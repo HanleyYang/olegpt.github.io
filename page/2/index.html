@@ -1,0 +1,3261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="keywords" content="Oleg的博客">
+<meta name="description" content="">
+<meta name="theme-color" content="#000">
+<title>Oleg的博客</title>
+<link rel="shortcut icon" href="/favicon.ico?v=1603976034557">
+<link rel="stylesheet" href="/media/css/gemini.css">
+<link rel="stylesheet" href="/media/fonts/font-awesome.css">
+<link
+  href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Rosario:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext"
+  rel="stylesheet" type="text/css">
+
+<link href="/media/hljs/styles/github.css"
+  rel="stylesheet">
+
+<link rel="stylesheet" href="/styles/main.css">
+
+<script src="/media/hljs/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.ui.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+
+</head>
+
+<body>
+  <div class="head-top-line"></div>
+  <div class="header-box">
+    
+<div class="gemini">
+  <header class="header  ">
+    <div class="blog-header box-shadow-wrapper bg-color " id="header">
+      <div class="nav-toggle" id="nav_toggle">
+        <div class="toggle-box">
+          <div class="line line-top"></div>
+          <div class="line line-center"></div>
+          <div class="line line-bottom"></div>
+        </div>
+      </div>
+      <div class="site-meta">       
+        <div class="site-title">
+          
+            <a href="/" class="brand">
+              <span>Oleg的博客</span>
+            </a>  
+          
+        </div>
+        
+          <p class="subtitle">人傻就要多读书</p>
+        
+      </div>
+      <nav class="site-nav" id="site_nav">
+        <ul id="nav_ul">
+          
+            
+            
+              
+            
+            <li class="nav-item nav-item-active">
+              
+              
+                <a href="/" target="_self">
+                  <i class="fa fa-home"></i> 首页
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/tags/" target="_self">
+                  <i class="fa fa-tags"></i> 标签
+                </a>
+              
+            </li>
+          
+          
+            
+              <li class="nav-item ">
+                <a href="/friends/" target="_self">
+                  
+                    <i class="fa fa-address-book"></i> 友情链接
+                  
+                </a>
+              </li>
+            
+          
+          
+            <li id="fa_search" class="nav-item">
+              <a href="javascript:void(0);">
+                <i class="fa fa-search"></i> <span class="language" data-lan="search">搜索</span>
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<script type="text/javascript"> 
+ 
+  let showNav = true;
+
+  let navToggle = document.querySelector('#nav_toggle'),
+  siteNav = document.querySelector('#site_nav');
+  
+  function navClick() {
+    let sideBar = document.querySelector('.sidebar');
+    let navUl = document.querySelector('#nav_ul');
+    navToggle.classList.toggle('nav-toggle-active');
+    siteNav.classList.toggle('nav-menu-active');
+    if (siteNav.classList.contains('nav-menu-active')) {
+      siteNav.style = "height: " + (navUl.children.length * 42) +"px !important";
+    } else {
+      siteNav.style = "";
+    }
+  }
+
+  navToggle.addEventListener('click',navClick);  
+</script>
+  </div>
+  <div class="main-continer">
+    
+    <div
+      class="section-layout gemini ">
+      <div class="section-layout-wrapper">
+        <div id="sidebarMeta" class="sidebar">
+    
+<div class="sidebar-wrapper box-shadow-wrapper bg-color">
+  <div class="sidebar-item">
+    <img class="site-author-image right-motion" src="/images/avatar.png"/>
+    <p class="site-author-name">Oleg</p>
+    
+  </div>
+  <div class="sidebar-item side-item-stat right-motion">
+    <div class="sidebar-item-box">
+      <a href="/archives/">
+        
+        <span class="site-item-stat-count">21</span>
+        <span class="site-item-stat-name language" data-lan="article">文章</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="">
+        <span class="site-item-stat-count">4</span>
+        <span class="site-item-stat-name language" data-lan="category">分类</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="/tags/">
+        <span class="site-item-stat-count">4</span>
+        <span class="site-item-stat-name language" data-lan="tag">标签</span>
+      </a>
+    </div>
+  </div>
+  
+    
+  
+  
+
+
+
+</div>
+</div>
+<script>
+  let sidebarMeta = document.querySelector('#sidebarMeta');
+  let scheme = 'gemini';
+  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
+  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
+    document.addEventListener('scroll', function(e) {
+      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
+        sidebarWrapper.classList.add('home-sidebar-fixed')
+      } else {
+        sidebarWrapper.classList.remove('home-sidebar-fixed')
+      }
+    });
+  }
+  </script>
+        <div class="section-box gemini">
+          <section class="section  posts-expand slide-down-in">
+            
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/494-target-sum/">
+      494. Target Sum
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2020-04-01 20:29:15">2020-04-01</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/boFyc4UTy/">
+        <span>LeetCode</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>3<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>408<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><p>You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.</p>
+<p>Find out how many ways to assign symbols to make sum of integers equal to target S.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: nums is [1, 1, 1, 1, 1], S is 3. 
+Output: 5
+
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/494-target-sum/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/406-queue-reconstruction-by-height/">
+      406. Queue Reconstruction by Height
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2020-03-31 20:31:59">2020-03-31</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/boFyc4UTy/">
+        <span>LeetCode</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>2<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>302<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><p>Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue.</p>
+<p><strong>Note:</strong><br>
+The number of people is less than 1,100.</p>
+<p><strong>Example</strong></p>
+<pre><code>Input:
+
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/406-queue-reconstruction-by-height/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/215-kth-largest-element-in-an-array/">
+      215. Kth Largest Element in an Array
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2020-03-24 20:34:10">2020-03-24</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/boFyc4UTy/">
+        <span>LeetCode</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>2<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>302<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><p>Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [3,2,1,5,6,4] and k = 2
+Output: 5
+</code></pre>
+
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/215-kth-largest-element-in-an-array/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/cslmap-he-ccsmap/">
+      CSLMap和CCSMap
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2020-02-06 20:22:03">2020-02-06</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/1LLmSYVy9/">
+        <span>Java</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>6<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>1392<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><h3 id="1-跳表">1. 跳表</h3>
+<h4 id="11-跳表基本思路">1.1 跳表基本思路</h4>
+<p>对于有序数据的存储，常见的数据结构有：</p>
+<ul>
+<li>数组：空间复杂度O(n)，定位插入/删除时间复杂度O(n)，查找时间复杂度O(logn)</li>
+
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/cslmap-he-ccsmap/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/spark-shuffle-manager-jie-xi/">
+      Spark Shuffle Manager解析
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2020-01-24 20:25:34">2020-01-24</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/MMU3f7np1/">
+        <span>Spark</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>3<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>563<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><p>Shuffle是下一个Stage向上一个Stage获取数据的过程，其中涉及到序列化、磁盘IO、网络IO等相对较慢的操作，所以减少和优化Shuffle过程有利于程序性能的提升。</p>
+<p>MapReduce中的shuffle：<br>
+<img src="https://olegpt.top/post-images/1603974363449.png" alt="" loading="lazy"></p>
+<h2 id="1-spark-shuffle过程">1. Spark Shuffle过程</h2>
+<p>在Spark中Shuffle和MR中的类似，也分为<code>Shuffle Read</code>和<code>Shuffle Write</code>，而且shuffle write也是将结果写入到磁盘中。</p>
+
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/spark-shuffle-manager-jie-xi/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/sparksql-join-de-shi-xian/">
+      SparkSQL join的实现
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2020-01-02 20:24:37">2020-01-02</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/MMU3f7np1/">
+        <span>Spark</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>2<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>381<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <p>SparkSQL对于join的实现有3种：</p>
+<ul>
+<li>Hash Join
+<ul>
+<li>Shuffle Hash Join</li>
+<li>Broadcast Hash Join（Map-Side Join）</li>
+</ul>
+</li>
+<li>Sort Merge Join</li>
+</ul>
+<p>下面详细介绍这3种join的实现思路。</p>
+<h2 id="1-hash-join">1. Hash Join</h2>
+<p>对两张表join的的过程是对两张表种符合条件的Row进行筛选，最终合并成结果的过程，这个过程使用Hash Join来实现有如下3步：</p>
+<ul>
+<li>确定<code>BuildTable</code>和<code>ProbeTable</code>：通常小表作为BuildTable，大表作为ProbeTable</li>
+<li>将BuidleTable表中的数据写入HashTable中</li>
+<li>使用ProbeTable中的记录去HashTable中匹配，相同join_key的生成一条记录</li>
+</ul>
+<h3 id="11-broadcast-hash-join">1.1 Broadcast Hash Join</h3>
+<p>当BuildTable非常小时可以将BuildTable直接广播到ProbeTable所在的各个节点，避免了Shuffle的发生，效率也更高，但如果BuildTable很大时就需要ShuffleHashJoin了。</p>
+<p>SparkSQL对于小于10M的表默认使用BroadcastHashJoin，可通过<code>spark.sql.autoBroadcastJoinThreshold</code>参数调整</p>
+<h3 id="12-shuffle-hash-join">1.2 Shuffle Hash Join</h3>
+<p>当HashTable较大时，广播所带来的资源消耗高于带来的收益，此时只能通过Shuffule将两表的数据按join_key分区后再生成HashTable进行匹配。</p>
+<h2 id="2-sort-merge-join">2. Sort Merge Join</h2>
+<p>Hash Join有一个缺陷就是如果BuildTable过大，无法完全存储在内存，此时就需要不断的从磁盘加载HashTable的各个部分，导致性能很低，所以为了优化两张大表的join引入了SortMergeJoin。<br>
+SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然后按照类似堆排序的过程进行匹配，虽然排序消耗了资源但匹配过程却只需要读取一次两表的数据。</p>
+
+          
+        
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/560-subarray-sum-equals-k/">
+      560. Subarray Sum Equals K
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2019-04-04 20:27:00">2019-04-04</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/boFyc4UTy/">
+        <span>LeetCode</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>3<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>495<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><p>Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.</p>
+<p><strong>Example 1:</strong><br>
+Input:nums = [1,1,1], k = 2<br>
+Output: 2<br>
+<strong>Note:</strong></p>
+
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/560-subarray-sum-equals-k/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/java-zhong-de-equals-he-you-shi-me-bu-tong/">
+      Java中的equals和==有什么不同
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2019-03-06 20:14:34">2019-03-06</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/1LLmSYVy9/">
+        <span>Java</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>4<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>749<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><p>今天看到两道题：</p>
+<ul>
+<li>
+<p><code>equals</code>和<code>==</code>有什么区别？</p>
+</li>
+
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/java-zhong-de-equals-he-you-shi-me-bu-tong/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/136-single-number/">
+      136. Single Number
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2019-02-25 20:17:48">2019-02-25</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/boFyc4UTy/">
+        <span>LeetCode</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>1<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>152<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><h3 id="136-single-number"><a href="https://leetcode.com/problems/single-number/">136. Single Number</a></h3>
+<p>Difficulty: <strong>Easy</strong></p>
+<p>Given a <strong>non-empty</strong> array of integers, every element appears <em>twice</em> except for one. Find that single one.</p>
+<p><strong>Note:</strong></p>
+<p>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
+
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/136-single-number/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/spark-guang-bo-ji-zhi-jie-xi/">
+      Spark广播机制解析
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2018-05-23 20:07:06">2018-05-23</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/MMU3f7np1/">
+        <span>Spark</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>4<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>837<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><h3 id="1-使用场景">1. 使用场景</h3>
+<p>在spark开发过程中，广播变量会被分发到Executor，当Executor执行多个Task时会复用广播变量。所以广播变量最常见的使用场景有两个：</p>
+<ol>
+<li><code>共享重资源</code>：重资源的初始化十分消耗性能（例如：各类存储系统的客户端和连接池等），如果不使用广播可能造成频繁的初始化而影响性能，即使基于分区创建连接，在分区数较多的情况下也会占用大量资源。</li>
+<li><code>共享只读数据</code>：多次使用的只读数据可以使用广播发送到每个节点，避免重复传输，起到性能优化的作用。</li>
+
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/spark-guang-bo-ji-zhi-jie-xi/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+  
+            
+            
+<div class="page bg-color">
+  <ul class="pagination-ul">
+    
+      <li class="pagination-dir">
+        <a href="https://olegpt.top/">
+          <i class="fa fa-angle-left"></i>
+        </a>
+      </li>
+    
+    
+      
+        <li class="pagination-li ">
+            <a href="/page/../">
+              1
+            </a>
+        </li>
+      
+        <li class="pagination-li pagination-active">
+            <a href="/page/2">
+              2
+            </a>
+        </li>
+      
+        <li class="pagination-li ">
+            <a href="/page/3">
+              3
+            </a>
+        </li>
+      
+    
+    
+      <li class="pagination-dir">
+        <a href="/page/3">
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="footer-box">
+  <footer class="footer">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2019-2020 Theme By <a
+        href="https://github.com/hsxyhao/gridea-theme-next" target="_blank">HsxyHao</a>
+    </div>
+    <div class="poweredby">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+  </footer>
+  
+  
+  <div class="gemini back-to-top" id="back_to_top">
+    <i class="fa fa-arrow-up"></i>
+    
+    <span class="scrollpercent">
+      <span id="back_to_top_text">0</span>%
+    </span>
+    
+  </div>
+  
+  
+  
+</div>
+<script>
+
+  let sideBarOpen = 'sidebar-open';
+  let body = document.body;
+  let back2Top = document.querySelector('#back_to_top'),
+    back2TopText = document.querySelector('#back_to_top_text'),
+    drawerBox = document.querySelector('#drawer_box'),
+    rightSideBar = document.querySelector('.sidebar'),
+    viewport = document.querySelector('body');
+
+  function scrollAnimation(currentY, targetY) {
+
+    let needScrollTop = targetY - currentY
+    let _currentY = currentY
+    setTimeout(() => {
+      const dist = Math.ceil(needScrollTop / 10)
+      _currentY += dist
+      window.scrollTo(_currentY, currentY)
+      if (needScrollTop > 10 || needScrollTop < -10) {
+        scrollAnimation(_currentY, targetY)
+      } else {
+        window.scrollTo(_currentY, targetY)
+      }
+    }, 1)
+  }
+
+  back2Top.addEventListener("click", function (e) {
+    scrollAnimation(document.scrollingElement.scrollTop, 0);
+    e.stopPropagation();
+    return false;
+  });
+
+  window.addEventListener('scroll', function (e) {
+    let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+    if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+      back2Top.classList.add('back-top-active');
+    }
+    if (percent == 0) {
+      back2Top.classList.remove('back-top-active');
+    }
+    if (back2TopText) {
+      back2TopText.textContent = Math.floor(percent);
+    }
+  });
+
+
+  let hasCacu = false;
+  window.onresize = function () {
+    calcuHeight();
+  }
+
+  function calcuHeight() {
+    // 动态调整站点概览高度
+    if (!hasCacu && back2Top.classList.contains('pisces') || back2Top.classList.contains('gemini')) {
+      let sideBar = document.querySelector('.sidebar');
+      let navUl = document.querySelector('#site_nav');
+      sideBar.style = 'margin-top:' + (navUl.offsetHeight + navUl.offsetTop + 15) + 'px;';
+      hasCacu = true;
+    }
+  }
+  calcuHeight();
+
+  let open = false, MOTION_TIME = 300, RIGHT_MOVE_DIS = '320px';
+
+  if (drawerBox) {
+    let rightMotions = document.querySelectorAll('.right-motion');
+    let right = drawerBox.classList.contains('right');
+
+    let transitionDir = right ? "transition.slideRightIn" : "transition.slideLeftIn";
+
+    let openProp, closeProp;
+    if (right) {
+      openProp = {
+        paddingRight: RIGHT_MOVE_DIS
+      };
+      closeProp = {
+        paddingRight: '0px'
+      };
+    } else {
+      openProp = {
+        paddingLeft: RIGHT_MOVE_DIS
+      };
+      closeProp = {
+        paddingLeft: '0px'
+      };
+    }
+
+    drawerBox.onclick = function () {
+      open = !open;
+      window.Velocity(rightSideBar, 'stop');
+      window.Velocity(viewport, 'stop');
+      window.Velocity(rightMotions, 'stop');
+      if (open) {
+        window.Velocity(rightSideBar, {
+          width: RIGHT_MOVE_DIS
+        }, {
+          duration: MOTION_TIME,
+          begin: function () {
+            window.Velocity(rightMotions, transitionDir, {});
+          }
+        })
+        window.Velocity(viewport, openProp, {
+          duration: MOTION_TIME
+        });
+      } else {
+        window.Velocity(rightSideBar, {
+          width: '0px'
+        }, {
+          duration: MOTION_TIME,
+          begin: function () {
+            window.Velocity(rightMotions, {
+              opacity: 0
+            });
+          }
+        })
+        window.Velocity(viewport, closeProp, {
+          duration: MOTION_TIME
+        });
+      }
+      for (let i = 0; i < drawerBox.children.length; i++) {
+        drawerBox.children[i].classList.toggle('muse-line');
+      }
+      drawerBox.classList.toggle(sideBarOpen);
+    }
+  }
+
+  // 链接跳转
+  let newWindow = 'false'
+  if (newWindow === 'true') {
+    let links = document.querySelectorAll('.post-body a')
+    links.forEach(item => {
+      if (!item.classList.contains('btn')) {
+        item.setAttribute("target", "_blank");
+      }
+    })
+  }
+
+  let faSearch = document.querySelector('#fa_search');
+  faSearch.addEventListener('click', function () {
+    document.querySelector('#search_mask').style = ''
+  })
+
+  // 代码高亮
+  hljs.initHighlightingOnLoad();
+  
+  // 离开当前页title变化
+  var leaveTitle = "";
+  if (leaveTitle) {
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState == 'hidden') {
+        normal_title = document.title;
+        document.title = leaveTitle;
+      } else {
+        document.title = normal_title;
+      }
+    });
+  }
+
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px;border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
+</script>
+  </div>
+</body>
+
+<div class="search-mask" id="search_mask" style="display: none;">
+  <div class="search-box">
+    <div class="search-title">
+      <i class="fa fa-search"></i>
+      <div class="input-box">
+        <input id="search" type="text" class="language" data-lan="search" placeholder="搜索">
+      </div>
+      <i id="close" class="fa fa-times-circle"></i>
+    </div>
+    <div class="stat-box">
+      <span id="stat_count">0</span><span class="language" data-lan="stat">条相关条目，使用了</span><span id="stat_times">0</span><span class="language" data-lan="stat-time">毫秒</span>
+      <hr>
+    </div>
+    <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/70-climbing-stairs/"" data-c="
+          &lt;h3 id=&#34;70-climbing-stairs&#34;&gt;&lt;a href=&#34;https://leetcode.com/problems/climbing-stairs/&#34;&gt;70. Climbing Stairs&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Difficulty: &lt;strong&gt;Easy&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;You are climbing a stair case. It takes &lt;em&gt;n&lt;/em&gt; steps to reach to the top.&lt;/p&gt;
+&lt;p&gt;Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Given &lt;em&gt;n&lt;/em&gt; will be a positive integer.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;1brute-force&#34;&gt;1.Brute Force&lt;/h4&gt;
+&lt;p&gt;通过递归遍历所有可能性，方法出入栈的开销大，会超时。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int climbStairs(int n) {
+        return climbStairs(n, 0);
+    }
+    
+    public int climbStairs(int n, int current) {
+        if (current == n) return 1;
+        if (current &amp;gt; n) return 0;
+        int count = 0;
+        count += climbStairs(n, current + 1);
+        count += climbStairs(n, current + 2);
+        return count;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2dp&#34;&gt;2.DP&lt;/h4&gt;
+&lt;p&gt;记录前两个元素的路径数，最终得到n的路径数&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int climbStairs(int n) {
+        int dp[] = new int[n + 1];
+        dp[1] = 1;
+        dp[0] = 1;
+        for (int i = 2; i &amp;lt;= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看出这里其实不需要用数组，只需要前两个元素即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int climbStairs(int n) {
+        int a = 0, b = 1;
+        for (int i = 1; i &amp;lt; n; i++) {
+            if (i % 2 == 0) {
+                b += a;
+            } else {
+                a += b;
+            }
+        }
+        return a + b;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;3斐波那契通项公式&#34;&gt;3.斐波那契通项公式&lt;/h4&gt;
+&lt;p&gt;通过公式直接算出，建议自行学习原理&lt;/p&gt;
+&lt;!-- more --&gt;
+">70. Climbing Stairs</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/"" data-c="
+          &lt;p&gt;最短路径问题即：找出一个点到另一个点的最短路径。这类问题的解法有：&lt;/p&gt;
+&lt;h3 id=&#34;1动态规划dp&#34;&gt;1.动态规划（DP）&lt;/h3&gt;
+&lt;p&gt;以为&lt;a href=&#34;https://leetcode.com/problems/minimum-path-sum&#34;&gt;63. Minimum Path Sum&lt;/a&gt;例，遍历方向只有右和下且目的地为最后一个节点，所以任意一个节点最终都能到达目的节点，此时只需要把所有节点遍历，并简单的记录每一个节点的最短路径就可以解决问题：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int minPathSum(int[][] grid) {
+        for (int i = 0; i &amp;lt; grid.length; i++) {
+            for (int j = 0; j &amp;lt; grid[0].length; j++) {
+                if (i &amp;gt; 0 &amp;amp;&amp;amp; j &amp;gt; 0) {
+                    grid[i][j] += Math.min(grid[i - 1][j], grid[i][j-1]);
+                } else if (i &amp;gt; 0) {
+                    grid[i][j] += grid[i - 1][j];
+                } else if (j &amp;gt; 0) {
+                    grid[i][j] += grid[i][j - 1];
+                }
+            }
+        }
+        return grid[grid.length - 1][grid[0].length - 1];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度为O(m*n)。&lt;/p&gt;
+&lt;h3 id=&#34;2floyd-算法&#34;&gt;2.Floyd 算法&lt;/h3&gt;
+&lt;p&gt;以&lt;a href=&#34;https://leetcode.com/problems/network-delay-time/&#34;&gt;743. Network Delay Time&lt;/a&gt;为例，这一题本质就是求两个点之间的最短距离，还是沿用上面的思路来解决。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;通过一个二维数据来记录各个点到另一个点的延迟。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当不经过其他点时，两个点的最短延迟就是二维数组中记录的数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;假设现在必须只经过点c，则两点之间的最低延迟为&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$ L_ {ab} = min(L_{ ab }, \quad L_{ac} + L_{cb}) $$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;假设现在必须经过点c、d，则两点之间的最低延迟为&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$ L_{ab} = min(min(L_{ab}, L_{ac} + L_{cb}),\quad min(L_{ab},L_{ad} + L_{db})) $$&lt;/p&gt;
+&lt;p&gt;因此，经过所有点时的延迟可以通过遍历所有点，套用上述公式得到：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        Integer dp[][] = new Integer[N + 1][N + 1];
+        for (int[] time : times) {
+            dp[time[0]][time[1]] = time[2];
+        }
+
+        for (int k = 1; k &amp;lt;= N; k++) {
+            for (int i = 1; i &amp;lt;= N; i++) {
+                for (int j = 1; j &amp;lt;= N; j++) {
+                    if (dp[i][k] != null &amp;amp;&amp;amp; dp[k][j] != null) {
+                        if (dp[i][j] == null) {
+                            dp[i][j] = dp[i][k] + dp[k][j];
+                        } else {
+                            dp[i][j] = Math.min(dp[i][k] + dp[k][j], dp[i][j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        int max = 0;
+        for (int i = 1; i &amp;lt;= N; i++) {
+            if (i != K) {
+                if (dp[K][i] == null) return -1;
+                max = Math.max(max, dp[K][i]);    
+            }
+        }
+        return max;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度为O(n^3)&lt;br&gt;
+关于此算法更详细的介绍可以参考：https://wiki.jikexueyuan.com/project/easy-learn-algorithm/floyd.html&lt;/p&gt;
+&lt;h3 id=&#34;3迪杰斯特拉算法dijkstra&#34;&gt;3.迪杰斯特拉算法（Dijkstra）&lt;/h3&gt;
+&lt;p&gt;还是以Network Delay Time问题为例，使用Floyd算法可以得出图中&lt;strong&gt;所有点到点的最短路径&lt;/strong&gt;，这称为&lt;strong&gt;多源最短路径算法&lt;/strong&gt;，但是实际上这个问题中，只需要求点K到其余各点的最短距离，所以这里介绍一种新的算法：Dijkstra。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;同样还是使用二维数据记录各点的距离。&lt;/li&gt;
+&lt;li&gt;另外用一个单独的数据记录各点到指定点K的最短距离。&lt;/li&gt;
+&lt;li&gt;找到距离K最近的点A，并看看A指向的点是否能通过A来缩短与K的距离，并将距离记录到2中的数组，这个过程称为松弛&lt;/li&gt;
+&lt;li&gt;继续通过3中的方法，直到所有点都松弛完成，2中数组保存的就是最短的点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        Integer dp[][] = new Integer[N + 1][N + 1];
+        Integer min[] = new Integer[N + 1];
+        boolean finished[] = new boolean[N + 1];
+        for (int[] time : times) {
+            dp[time[0]][time[1]] = time[2];
+            if (time[0] == K) min[time[1]] = time[2];
+        }
+
+        for (int i = 1; i &amp;lt;= N; i++) {
+            int minIndex = -1;
+            for (int j = 1; j &amp;lt;= N; j++) {
+                if (j != K &amp;amp;&amp;amp; min[j] != null &amp;amp;&amp;amp; !finished[j]) {
+                    minIndex = minIndex &amp;lt; 0 ? j : (min[j] &amp;lt;= min[minIndex] ? j : minIndex);
+                }
+            }
+
+            if (minIndex &amp;gt; 0) {
+                finished[minIndex] = true;
+                for (int j = 1; j &amp;lt;=N; j++) {
+                    if (j != K &amp;amp;&amp;amp; dp[minIndex][j] != null) {
+                        min[j] = min[j] == null ? min[minIndex] + dp[minIndex][j] : Math.min(min[j], min[minIndex] + dp[minIndex][j]);
+                    }
+                }
+            }
+        }
+
+        int max = 0;
+        for (int i = 1; i &amp;lt;= N; i++) {
+            if (i != K) {
+                if (min[i] == null) return -1;
+                max = Math.max(max, min[i]);    
+            }
+        }
+        return max;
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度为O(n^2)&lt;br&gt;
+关于此算法更详细的介绍可以参考：&lt;br&gt;
+https://wiki.jikexueyuan.com/project/easy-learn-algorithm/dijkstra.html&lt;/p&gt;
+">最短路径问题的解法</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/kudu-de-compaction-ji-zhi/"" data-c="
+          &lt;h3 id=&#34;1-为什么进行compaction&#34;&gt;1. 为什么进行compaction&lt;/h3&gt;
+&lt;p&gt;kudu中的compaction主要针对磁盘中的DiskRowset进行合并，DiskRowset包含3部分数据：BaseData、RedoLog、UndoLog，对应的有下面3种compaction形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MergeCompaction&lt;/strong&gt;：仅对BaseData合并&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MinorDeltaCompaction&lt;/strong&gt;：对RedoLog进行合并&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MajorDeltaCompaction&lt;/strong&gt;：对UndoLog、BaseData、RedoLog进行合并，删除历史版本数据释放磁盘空间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-compaction如何触发&#34;&gt;2. compaction如何触发&lt;/h3&gt;
+&lt;p&gt;kudu tablet有一个maintenance_scheduler线程负责针对当前系统状况来对后台维护任务进行调度。tablet会创建MaintenanceOp 对象，维护线程每250ms轮询一次上述对象，并决定执行哪些任务。&lt;/p&gt;
+&lt;h3 id=&#34;3-compaction策略&#34;&gt;3. compaction策略&lt;/h3&gt;
+&lt;p&gt;compaction会消耗当前的机器资源，但是可以提升后续的服务性能，所以需要在当前资源消耗和后续服务性能之间取得平衡。&lt;/p&gt;
+&lt;h4 id=&#34;31-服务开销&#34;&gt;3.1. 服务开销&lt;/h4&gt;
+&lt;p&gt;为了衡量kudu的读写时间开销，引入&lt;code&gt;高度&lt;/code&gt;和&lt;code&gt;宽度&lt;/code&gt;，这两个概念：&lt;/p&gt;
+&lt;p&gt;假设在一个tablet中有如下A - F 6 个rowset文件，文件包含1 - 5 这5个key：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   1     2      3     4    5
+|--A--||-B--||--C--||---D----|
+|--------------E-------------|
+                   |-F--|
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;**宽度：**E首尾距离为5， 所以E的宽度为5， 同理D的宽度为2&lt;/p&gt;
+&lt;p&gt;**高度：**对于4这个key，可能存在于D、E、F这3个文件，所以高度为3， 同理 2 的高度为2&lt;/p&gt;
+&lt;p&gt;插入操作：&lt;/p&gt;
+&lt;p&gt;​	插入操作需要先检查主键是否存在，kudu将每个文件包含的起始结束键存储在树中，通过检索可以快速找到可能包含当前pk的文件。按照如下公式计算时间开销：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;n = 可能包含当前pk的文件个数 即 高度
+B = 上述文件BloomFilter误报概率
+C_bf = BloomFilter校验时间开销
+C_pk = 单文件pk查找时间开销
+
+开销为 Cost = n * C_bf + n * B * C_pk = n * (C_bf + B*C_pk)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;随机读取：&lt;/p&gt;
+&lt;p&gt;​	和插入类似&lt;/p&gt;
+&lt;p&gt;短扫描：&lt;/p&gt;
+&lt;p&gt;​	扫描不使用BloomFilter，且磁盘读取时间较短，所以开销为&lt;code&gt;Cost = n*C_pk&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;长扫描：&lt;/p&gt;
+&lt;p&gt;​	长扫描需要读取大量数据&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;S = 需要读取的数据
+B = 磁盘带宽
+开销为 Cost = n * C_pk + S / B
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;32-合并策略&#34;&gt;3.2. 合并策略&lt;/h4&gt;
+&lt;p&gt;通过3.1的结果可以得出结论：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;插入，随机读，短扫描 这3个场景下，减少 n（高度）可以获得最大收益，也就是&lt;strong&gt;将有主键交叉的文件合并&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;对于长扫描，一次寻道时间为10ms左右，读取10M文件需要100ms左右，可以通过合并文件来提升顺序性能，但相对于1中的线性提升，&lt;strong&gt;单个文件到达一定大小后，继续合并所节省的寻道时间占比越来越低，在OLAP场景下更为突出&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;理论上像HBase一样将所有文件合并成一个可以获得最大长扫描性能，但会带来较大的写放大（数据反复合并*副本数 ）和性能波动，所以kudu选择将Memstore限制在64M，DiskRowSet限制在32M，合并IO限制在128M，且只对有主键交叉的文件进行合并，既保证了后续读写性能，又可以在后台不断执行合并而不会对当前读写有太大影响。&lt;/p&gt;
+&lt;p&gt;Tips:因为kudu合并有主键交叉的文件，可以使用递增主键来避免合并，提升写入性能。&lt;/p&gt;
+&lt;h4 id=&#34;33-文件选择策略&#34;&gt;3.3 文件选择策略&lt;/h4&gt;
+&lt;p&gt;如果有多个待合并的文件，kudu如何进行文件选择呢？ 上面提到合并的目标是降低tablet的高度，tablet的高度是因为有多个文件主键交叉导致的，所以如果一个文件的主键分布太广（即宽度过大），就会导致其与其他文件主键交叉的概率增加，&lt;strong&gt;所以应该优先合并宽度大的文件&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;假设在如下文件中选取3个文件进行合并：&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://olegpt.top/post-images/1603975448993.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;可以看到合并ABD高度减少到2 ，宽度减少到40， 合并BDE高度减少到2，宽度减少到35，很明显BDE是更好的合并方式。&lt;/p&gt;
+&lt;p&gt;​	Kudu的合并策略也有一些弊端，如果持续缓慢的向kudu写入主键递增的数据，因为Kudu 2分钟flush的策略，就会导致磁盘上有很多小文件，却又一直不会合并，导致该表性能下降。&lt;a href=&#34;https://community.cloudera.com/t5/Interactive-Short-cycle-SQL/kudu-compaction-did-not-run/td-p/84298&#34;&gt;https://community.cloudera.com/t5/Interactive-Short-cycle-SQL/kudu-compaction-did-not-run/td-p/84298&lt;/a&gt;这个问题在1.9版本修复，感兴趣看下设计文档&lt;a href=&#34;https://docs.google.com/document/d/1yTfxt0_2p5EfIjCnjJCt3o-nB9xk-Kl2O8yKTA1LQrQ/edit#&#34;&gt;https://docs.google.com/document/d/1yTfxt0_2p5EfIjCnjJCt3o-nB9xk-Kl2O8yKTA1LQrQ/edit#&lt;/a&gt;&lt;/p&gt;
+">kudu的compaction机制</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/739-daily-temperatures/"" data-c="
+          &lt;h3 id=&#34;739-daily-temperatures&#34;&gt;&lt;a href=&#34;https://leetcode.com/problems/daily-temperatures/&#34;&gt;739. Daily Temperatures&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Difficulty: &lt;strong&gt;Medium&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Given a list of daily temperatures &lt;code&gt;T&lt;/code&gt;, return a list such that, for each day in the input, tells you how many days you would have to wait until a warmer temperature. If there is no future day for which this is possible, put &lt;code&gt;0&lt;/code&gt; instead.&lt;/p&gt;
+&lt;p&gt;For example, given the list of temperatures &lt;code&gt;T = [73, 74, 75, 71, 69, 72, 76, 73]&lt;/code&gt;, your output should be &lt;code&gt;[1, 1, 4, 2, 1, 1, 0, 0]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The length of &lt;code&gt;temperatures&lt;/code&gt; will be in the range &lt;code&gt;[1, 30000]&lt;/code&gt;. Each temperature will be an integer in the range &lt;code&gt;[30, 100]&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;1stack&#34;&gt;1.Stack&lt;/h3&gt;
+&lt;p&gt;利用栈来消除多余的降序数，例如：&lt;code&gt;1, 3, 5, 7, 4, 3, 8&lt;/code&gt;中的&lt;code&gt;4, 3&lt;/code&gt;在7之后，所以在后续的遍历中完全无用，通过栈可以跳过这部分数据。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        int r[] = new int[T.length];
+        Stack&amp;lt;Integer&amp;gt; stack = new Stack&amp;lt;&amp;gt;();
+        
+        for (int i = T.length - 1; i &amp;gt;= 0 ; i--) {
+            while (!stack.isEmpty() &amp;amp;&amp;amp; T[stack.peek()] &amp;lt;= T[i]) {stack.pop();}
+            
+            if (!stack.isEmpty()) {
+                r[i] = stack.peek() - i;
+            } 
+            stack.push(i);
+        }
+        return r;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度O(n)，空间复杂度O(m)&lt;/p&gt;
+&lt;h3 id=&#34;2dp&#34;&gt;2.DP&lt;/h3&gt;
+&lt;p&gt;由于方法1中对栈的操作相对耗时，还是沿用上述跳过无效数据的思想，可以直接通过结果数组来实现。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        int r[] = new int[T.length];
+        
+        for (int i = T.length - 2; i &amp;gt;= 0 ; i--) {
+            for (int j = i + 1; j &amp;lt; T.length; j+=r[j]) {
+                if (T[j] &amp;gt; T[i]) {
+                    r[i] = j - i;
+                    break;
+                } else if (r[j] == 0) {
+                    break;
+                }
+            }
+        }
+        return r;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度O(n)，空间复杂度O(1)&lt;/p&gt;
+">739. Daily Temperatures</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/287-find-the-duplicate-number/"" data-c="
+          &lt;h3 id=&#34;287-find-the-duplicate-number&#34;&gt;&lt;a href=&#34;https://leetcode.com/problems/find-the-duplicate-number/&#34;&gt;287. Find the Duplicate Number&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Difficulty: &lt;strong&gt;Medium&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Given an array &lt;em&gt;nums&lt;/em&gt; containing &lt;em&gt;n&lt;/em&gt; + 1 integers where each integer is between 1 and &lt;em&gt;n&lt;/em&gt; (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: [1,3,4,2,2]
+Output: 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: [3,1,3,4,2]
+Output: 3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;You &lt;strong&gt;must not&lt;/strong&gt; modify the array (assume the array is read only).&lt;/li&gt;
+&lt;li&gt;You must use only constant, &lt;em&gt;O&lt;/em&gt;(1) extra space.&lt;/li&gt;
+&lt;li&gt;Your runtime complexity should be less than &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;n&lt;/em&gt;&lt;sup&gt;2&lt;/sup&gt;).&lt;/li&gt;
+&lt;li&gt;There is only one duplicate number in the array, but it could be repeated more than once.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;不允许修改数组，只允许使用 &lt;em&gt;O&lt;/em&gt;(1) 的空间，也就无法使用排序、HashMap/HashSet统计的方法。&lt;/p&gt;
+&lt;h4 id=&#34;1-二分查找&#34;&gt;1. 二分查找&lt;/h4&gt;
+&lt;p&gt;利用平均值来进行二分查找。求出1-n的平均值，根据小于平均值的元素个数是否超出来判断重复值在左侧还是右侧，然后递归得到最终的重复值，但是这种方式对于有不连续的数据无法AC&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[1,4,2,2,5,6,7,8]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2-快慢指针&#34;&gt;2. 快慢指针&lt;/h4&gt;
+&lt;p&gt;这个数组中的所有值都是小于数组长度的，可以把这些值看成链表中的next索引。由于有重复的数字指向同一个元素，所以一定会存在环状索引，且环的起始位置就是重复的数字。&lt;br&gt;
+此时顺利的将问题转化为对环起始点的检测，即：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+        
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+        
+        slow  = 0;
+        do {
+            slow = nums[slow];
+            fast = nums[fast];
+        } while (slow != fast);
+        
+        return slow;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+">287. Find the Duplicate Number</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/3-longest-substring-without-repeating-characters/"" data-c="
+          &lt;h3 id=&#34;3-longest-substring-without-repeating-characters&#34;&gt;&lt;a href=&#34;https://leetcode.com/problems/longest-substring-without-repeating-characters/&#34;&gt;3. Longest Substring Without Repeating Characters&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Difficulty: &lt;strong&gt;Medium&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Given a string, find the length of the &lt;strong&gt;longest substring&lt;/strong&gt; without repeating characters.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: &amp;quot;abcabcbb&amp;quot;
+Output: 3 
+Explanation: The answer is &amp;quot;abc&amp;quot;, with the length of 3\. 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: &amp;quot;bbbbb&amp;quot;
+Output: 1
+Explanation: The answer is &amp;quot;b&amp;quot;, with the length of 1.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 3:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: &amp;quot;pwwkew&amp;quot;
+Output: 3
+Explanation: The answer is &amp;quot;wke&amp;quot;, with the length of 3\. 
+             Note that the answer must be a substring, &amp;quot;pwke&amp;quot; is a subsequence and not a substring.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;1-滑动窗口&#34;&gt;1. 滑动窗口&lt;/h4&gt;
+&lt;p&gt;利用数组记录窗口中是否出现重复字符&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;未出现则继续向右扩大窗口&lt;/li&gt;
+&lt;li&gt;出现则从左侧缩小窗口，直到缩小到没有重复字符&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int flag[] = new int[128];
+        int start = 0, end = 0;
+        
+        int max = 0;
+        while (end &amp;lt; s.length()) {
+            if (flag[s.charAt(end)] == 0) {
+                flag[s.charAt(end++)]++;
+                max = Math.max(max, end - start);
+            } else {
+                while (flag[s.charAt(end)] &amp;gt; 0) {
+                    flag[s.charAt(start++)]--;
+                }
+            }
+        }
+        return max;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;当然也可以使用HashMap或HashSet来记录窗口中的元素，这里就省略了&lt;/p&gt;
+">3. Longest Substring Without Repeating Characters</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/chou-yang-suan-fa-zhi-shui-tang-chou-yang-reservoir-sampling/"" data-c="
+          &lt;p&gt;Spark的分区器实现包含两种：&lt;code&gt;HashPartitioner&lt;/code&gt;和&lt;code&gt;RangePartitioner&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HashPartitioner：根据&lt;code&gt;key % 分区数&lt;/code&gt;来进行分区，可能导致数据倾斜问题&lt;/li&gt;
+&lt;li&gt;RangePartitioner：对数据集中的key进行采样，根据采样结果对数据进行分区，由于采样可以反应key的分布情况，所以RangePartitioner可以在一定程度上避免数据倾斜。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为了实现数据集的随机采样，Spark使用了水塘抽样算法(Reservoir Sampling)，实现了&lt;strong&gt;未知数据量大小&lt;/strong&gt;场景下的随机抽样（无法一次性加载到内存的大数据、流数据）。&lt;/p&gt;
+&lt;h3 id=&#34;1-随机采样1条数据&#34;&gt;1. 随机采样1条数据&lt;/h3&gt;
+&lt;p&gt;假设有一个长度为未知数N的数据集，从中随机取1条：即每条数据保留的概率为1/N&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当数据长度为1时：保留第一条数据，即&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;P_1=1 
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.64444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当数据长度为2时：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mspace width=&#34;2em&#34;/&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;P_1=1-{1\over2}={1\over2} \qquad P_2={1\over2} 
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.72777em;vertical-align:-0.08333em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:2em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当数据长度为3时：所有数据保留概率为1/3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;∗&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;mspace width=&#34;2em&#34;/&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;∗&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;mspace width=&#34;2em&#34;/&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;P_1=(1-{1\over2})* (1 -{1\over3})={1\over3}  \qquad  P_2={1\over2} * (1 -{1\over3})={1\over3}  \qquad  P_3={1\over3}
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;∗&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:2em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;∗&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:2em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;......&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由此总结出规律：&lt;strong&gt;遍历到第N条数据时保留的概率为1/N&lt;/strong&gt;就可以保证1条数据的随机采样。&lt;/p&gt;
+&lt;p&gt;数学归纳法证明：&lt;br&gt;
+当N=1时：&lt;/p&gt;
+&lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mtext&gt;, 结论成立&lt;/mtext&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;P_1=1 \text{, 结论成立} 
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.8777699999999999em;vertical-align:-0.19444em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mord text&#34;&gt;&lt;span class=&#34;mord&#34;&gt;, &lt;/span&gt;&lt;span class=&#34;mord cjk_fallback&#34;&gt;结论成立&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设N=i时结论成立，即：&lt;/p&gt;
+&lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;.&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;.&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;.&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;P_1 = P_2 = ...=P_i={1 \over i} 
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.36687em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.31166399999999994em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当N=i+1时：&lt;/p&gt;
+&lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;.&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;.&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;.&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/mfrac&gt;&lt;mo&gt;∗&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/mfrac&gt;&lt;mo&gt;∗&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;P_1 = P_2=...=P_i={1 \over i } * (1 - P_{i+1}) = {1 \over i} * (1 - {1 \over i+1}) = {1 \over i+1} 
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.36687em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.31166399999999994em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;∗&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.311664em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;mbin mtight&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.208331em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.00744em;vertical-align:-0.686em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;∗&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.09077em;vertical-align:-0.7693300000000001em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7693300000000001em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.09077em;vertical-align:-0.7693300000000001em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.32144em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7693300000000001em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;结论成立。&lt;/p&gt;
+&lt;h3 id=&#34;2-随机采样k条数据&#34;&gt;2. 随机采样k条数据&lt;/h3&gt;
+&lt;p&gt;可以直接采用上述结果，即：第i条数据保留概率为k/i，证明过程和上述类似，不再赘述。&lt;/p&gt;
+">抽样算法之：水塘抽样（Reservoir Sampling）</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/347-top-k-frequent-elements/"" data-c="
+          &lt;p&gt;Given a non-empty array of integers, return the k most frequent elements.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: nums = [1], k = 1
+Output: [1]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;You may assume k is always valid, 1 ≤ k ≤ number of unique elements.&lt;br&gt;
+Your algorithm&#39;s time complexity must be better than O(n log n), where n is the array&#39;s size.&lt;/p&gt;
+&lt;h4 id=&#34;1bucketsort&#34;&gt;1.BucketSort&lt;/h4&gt;
+&lt;p&gt;用frequencyMap统计每个数字出现的频率，然后将这些数字按出现频率添加到对应的桶中，最后从桶中由大到小取出k个数字。时间复杂度O(n)，空间复杂度O(n)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public List&amp;lt;Integer&amp;gt; topKFrequent(int[] nums, int k) {
+        List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;(k);
+        Map&amp;lt;Integer, Integer&amp;gt; frequencyMap = new HashMap&amp;lt;&amp;gt;();
+        
+        for (int i = 0; i &amp;lt; nums.length; i++) {
+            frequencyMap.put(nums[i],  frequencyMap.getOrDefault(nums[i], 0) + 1);
+        }
+
+        List&amp;lt;Integer&amp;gt;[] bucket = new LinkedList[nums.length + 1];
+        for (Integer key : frequencyMap.keySet()) {
+            Integer count = frequencyMap.get(key);
+            if (bucket[count] == null) bucket[count] = new LinkedList&amp;lt;&amp;gt;();
+            bucket[count].add(key);
+        }
+
+        int count = 0;
+        for (int i = nums.length; count &amp;lt; k &amp;amp;&amp;amp; i &amp;gt;= 0; i--) {
+            if (bucket[i] != null) {
+                result.addAll(bucket[i]);
+                count += bucket[i].size();
+            }
+        }
+        return result;
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2heapsort&#34;&gt;2.HeapSort&lt;/h4&gt;
+&lt;p&gt;和上面桶排序的前半部分相同，最后将frequencyMap的结果写入到一个Heap中，Heap中包含了topK个数字。由于堆的插入排序耗时，所以时间复杂度为O(n logn)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public List&amp;lt;Integer&amp;gt; topKFrequent(int[] nums, int k) {
+        List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;(k);
+        Map&amp;lt;Integer, Integer&amp;gt; frequencyMap = new HashMap&amp;lt;&amp;gt;();
+        
+        for (int i = 0; i &amp;lt; nums.length; i++) {
+            frequencyMap.put(nums[i],  frequencyMap.getOrDefault(nums[i], 0) + 1);
+        }
+
+        PriorityQueue&amp;lt;Map.Entry&amp;lt;Integer, Integer&amp;gt;&amp;gt; heap = new PriorityQueue&amp;lt;&amp;gt;(new Comparator&amp;lt;Map.Entry&amp;lt;Integer, Integer&amp;gt;&amp;gt;() {
+            public int compare(Map.Entry&amp;lt;Integer, Integer&amp;gt; e1, Map.Entry&amp;lt;Integer, Integer&amp;gt; e2) {
+                return e2.getValue() - e1.getValue();
+            }
+        });
+
+        for (Map.Entry&amp;lt;Integer, Integer&amp;gt; entry : frequencyMap.entrySet()) {
+            heap.offer(entry);
+        }
+
+        for (int i = 0; i &amp;lt; k; i++) {
+            result.add(heap.poll().getKey());
+        }
+
+        return result;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;!-- more --&gt;
+">347. Top K Frequent Elements</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/438-find-all-anagrams-in-a-string/"" data-c="
+          &lt;p&gt;Given a string s and a non-empty string p, find all the start indices of p&#39;s anagrams in s.&lt;/p&gt;
+&lt;p&gt;Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.&lt;/p&gt;
+&lt;p&gt;The order of output does not matter.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input:
+s: &amp;quot;cbaebabacd&amp;quot; p: &amp;quot;abc&amp;quot;
+
+Output:
+[0, 6]
+
+Explanation:
+The substring with start index = 0 is &amp;quot;cba&amp;quot;, which is an anagram of &amp;quot;abc&amp;quot;.
+The substring with start index = 6 is &amp;quot;bac&amp;quot;, which is an anagram of &amp;quot;abc&amp;quot;.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input:
+s: &amp;quot;abab&amp;quot; p: &amp;quot;ab&amp;quot;
+
+Output:
+[0, 1, 2]
+
+Explanation:
+The substring with start index = 0 is &amp;quot;ab&amp;quot;, which is an anagram of &amp;quot;ab&amp;quot;.
+The substring with start index = 1 is &amp;quot;ba&amp;quot;, which is an anagram of &amp;quot;ab&amp;quot;.
+The substring with start index = 2 is &amp;quot;ab&amp;quot;, which is an anagram of &amp;quot;ab&amp;quot;.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;1brute-force&#34;&gt;1.Brute Force&lt;/h4&gt;
+&lt;p&gt;计算出p中所有char之和，然后从s中不断匹配和相同的串，然后对这些串的字符与p进行逐一比较。时间复杂度O(n*l)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public List&amp;lt;Integer&amp;gt; findAnagrams(String s, String p) {
+        List&amp;lt;Integer&amp;gt; result = new ArrayList();
+        
+        int pSum = 0;
+        for (char c : p.toCharArray()) {
+            pSum += c;
+        }
+        
+        int sSum = 0;
+        for (int i = 0; i &amp;lt; s.length(); i++) {
+            sSum += s.charAt(i);
+            if (i &amp;gt;= p.length() - 1) {
+                if (sSum == pSum) {
+                    boolean match = true;
+                    for (int j = i - p.length() + 1; j &amp;lt;= i; j++) {
+                        if (p.indexOf(s.charAt(j)) &amp;lt; 0) {
+                            match = false;
+                            break;
+                        }
+                    }
+                    if (match) result.add(i - p.length() + 1);
+                }
+                sSum -= s.charAt(i - p.length() + 1);
+            }
+        }
+        return result;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2two-pointers&#34;&gt;2.Two Pointers&lt;/h4&gt;
+&lt;p&gt;利用一个数组保存p中所有字符出现的次数。用两个指针划分出一个长度为p的窗口，另外用一个变量记录窗口中匹配到的字符数量，通过窗口不断向后滑动，最终实现一次遍历得到结果，时间复杂度O(n)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public List&amp;lt;Integer&amp;gt; findAnagrams(String s, String p) {
+        List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+        if (p.length() &amp;gt; s.length()) return result;
+        
+        int mark[] = new int[26];
+        for (char c : p.toCharArray()) mark[c - &#39;a&#39;]++;
+        
+        int start = 0, end = 0, count = 0;
+        while (end &amp;lt; s.length()) {
+            if (--mark[s.charAt(end++) - &#39;a&#39;] &amp;gt;= 0) count++;
+            if (count == p.length()) result.add(start);
+            if (end - start == p.length() &amp;amp;&amp;amp; ++mark[s.charAt(start++) - &#39;a&#39;] &amp;gt; 0) count--;
+        }
+        return result;  
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+">438. Find All Anagrams in a String</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/208-implement-trie-prefix-tree/"" data-c="
+          &lt;p&gt;Implement a trie with insert, search, and startsWith methods.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Trie trie = new Trie();
+
+trie.insert(&amp;quot;apple&amp;quot;);
+trie.search(&amp;quot;apple&amp;quot;);   // returns true
+trie.search(&amp;quot;app&amp;quot;);     // returns false
+trie.startsWith(&amp;quot;app&amp;quot;); // returns true
+trie.insert(&amp;quot;app&amp;quot;);   
+trie.search(&amp;quot;app&amp;quot;);     // returns true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;You may assume that all inputs are consist of lowercase letters a-z.&lt;br&gt;
+All inputs are guaranteed to be non-empty strings.&lt;/p&gt;
+&lt;p&gt;实现一个trie树&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Trie {
+
+
+    class Node {
+        Node[] next = new Node[27];
+    }
+
+    Node endNode = new Node();
+    Node root = new Node();
+
+    /** Initialize your data structure here. */
+    public Trie() {
+        
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        Node curNode = root;
+        for (char c : word.toCharArray()) {
+            if (curNode.next[c - &#39;a&#39;] == null) {
+                curNode.next[c - &#39;a&#39;] = new Node();
+            }
+            curNode = curNode.next[c - &#39;a&#39;];
+        }
+        curNode.next[26] = endNode;
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        return search(word, true);
+    }
+
+    public boolean search(String word, boolean mustEnd) {
+        Node curNode = root;
+        for (char c : word.toCharArray()) {
+            if (curNode.next[c - &#39;a&#39;] == null) return false;
+            curNode = curNode.next[c - &#39;a&#39;];
+        }
+        return mustEnd ? curNode.next[26] != null : true;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        return search(prefix, false);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+">208. Implement Trie (Prefix Tree)</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/494-target-sum/"" data-c="
+          &lt;p&gt;You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.&lt;/p&gt;
+&lt;p&gt;Find out how many ways to assign symbols to make sum of integers equal to target S.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: nums is [1, 1, 1, 1, 1], S is 3. 
+Output: 5
+Explanation: 
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+
+There are 5 ways to assign symbols to make the sum of nums be target 3.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br&gt;
+The length of the given array is positive and will not exceed 20.&lt;br&gt;
+The sum of elements in the given array will not exceed 1000.&lt;br&gt;
+Your output answer is guaranteed to be fitted in a 32-bit integer.&lt;/p&gt;
+&lt;h4 id=&#34;1递归&#34;&gt;1.递归&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
+    int count = 0;
+    public int findTargetSumWays(int[] nums, int S) {
+        calculate(nums, 0, 0, S);
+        return count;
+    }
+    public void calculate(int[] nums, int i, int sum, int S) {
+        if (i == nums.length) {
+            if (sum == S)
+                count++;
+        } else {
+            calculate(nums, i + 1, sum + nums[i], S);
+            calculate(nums, i + 1, sum - nums[i], S);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度：O(2^n)&lt;/p&gt;
+&lt;h4 id=&#34;2dp&#34;&gt;2.DP&lt;/h4&gt;
+&lt;p&gt;题目中明确指出所有数字之合不大于1000，因此可以用一个长度为2001的数组(-1000~1000)来保存当前的加减结果，即：index为值，value为次数，最后返回值为S的次数即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        if (S &amp;gt; 1000 || S &amp;lt; -1000) return 0;
+        Integer tmp[] = new Integer[2001];
+        tmp[nums[0] + 1000] = 1;
+        tmp[1000 - nums[0]] = nums[0] == 0 ? 2 : 1;
+        for (int i = 1; i &amp;lt; nums.length; i++) {
+            Integer newTmp[] = new Integer[2001];
+            for (int j = 0; j &amp;lt; 2001; j++) {
+                if (tmp[j] != null) {
+                    newTmp[j + nums[i]] = newTmp[j + nums[i]] == null ? tmp[j] : newTmp[j + nums[i]] + tmp[j];
+                    newTmp[j - nums[i]] = newTmp[j - nums[i]] == null ? tmp[j] : newTmp[j - nums[i]] + tmp[j];
+                }
+            }
+            tmp = newTmp;
+        }
+        return tmp[S + 1000] == null ? 0 : tmp[S + 1000];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度：O(n*l)&lt;br&gt;
+空间复杂度: O(n)&lt;/p&gt;
+">494. Target Sum</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/406-queue-reconstruction-by-height/"" data-c="
+          &lt;p&gt;Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br&gt;
+The number of people is less than 1,100.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input:
+[[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+
+Output:
+[[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;数据按照h由大到小插入时,k正好是其插入的下标值：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;插入7：
+[7, 0], [7, 1]
+插入6
+[7, 0], [6, 1], [7, 1]
+.......
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator&amp;lt;int[]&amp;gt;(){
+            public int compare(int[] a, int[] b) {
+                if (a[0] == b[0]) return a[1] - b[1];
+                return b[0] - a[0];
+            }
+        });
+        List&amp;lt;int[]&amp;gt; tmp = new ArrayList(people.length);
+        for (int[] p : people) {
+            tmp.add(p[1], p);
+        }
+        return tmp.toArray(new int[][]{});
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;也可以不使用额外空间，排序好的数组向前移动&lt;code&gt;i - people[i][1]&lt;/code&gt;位就是其真实位置&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator&amp;lt;int[]&amp;gt;(){
+            public int compare(int[] a, int[] b) {
+                if (a[0] == b[0]) return a[1] - b[1];
+                return b[0] - a[0];
+            }
+        });
+
+        for (int i = 0; i &amp;lt; people.length; i++) {
+            int[] cur = people[i];
+            for (int j = i; j &amp;gt; cur[1] ; j--) {
+                int tmp[] = people[j];
+                people[j] = people[j - 1];
+                people[j - 1] = tmp;
+            }
+        }
+        return people;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+">406. Queue Reconstruction by Height</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/215-kth-largest-element-in-an-array/"" data-c="
+          &lt;p&gt;Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: [3,2,1,5,6,4] and k = 2
+Output: 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: [3,2,3,1,2,4,5,5,6] and k = 4
+Output: 4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br&gt;
+You may assume k is always valid, 1 ≤ k ≤ array&#39;s length.&lt;/p&gt;
+&lt;h4 id=&#34;1quicksort&#34;&gt;1.QuickSort&lt;/h4&gt;
+&lt;p&gt;最容易想到的方案就是排序后取对应位数，但是这种方式时间复杂度为O(nlogn)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        Arrays.sort(nums);
+        return nums[nums.length - k];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2quickselect&#34;&gt;2.QuickSelect&lt;/h4&gt;
+&lt;p&gt;可以借助快排的思想，当&lt;code&gt;数组长度 - k = pivot右边的值个数&lt;/code&gt;时，可以认为pivot就是要找的数。这种方式平均时间复杂度为&lt;code&gt;n + n/2 + n/4 + ... = 2n&lt;/code&gt;即O(n)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+
+    static Random random = new Random(); 
+
+    public int findKthLargest(int[] nums, int k) {
+        return findKthLargest(nums, k, 0, nums.length);
+    }
+
+    public int findKthLargest(int[] nums, int k, int start, int end) {
+        int pivot = random.nextInt(end - start) + start;
+        int firstGePivot = start + 1;
+        int pivotVal = nums[pivot];
+        swap(nums, start, pivot);
+        for (int i = start + 1; i &amp;lt; end; i++) {
+            if (nums[i] &amp;lt; pivotVal) {
+                swap(nums, i, firstGePivot++);
+            }
+        }
+        swap(nums, start, firstGePivot - 1);
+
+        int target = nums.length - k;
+        if (firstGePivot - 1 == target) {
+            return pivotVal;
+        } else if (firstGePivot - 1 &amp;gt; target) {
+            return findKthLargest(nums, k, start, firstGePivot - 1);
+        } else {
+            return findKthLargest(nums, k, firstGePivot, end);
+        }
+    }
+
+    public void swap(int nums[], int a, int b) {
+        int tmp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = tmp;
+    }
+
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+">215. Kth Largest Element in an Array</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/cslmap-he-ccsmap/"" data-c="
+          &lt;h3 id=&#34;1-跳表&#34;&gt;1. 跳表&lt;/h3&gt;
+&lt;h4 id=&#34;11-跳表基本思路&#34;&gt;1.1 跳表基本思路&lt;/h4&gt;
+&lt;p&gt;对于有序数据的存储，常见的数据结构有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数组：空间复杂度O(n)，定位插入/删除时间复杂度O(n)，查找时间复杂度O(logn)&lt;/li&gt;
+&lt;li&gt;链表：空间复杂度O(n)，定位插入/删除时间复杂度O(1)，查找时间复杂度O(n)&lt;/li&gt;
+&lt;li&gt;二叉树：空间复杂度O(n)，定位插入/删除时间复杂度O(logn)，查找时间复杂度Olog(n)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由上可以看出跳表在定位插入时效率很高，但在查找时效率较低。为了提升其查找效率可以为链表加上多层索引，形成一种新的数据结构&lt;strong&gt;跳表&lt;/strong&gt;，跳表在查找时可以通过索引跳过部分节点，提高查找效率。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://olegpt.top/post-images/1603974167497.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+如果每隔一个节点向上层生成一个索引，最终会生成logn层高的索引，查找过程每次都能剔除一半节点，相对单纯的链表即有快速插入的能力，又可以明显提升查询速度。&lt;/p&gt;
+&lt;h4 id=&#34;12-跳表的插入&#34;&gt;1.2 跳表的插入&lt;/h4&gt;
+&lt;p&gt;但是如果在上述跳表基础上进行插入操作时可能会破坏&lt;code&gt;每隔一个节点向上层生成一个索引&lt;/code&gt;的结构，需要重新遍历生成索引(O(n))，这显然是不合理的。&lt;/p&gt;
+&lt;p&gt;为了解决索引的生成问题跳表在插入时并不关心已有索引结构，而是通过随机数来决定新节点的索引高度：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;int rnd = ThreadLocalRandom.nextSecondarySeed();
+int level = 1, max;
+while (((rnd &amp;gt;&amp;gt;&amp;gt;= 1) &amp;amp; 1) != 0)
+    ++level;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;13-空间复杂度&#34;&gt;1.3 空间复杂度&lt;/h4&gt;
+&lt;p&gt;假设生成索引的概率为p，则：&lt;/p&gt;
+&lt;p&gt;节点层数为1概率：1-p&lt;/p&gt;
+&lt;p&gt;节点层数为2概率：(1-p) * p&lt;/p&gt;
+&lt;p&gt;节点层数为3概率：(1-p) * p^2&lt;/p&gt;
+&lt;p&gt;....&lt;/p&gt;
+&lt;p&gt;跳表中节点平均高度为&lt;/p&gt;
+&lt;p&gt;(1-p) + 2p(1-p) + 3p^2(1-p) + 4p^3(1-p) + ... + np^(n-1)(1-p)           n-&amp;gt;正无穷&lt;/p&gt;
+&lt;p&gt;=(1-p) * 1 / (1-p)^2&lt;/p&gt;
+&lt;p&gt;= 1 / (1 - p)&lt;/p&gt;
+&lt;p&gt;这也决定了跳表的空间复杂度为O(n)。&lt;/p&gt;
+&lt;h4 id=&#34;14-时间复杂度&#34;&gt;1.4 时间复杂度&lt;/h4&gt;
+&lt;p&gt;一个存储n个节点，m个节点创建一个上层索引的跳表中：&lt;/p&gt;
+&lt;p&gt;第1层节点数量L1 = n&lt;/p&gt;
+&lt;p&gt;第2层节点数量L2 = n  / m^2&lt;/p&gt;
+&lt;p&gt;第3层节点数量L3 = n / m^3&lt;/p&gt;
+&lt;p&gt;...&lt;/p&gt;
+&lt;p&gt;则最高层级Lmax = n / m^max = m&lt;/p&gt;
+&lt;p&gt;即 max = logn - 1&lt;/p&gt;
+&lt;p&gt;又因为在每一层的搜索中，搜索次数都小于等于m，所以最大搜索次数为m(logn - 1)，即最终的时间复杂度为O(logn)&lt;/p&gt;
+&lt;p&gt;关于跳表部分的更多参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/upload/2020/3/skiplist-22d1f1f338884882a0181cb6c9df3b4b.pdf&#34;&gt;Skip Lists: A Probabilistic Alternative to Balanced Trees&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/upload/2020/3/2001-caslists-e15500623d074c4caba7db2c477d5a43.pdf&#34;&gt;A Pragmatic Implementation of Non-Blocking Linked-Lists&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;https://juejin.im/post/57fa935b0e3dd90057c50fbc#heading-5&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.yangxf.top/13/&#34;&gt;https://www.yangxf.top/13/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2concurrentskiplistmap&#34;&gt;2.ConcurrentSkipListMap&lt;/h3&gt;
+&lt;p&gt;ConcurrentSkipListMap就是基于上述跳表的思想实现的一个线程安全的有序Map结构。为了实现这一目标，需要对链表的一系列操作进行线程安全性的保证。&lt;/p&gt;
+&lt;h4 id=&#34;21-链表的并发插入与删除&#34;&gt;2.1 链表的并发插入与删除&lt;/h4&gt;
+&lt;p&gt;对于链表的并发插入，直接使用CAS实现是没有问题的，因为在同一个区间（下图2-15）进行插入操作时都会受到首节点（2）的限制，只有成功将前驱节点指针指向新插入节点的线程才算完成插入操作。&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;/upload/2020/3/%E9%93%BE%E8%A1%A8%E5%B9%B6%E5%8F%91%E6%8F%92%E5%85%A5-5ed0b6ce7f2a465bab9ba307a5deb538.png&#34; alt=&#34;链表并发插入.png&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;但是链表的并发删除，使用CAS则会有问题，删除操作的区间存在重叠情况，仅仅依赖与前驱节点的CAS操作可能会破坏链表的结构。&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;2&#34;&gt;&lt;img src=&#34;/upload/2020/3/%E9%93%BE%E8%A1%A8%E5%B9%B6%E5%8F%91%E5%88%A0%E9%99%A4%E5%BC%82%E5%B8%B8-e4262ef9fc3f437b954bad141ac401df.png&#34; alt=&#34;链表并发删除异常.png&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;同样的，并发的CAS插入和删除也会有类似问题，问题的原因在于：链表在并发插入时只需要锁定一个区间，而对于删除操作需要锁定两个区间（如下图）。&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;3&#34;&gt;&lt;img src=&#34;/upload/2020/3/%E9%93%BE%E8%A1%A8%E5%B9%B6%E5%8F%91%E6%8F%92%E5%85%A5%E5%92%8C%E5%88%A0%E9%99%A4-d51419973c0844f79b8fc7cf48b2b36b.png&#34; alt=&#34;链表并发插入和删除.png&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;为了解决上述问题，在保留原有的插入逻辑的基础上，对节点的删除方式进行了调整：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在节点删除时并不对其进行物理删除，只是将要删除的节点value设置为空。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;后续在对链表进行遍历时，如果第一次发现value为空的节点，在该节点后面插入删除标记，其他写入线程遍历到该标记后会不断尝试通过对左区间的原子操作对该节点进行物理删除，即标记插入的那一刻就保证右侧区间被锁定直到删除完成。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;4&#34;&gt;&lt;img src=&#34;/upload/2020/3/%E9%93%BE%E8%A1%A8%E5%B9%B6%E5%8F%91%E5%88%A0%E9%99%A4-23a0043626ef494f9c1ff1c8cbc4f9ce.png&#34; alt=&#34;链表并发删除.png&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;h4 id=&#34;22-跳表的索引插入与删除&#34;&gt;2.2 跳表的索引插入与删除&lt;/h4&gt;
+&lt;p&gt;CSLMap中的索引对象如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;static class Index&amp;lt;K,V&amp;gt; {
+    final Node&amp;lt;K,V&amp;gt; node;
+    final Index&amp;lt;K,V&amp;gt; down;
+    volatile Index&amp;lt;K,V&amp;gt; right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在不考虑并发操作时，对于索引的插入可以通过：将查找节点时经过的路径进行存储，实现快速插入索引的目的，但对于并发操作时索引结构随时可能发生变化，CSLMap采用了对每一层从前驱索引开始进行遍历的方式进行插入，插入的方式和2.1中链表插入方式一致。&lt;/p&gt;
+&lt;p&gt;对于索引的删除则是在查找索引过程中实现的，当查找索引时发现node为null的索引时直接使用CAS替换来删除该索引，并没有使用2.1中对节点删除的方式，这样可能会导致索引删除失败（会在后续的查找中被修正）或者新增失败，猜测应该是索引结构出现小范围的缺失并不会产生太大影响。&lt;/p&gt;
+&lt;h3 id=&#34;3-ccsmap&#34;&gt;3. CCSMap&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.google.com/document/d/16VIY7o-18sM-pIlIYkbTuhKPmwfnqabCt_nlOARAzdg/edit#&#34;&gt;A Faster, GC-friendly, Less memory Concurrent Map for MemStore &lt;/a&gt;&lt;/p&gt;
+">CSLMap和CCSMap</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/spark-shuffle-manager-jie-xi/"" data-c="
+          &lt;p&gt;Shuffle是下一个Stage向上一个Stage获取数据的过程，其中涉及到序列化、磁盘IO、网络IO等相对较慢的操作，所以减少和优化Shuffle过程有利于程序性能的提升。&lt;/p&gt;
+&lt;p&gt;MapReduce中的shuffle：&lt;br&gt;
+&lt;img src=&#34;https://olegpt.top/post-images/1603974363449.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1-spark-shuffle过程&#34;&gt;1. Spark Shuffle过程&lt;/h2&gt;
+&lt;p&gt;在Spark中Shuffle和MR中的类似，也分为&lt;code&gt;Shuffle Read&lt;/code&gt;和&lt;code&gt;Shuffle Write&lt;/code&gt;，而且shuffle write也是将结果写入到磁盘中。&lt;/p&gt;
+&lt;h2 id=&#34;2-shufflemanager&#34;&gt;2. ShuffleManager&lt;/h2&gt;
+&lt;p&gt;Spark中对于Shuffle的管理由&lt;code&gt;ShuffleManager&lt;/code&gt;完成，ShuffleManager也从开始的HashShuffleManager演变为现在常用的&lt;code&gt;SortShuffleManager&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;21-hashshufflemanager&#34;&gt;2.1 HashShuffleManager&lt;/h3&gt;
+&lt;p&gt;上游Stage会根据下游Stage的Task个数对数据进行hash分区后通过shuffle write写入对应的分区文件中，即：每个上游Task会针对每一个下游分区生成一个文件（如果存在该分区数据）。&lt;/p&gt;
+&lt;p&gt;这种方式可能会产生大量文件，所以HashShuffleManager有一个优化参数&lt;code&gt;spark.shuffle.consolidateFiles=true&lt;/code&gt;，来缓解这一问题，原理很容易理解：shuffle write在写入文件时有buffer作为缓冲，此参数可以使同一Executor同一CPU core执行的Task复用此buffer，实现数据追加到老文件，避免创建新文件。&lt;/p&gt;
+&lt;p&gt;但是如果ReduceTask数量很多时还是会有很多文件产生，大量的文件会导致大量的句柄对象占用资源。&lt;/p&gt;
+&lt;h3 id=&#34;22-sortshufflemanager&#34;&gt;2.2 SortShuffleManager&lt;/h3&gt;
+&lt;p&gt;SortShuffleManager的shuffle write是在内存中维护了一个数据结构（map或数组），当读入数据到达一定数量后按key进行排序然后写入临时文件和索引（起始值），当Task完成时将临时文件归并合并成一个文件，所以最终的文件数为&lt;strong&gt;Map Task的个数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;bypass运行&lt;/strong&gt;：当shuffle map task数量小于spark.shuffle.sort.bypassMergeThreshold参数的值或使用非聚合类的shuffle算子（比如reduceByKey）会触发。此过程和HashShuffleManager一致，但是会在最后将多个分区文件合并。&lt;/p&gt;
+&lt;p&gt;SortShuffleManager减少了文件个数，但是需要对数据进行排序会降低性能。&lt;/p&gt;
+&lt;h3 id=&#34;23-tungsten-sort-based-shuffle&#34;&gt;2.3 Tungsten-Sort Based Shuffle&lt;/h3&gt;
+&lt;p&gt;为了进一步优化SortShuffleManager，Spark 1.6引入了Tungsten-Sort Based Shuffle，通过JAVA中的Unsafe API对序列化后的二进制数据&lt;strong&gt;指针排序&lt;/strong&gt;，减少了GC和内存占用，提升了排序性能，但是此排序不能有aggregate操作且分区数小于2^24 - 1。&lt;/p&gt;
+">Spark Shuffle Manager解析</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/sparksql-join-de-shi-xian/"" data-c="
+          &lt;p&gt;SparkSQL对于join的实现有3种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hash Join
+&lt;ul&gt;
+&lt;li&gt;Shuffle Hash Join&lt;/li&gt;
+&lt;li&gt;Broadcast Hash Join（Map-Side Join）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Sort Merge Join&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面详细介绍这3种join的实现思路。&lt;/p&gt;
+&lt;h2 id=&#34;1-hash-join&#34;&gt;1. Hash Join&lt;/h2&gt;
+&lt;p&gt;对两张表join的的过程是对两张表种符合条件的Row进行筛选，最终合并成结果的过程，这个过程使用Hash Join来实现有如下3步：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;确定&lt;code&gt;BuildTable&lt;/code&gt;和&lt;code&gt;ProbeTable&lt;/code&gt;：通常小表作为BuildTable，大表作为ProbeTable&lt;/li&gt;
+&lt;li&gt;将BuidleTable表中的数据写入HashTable中&lt;/li&gt;
+&lt;li&gt;使用ProbeTable中的记录去HashTable中匹配，相同join_key的生成一条记录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;11-broadcast-hash-join&#34;&gt;1.1 Broadcast Hash Join&lt;/h3&gt;
+&lt;p&gt;当BuildTable非常小时可以将BuildTable直接广播到ProbeTable所在的各个节点，避免了Shuffle的发生，效率也更高，但如果BuildTable很大时就需要ShuffleHashJoin了。&lt;/p&gt;
+&lt;p&gt;SparkSQL对于小于10M的表默认使用BroadcastHashJoin，可通过&lt;code&gt;spark.sql.autoBroadcastJoinThreshold&lt;/code&gt;参数调整&lt;/p&gt;
+&lt;h3 id=&#34;12-shuffle-hash-join&#34;&gt;1.2 Shuffle Hash Join&lt;/h3&gt;
+&lt;p&gt;当HashTable较大时，广播所带来的资源消耗高于带来的收益，此时只能通过Shuffule将两表的数据按join_key分区后再生成HashTable进行匹配。&lt;/p&gt;
+&lt;h2 id=&#34;2-sort-merge-join&#34;&gt;2. Sort Merge Join&lt;/h2&gt;
+&lt;p&gt;Hash Join有一个缺陷就是如果BuildTable过大，无法完全存储在内存，此时就需要不断的从磁盘加载HashTable的各个部分，导致性能很低，所以为了优化两张大表的join引入了SortMergeJoin。&lt;br&gt;
+SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然后按照类似堆排序的过程进行匹配，虽然排序消耗了资源但匹配过程却只需要读取一次两表的数据。&lt;/p&gt;
+&lt;!-- more --&gt;
+">SparkSQL join的实现</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/560-subarray-sum-equals-k/"" data-c="
+          &lt;p&gt;Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;br&gt;
+Input:nums = [1,1,1], k = 2&lt;br&gt;
+Output: 2&lt;br&gt;
+&lt;strong&gt;Note:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The length of the array is in range [1, 20,000].&lt;/li&gt;
+&lt;li&gt;The range of numbers in the array is [-1000, 1000] and the range of the integer k is [-1e7, 1e7].&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;找出一个数组中连续元素之和为k的组合个数。&lt;/p&gt;
+&lt;h4 id=&#34;1-brute-force-剪枝&#34;&gt;1. Brute Force 剪枝&lt;/h4&gt;
+&lt;p&gt;求出每一个元素与后面元素之和的最大最小值，当一个元素与&lt;code&gt;后一个元素的最小值之和大于k&lt;/code&gt;或者&lt;code&gt;与后一个元素的最大值之和小于k&lt;/code&gt;就可以断定后面不存在满足条件的集合，可以直接跳过。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int subarraySum(int[] nums, int k) {
+        if (nums == null) return 0;
+        int r = 0;
+        int[] min = new int[nums.length];
+        int[] max = new int[nums.length];
+        min[nums.length - 1] = nums[nums.length - 1];
+        max[nums.length - 1] = nums[nums.length - 1];
+        for (int i = nums.length - 2; i &amp;gt;= 0; i--) {
+            min[i] = Math.min(min[i + 1] + nums[i], nums[i]);
+            max[i] = Math.max(max[i + 1] + nums[i], nums[i]);
+        }
+        for (int i = 0; i &amp;lt; nums.length ; i++) {
+            int cur = nums[i];
+            if (cur == k) r++;
+            for (int j = i + 1; j &amp;lt; nums.length; j++) {
+                if (cur + nums[j] == k) r++;
+                if (cur + min[j] &amp;gt; k || cur + max[j] &amp;lt; k) break;
+                cur += nums[j];
+            }
+        }
+        return r;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度为O(m * n)，空间复杂度为O(n)&lt;/p&gt;
+&lt;h4 id=&#34;2-dp&#34;&gt;2. DP&lt;/h4&gt;
+&lt;p&gt;将每次累加的结果保存起来，而其中任意一段的累加和可以通过两段累加和相减得到&lt;br&gt;
+&lt;img src=&#34;https://olegpt.top/post-images/1603974460066.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;利用上述思想可以：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;遍历整个数组，把累加和计算一遍并保存起来&lt;/li&gt;
+&lt;li&gt;累加和减去我们期望的k值，如果结果在之前的累加结果中存在则可判定为符合条件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://olegpt.top/post-images/1603974490971.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0, sum = 0;
+        Map&amp;lt;Integer, Integer&amp;gt; map = new HashMap&amp;lt;&amp;gt;(nums.length);
+        map.put(0, 1);
+        for (int i = 0; i &amp;lt; nums.length; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum - k)) count += map.get(sum - k);
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;时间复杂度为O(n)，空间复杂度为O(n)&lt;/p&gt;
+">560. Subarray Sum Equals K</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/java-zhong-de-equals-he-you-shi-me-bu-tong/"" data-c="
+          &lt;p&gt;今天看到两道题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;equals&lt;/code&gt;和&lt;code&gt;==&lt;/code&gt;有什么区别？&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Integer a = 1;
+Integer b = 1;
+Integer a1 = 10000;
+Integer b1 = 10000;
+
+System.out.println(a == b); // true
+System.out.println(a1 == b1); //false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;突然感觉对这一块的基础知识较为模糊，所以专门整理下这里的知识点，对JVM的操作数栈和字节码指令信息比较熟悉更容易理解下面的内容。&lt;/p&gt;
+&lt;h3 id=&#34;1&#34;&gt;1. ==&lt;/h3&gt;
+&lt;p&gt;网上的资料的解释：&lt;code&gt;==&lt;/code&gt;针对基础数据类型是直接比较值，而针对引用数据类型则是比较引用地址是否相同，题目2中用到的都是引用数据类型，为什么还会产生这样的区别呢？&lt;/p&gt;
+&lt;p&gt;JAVA代码编译后会形成字节码指令，所以可以先通过&lt;code&gt;javap -v&lt;/code&gt;来看一看能不能从字节码中看出问题所在：&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://olegpt.top/post-images/1603973766192.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;整个程序的字节码指令过程如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加载操作数到操作数栈&lt;/li&gt;
+&lt;li&gt;通过&lt;code&gt;Integer.valueOf()&lt;/code&gt;方法自动装箱操作&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;if_acmpne&lt;/code&gt;比较栈顶两个对象的引用是否相同&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以看到，两段程序除了加载操作数到操作数栈所使用的指令不同（&lt;em&gt;JVM对于取值**-1&lt;sub&gt;5**采用`iconst`指令，取值**-128&lt;/sub&gt;127&lt;strong&gt;采用&lt;code&gt;bipush&lt;/code&gt;指令，取值&lt;/strong&gt;-32768&lt;sub&gt;32767**采用`sipush`指令，取值**-2147483648&lt;/sub&gt;2147483647**采用 &lt;code&gt;ldc&lt;/code&gt; 指令&lt;/em&gt;）外，其他的操作完全相同，所以唯一能够产生不同的地方就在于自动装箱操作了。&lt;/p&gt;
+&lt;p&gt;果然在&lt;code&gt;Integer&lt;/code&gt;的源码中发现了原因：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public static Integer valueOf(int i) {
+    if (i &amp;gt;= IntegerCache.low &amp;amp;&amp;amp; i &amp;lt;= IntegerCache.high)
+    return IntegerCache.cache[i + (-IntegerCache.low)];
+    return new Integer(i);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;该方法会对-128~127的数据进行缓存，对于这一区间的数据返回的都是同一个对象，才导致了上面的不同。&lt;/p&gt;
+&lt;p&gt;扩展一下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;int a = 10000;
+int b = 10000;
+Integer c = 10000;
+
+System.out.println(a == b);
+System.out.println(a == c);
+
+Map&amp;lt;Integer, Integer&amp;gt; map = new HashMap&amp;lt;&amp;gt;();
+map.put(new Integer(10000), 1);
+System.out.println(map.containsKey(new Integer(10000)));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;还是通过&lt;code&gt;javap -v&lt;/code&gt;来看一看字节码&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;2&#34;&gt;&lt;img src=&#34;https://olegpt.top/post-images/1603973804300.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;可以看到对于&lt;code&gt;int&lt;/code&gt;直接的比较使用了&lt;code&gt;if_icmpe&lt;/code&gt;指令对操作数直接进行比较，而对于&lt;code&gt;int&lt;/code&gt;和&lt;code&gt;Integer&lt;/code&gt;直接的比较则是通过对Integer调用&lt;code&gt;Integer.intValue()&lt;/code&gt;自动拆箱后再调用&lt;code&gt;if_icmpe&lt;/code&gt;指令，所以前两个结果都应该是true。&lt;br&gt;
+对于最后一个结果也是true，因为HashMap的&lt;code&gt;containsKey()&lt;/code&gt;是通过对象的hashCode判断的，而Integer对象的hashCode就是value本身。&lt;/p&gt;
+&lt;h3 id=&#34;2-equals&#34;&gt;2. equals()&lt;/h3&gt;
+&lt;p&gt;上面提到&lt;code&gt;==&lt;/code&gt;仅可用于基本数据类型的值比较，如果想要对引用类型的值进行比较怎么办呢，可以使用&lt;code&gt;equals()&lt;/code&gt;，但是需要注意所使用的类型&lt;strong&gt;一定要覆写了Object类中的equals方法才能实现值比较&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;Object类中的equals方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public boolean equals(Object obj) {
+    return (this == obj);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;String中的equals方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public boolean equals(Object anObject) {
+    if (this == anObject) {
+        return true;
+    }
+    if (anObject instanceof String) {
+        String anotherString = (String)anObject;
+        int n = value.length;
+        if (n == anotherString.value.length) {
+            char v1[] = value;
+            char v2[] = anotherString.value;
+            int i = 0;
+            while (n-- != 0) {
+                if (v1[i] != v2[i])
+                    return false;
+                i++;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+&lt;/code&gt;&lt;/pre&gt;
+">Java中的equals和==有什么不同</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/136-single-number/"" data-c="
+          &lt;h3 id=&#34;136-single-number&#34;&gt;&lt;a href=&#34;https://leetcode.com/problems/single-number/&#34;&gt;136. Single Number&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Difficulty: &lt;strong&gt;Easy&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Given a &lt;strong&gt;non-empty&lt;/strong&gt; array of integers, every element appears &lt;em&gt;twice&lt;/em&gt; except for one. Find that single one.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: [2,2,1]
+Output: 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Input: [4,1,2,1,2]
+Output: 4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;1hashset&#34;&gt;1.HashSet&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int singleNumber(int[] nums) {
+        Set&amp;lt;Integer&amp;gt; exists = new HashSet&amp;lt;&amp;gt;();
+        for (int i : nums) {
+            if (exists.contains(i)) {
+                exists.remove(i);
+            } else {
+                exists.add(i);
+            }
+        }
+        return exists.toArray(new Integer[0])[0];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;2-xor解法&#34;&gt;2. xor解法&lt;/h3&gt;
+&lt;p&gt;任何一个数字亦或本身都为0：&lt;code&gt;1 xor 1 = 0&lt;/code&gt;，所以假设A为single one：&lt;br&gt;
+&lt;code&gt;A ^ B ^ B ^ C ^ C ^ D ^ D ^..... = A&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class Solution {
+    public int singleNumber(int[] nums) {
+        int r = 0;
+        for (int i : nums) r ^= i;
+        return r;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+">136. Single Number</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/spark-guang-bo-ji-zhi-jie-xi/"" data-c="
+          &lt;h3 id=&#34;1-使用场景&#34;&gt;1. 使用场景&lt;/h3&gt;
+&lt;p&gt;在spark开发过程中，广播变量会被分发到Executor，当Executor执行多个Task时会复用广播变量。所以广播变量最常见的使用场景有两个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;共享重资源&lt;/code&gt;：重资源的初始化十分消耗性能（例如：各类存储系统的客户端和连接池等），如果不使用广播可能造成频繁的初始化而影响性能，即使基于分区创建连接，在分区数较多的情况下也会占用大量资源。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;共享只读数据&lt;/code&gt;：多次使用的只读数据可以使用广播发送到每个节点，避免重复传输，起到性能优化的作用。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2-实现方式&#34;&gt;2. 实现方式&lt;/h3&gt;
+&lt;p&gt;广播的实现分为几个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;序列化&lt;/code&gt;：由Driver将广播变量序列化，生成chunks保存在Driver的BlockManager中。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;传输读取&lt;/code&gt;：Executor在使用广播变量时首先尝试从本地BlockManager中获取数据，如果获取失败则从Driver或其他Executor的BlockManager获取，最终在首次使用时将数据反序列化成对象。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;传输实现有两种方式：&lt;code&gt;HttpBroadcast&lt;/code&gt;所有Executor都从Driver获取广播变量、&lt;code&gt;TorrentBroadcast&lt;/code&gt;Executor之间也可以传输广播变量，避免Driver性能瓶颈。&lt;/p&gt;
+&lt;h3 id=&#34;3不可序列化对象&#34;&gt;3.不可序列化对象&lt;/h3&gt;
+&lt;p&gt;由2中描述可知，广播的变量必须是可序列化的否则会抛出&lt;code&gt;NotSerializableException&lt;/code&gt;，但是如果想广播不可序列化的对象如何实现呢？这里以Redis客户端为示例。&lt;/p&gt;
+&lt;p&gt;为了避免这个问题，只需要使用使用一层wrapper类，将不可序列化的类作为懒加载变量即可，即在Driver序列化的时候对象是可序列化的就能满足要求：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;import org.apache.spark.{SparkConf, SparkContext}
+import redis.clients.jedis.{HostAndPort, JedisCluster}
+
+//使用RedisSink来封装Redis连接池，避免直接广播JedisCluster
+class RedisSink extends Serializable {
+  //使用lazy修饰的变量，序列化时不会初始化此变量
+  lazy val cluster: JedisCluster = RedisSink.createObj()
+}
+
+object RedisSink {
+  def createObj() : JedisCluster = {
+    new JedisCluster(new HostAndPort(&amp;quot;127.0.0.1&amp;quot;, 2181))
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用广播JedisCluster：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;def main(args: Array[String]): Unit = {
+    val config = new SparkConf().setAppName(&amp;quot;TestRedisSink&amp;quot;)
+    val sc = new SparkContext(config)
+    val rdd = sc.parallelize(Array(1, 2, 3))
+    val cluster = sc.broadcast(new TestSink)
+    rdd.map(i =&amp;gt; {
+      //使用广播变量
+      cluster.value.cluster.get(i.toString)
+    }).count()
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样就可以正常在node中共享一个连接池了。&lt;br&gt;
+另外如果客户端有缓冲区还要在程序退出时关闭连接：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;val cluster = new JedisCluster(new HostAndPort(&amp;quot;127.0.0.1&amp;quot;, 2181))
+    sys.addShutdownHook {
+      cluster.close()
+    }
+    cluster
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;4-java实现&#34;&gt;4. JAVA实现&lt;/h3&gt;
+&lt;p&gt;上面提到用Scala中的懒加载变量实现不可序列化对象的广播，那如果用JAVA开发Spark程序如何实现呢？&lt;/p&gt;
+&lt;p&gt;其实也可以参考Scala的实现方式，如果一个变量被lazy修饰后：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;class TestLazy {
+  lazy val a = 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;与之对应的Java代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class TestLazy {
+  private int a;
+  
+  private volatile boolean bitmap$0;
+  
+  private int a$lzycompute() {
+    synchronized (this) {
+      if (!this.bitmap$0) {
+        this.a = 0;
+        this.bitmap$0 = true;
+      } 
+      return this.a;
+    } 
+  }
+  
+  public int a() {
+    return this.bitmap$0 ? this.a : a$lzycompute();
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到，对变量a的读取都变成了对a()的调用，&lt;strong&gt;只有首次读取a的值时才会触发a的初始化，而且类序列化的过程是会跳过值为null的字段和方法&lt;/strong&gt;，也就使得任何类型的对象都可以使用这种方式来实现可序列化。&lt;/p&gt;
+">Spark广播机制解析</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/java_unit_test/"" data-c="
+          &lt;h3 id=&#34;1-junit-基本测试类&#34;&gt;1. JUnit 基本测试类&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;class StandardTests {
+
+    @BeforeAll
+    static void initAll() {
+    }
+
+    @BeforeEach
+    void init() {
+    }
+
+    @Test
+    void succeedingTest() {
+    }
+
+    @Test
+    @Timeout(value = 100, unit = TimeUnit.MILLISECONDS)
+    void failingTest() {
+        fail(&amp;quot;a failing test&amp;quot;);
+    }
+
+    @Test
+    @Disabled(&amp;quot;for demonstration purposes&amp;quot;)
+    void skippedTest() {
+        // not executed
+    }
+
+    @Test
+    void abortedTest() {
+        assumeTrue(&amp;quot;abc&amp;quot;.contains(&amp;quot;Z&amp;quot;));
+        fail(&amp;quot;test should have been aborted&amp;quot;);
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;2mockito&#34;&gt;2.Mockito&lt;/h3&gt;
+&lt;p&gt;Mockito是一个模拟框架，可以按需求控制方法被调用时的返回值或抛出异常操作，还能够对mock对象的操作进行验证。&lt;/p&gt;
+&lt;h4 id=&#34;21-简单demo&#34;&gt;2.1 简单demo：&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;LinkedList mockedList = mock(LinkedList.class);		//模拟
+
+when(mockedList.get(0)).thenReturn(&amp;quot;first&amp;quot;);		//存根
+when(mockedList.get(1)).thenThrow(new RuntimeException());
+
+System.out.println(mockedList.get(0));
+System.out.println(mockedList.get(1));
+
+verify(mockedList).get(0);		//验证
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;22-mock如何实现的&#34;&gt;2.2 mock()如何实现的&lt;/h4&gt;
+&lt;p&gt;创建一个Mock对象：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;LinkedList mockedList = mock(LinkedList.class);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果调用&lt;code&gt;mockedList.isEmpty()&lt;/code&gt;会返回什么？&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;//创建Answer
+Object returnValueFor(Class&amp;lt;?&amp;gt; type) {
+    if (Primitives.isPrimitiveOrWrapper(type)) {
+        return Primitives.defaultValueForPrimitiveOrWrapper(type);
+        //new instances are used instead of Collections.emptyList(), etc.
+        //to avoid UnsupportedOperationException if code under test modifies returned collection
+    } else if (type == Collection.class) {
+        return new LinkedList&amp;lt;Object&amp;gt;();
+    } else if (type == Set.class) {
+        return new HashSet&amp;lt;Object&amp;gt;();
+    } else if (type == HashSet.class) {
+        return new HashSet&amp;lt;Object&amp;gt;();
+    } else if (type == SortedSet.class) {
+        return new TreeSet&amp;lt;Object&amp;gt;();
+    } else if (type == TreeSet.class) {
+        return new TreeSet&amp;lt;Object&amp;gt;();
+    } else if (type == LinkedHashSet.class) {
+        return new LinkedHashSet&amp;lt;Object&amp;gt;();
+    } else if (type == List.class) {
+        return new LinkedList&amp;lt;Object&amp;gt;();
+    } else if (type == LinkedList.class) {
+        return new LinkedList&amp;lt;Object&amp;gt;();
+    } else if (type == ArrayList.class) {
+        return new ArrayList&amp;lt;Object&amp;gt;();
+    } else if (type == Map.class) {
+        return new HashMap&amp;lt;Object, Object&amp;gt;();
+    } else if (type == HashMap.class) {
+        return new HashMap&amp;lt;Object, Object&amp;gt;();
+    } else if (type == SortedMap.class) {
+        return new TreeMap&amp;lt;Object, Object&amp;gt;();
+    } else if (type == TreeMap.class) {
+        return new TreeMap&amp;lt;Object, Object&amp;gt;();
+    } else if (type == LinkedHashMap.class) {
+        return new LinkedHashMap&amp;lt;Object, Object&amp;gt;();
+    }
+    // TODO return empty Iterable ; see issue 175
+
+    //Let&#39;s not care about the rest of collections.
+    return null;
+}
+
+//基本数据类型默认值
+static {
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Boolean.class, false);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Character.class, &#39;\u0000&#39;);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Byte.class, (byte) 0);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Short.class, (short) 0);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Integer.class, 0);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Long.class, 0L);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Float.class, 0F);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(Double.class, 0D);
+
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(boolean.class, false);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(char.class, &#39;\u0000&#39;);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(byte.class, (byte) 0);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(short.class, (short) 0);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(int.class, 0);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(long.class, 0L);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(float.class, 0F);
+    PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.put(double.class, 0D);
+}
+
+
+//创建代理对象
+public &amp;lt;T&amp;gt; T imposterise(final MethodInterceptor interceptor, Class&amp;lt;T&amp;gt; mockedType, Class&amp;lt;?&amp;gt;... ancillaryTypes) {
+    Class&amp;lt;Factory&amp;gt; proxyClass = null;
+    Object proxyInstance = null;
+    try {
+        setConstructorsAccessible(mockedType, true);
+        proxyClass = createProxyClass(mockedType, ancillaryTypes);
+        proxyInstance = createProxy(proxyClass, interceptor);
+        return mockedType.cast(proxyInstance);
+    } catch (ClassCastException cce) {
+        throw new MockitoException(join(
+            &amp;quot;ClassCastException occurred while creating the mockito proxy :&amp;quot;,
+            &amp;quot;  class to mock : &amp;quot; + describeClass(mockedType),
+            &amp;quot;  created class : &amp;quot; + describeClass(proxyClass),
+            &amp;quot;  proxy instance class : &amp;quot; + describeClass(proxyInstance),
+            &amp;quot;  instance creation by : &amp;quot; + instantiator.getClass().getSimpleName(),
+            &amp;quot;&amp;quot;,
+            &amp;quot;You might experience classloading issues, disabling the Objenesis cache *might* help (see MockitoConfiguration)&amp;quot;
+        ), cce);
+    } finally {
+        setConstructorsAccessible(mockedType, false);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;23-spy半模拟&#34;&gt;2.3 spy半模拟&lt;/h4&gt;
+&lt;p&gt;mock只能mock Class或者Interface，如果想mock一个实例或类进行部分mock则可以使用spy&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Test
+public void test1() {
+    List list = new LinkedList();
+    list.add(&amp;quot;a&amp;quot;);
+
+    List spy = spy(list);
+    doReturn(&amp;quot;b&amp;quot;).when(spy).get(2);
+
+    System.out.println(spy.get(0));
+    System.out.println(spy.get(2));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;mock和spy有什么区别？&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;static class A {
+    int function1() {
+        System.out.println(&amp;quot;this is function 1&amp;quot;);
+        return 1;
+    }
+
+    int function2() {
+        System.out.println(&amp;quot;this is function 2&amp;quot;);
+        return 2;
+    }
+}
+
+
+@Test
+public void differenceBetweenMockAndSpy() {
+    A mockA = mock(A.class);
+    A spyA = spy(A.class);
+
+    System.out.println(mockA.function1());
+    System.out.println();
+    System.out.println(spyA.function1());
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在半模拟中，未指定的stub会自动执行&lt;code&gt;callRealMethod()&lt;/code&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;24-存根方式区别&#34;&gt;2.4 存根方式区别&lt;/h4&gt;
+&lt;p&gt;Mockito有两种存根语法，&lt;code&gt;do...when...action&lt;/code&gt;、&lt;code&gt;when...then&lt;/code&gt;，两种语法在mock全模拟情况下作用相同，但是在spy半模拟情况下效果不同：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;static class A {
+    int function1() {
+        System.out.println(&amp;quot;this is function 1&amp;quot;);
+        return 1;
+    }
+
+    int function2() {
+        System.out.println(&amp;quot;this is function 2&amp;quot;);
+        return 2;
+    }
+}
+
+@Test
+public void differenceBetweenWhenThenAndDoWhen() {
+    A mockA = spy(A.class);
+
+    when(mockA.function1()).thenReturn(99);
+    doReturn(88).when(mockA).function2();
+
+    System.out.println(mockA.function1());
+    System.out.println();
+    System.out.println(mockA.function2());
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;25-与springboot结合&#34;&gt;2.5 与SpringBoot结合&lt;/h4&gt;
+&lt;p&gt;引入依赖&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;测试类&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Autowired
+private WebApplicationContext applicationContext;
+
+//实现对容器Bean的mock
+@MockBean 
+private Service1 service1;
+
+//创建mockMvc
+@Before
+public void setUp() throws Exception {
+    mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
+}
+
+@Test
+public void test1(){
+    //mock service1，如果/test1的controller调用了service1，则会返回999
+    when(service1.query(any())).thenReturn(999);
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(&amp;quot;/test1&amp;quot;)
+        .header(&amp;quot;Date&amp;quot;, dateStr)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(requestBodyJson)
+}
+&lt;/code&gt;&lt;/pre&gt;
+">Java如何写单元测试</a>
+      </div>
+      
+    </div>
+    <div class="page">
+      <div id="page_ul"></div>
+    </div>
+  </div>
+</div>
+<script>
+  !function () {
+    let searchMask = document.querySelector('#search_mask');
+    let result = document.querySelector('#result');
+    let items = document.querySelectorAll('.item');
+    let searchBox = document.querySelector('#search');
+    let statCount = document.querySelector('#stat_count');
+    let statTimes = document.querySelector('#stat_times');
+    let pageUl = document.querySelector('#page_ul');
+    let close = document.querySelector('#close');
+    
+    close.addEventListener('click', function() {
+      searchMask.style = 'display: none;'
+    })
+
+    let finds = [];
+    let contents = [];
+    let pageSize = 10;
+    items.forEach(item => {
+      let a = item.querySelector('a');
+      contents.push({
+        title: a.innerText,
+        details: a.dataset.c,
+        link: a.href
+      })
+      item.remove();
+    })
+
+    function insertStr(soure, start, count) {
+      let newStr = soure.substr(start, count);
+      return soure.slice(0, start) + '<em>' + newStr + '</em>' + soure.slice(start + count);
+    }
+
+    pageUl.addEventListener('click', function(event) {
+      let target = event.target;
+      if (target.__proto__ === HTMLSpanElement.prototype) {
+        appendResults(parseInt(target.dataset.i));
+      }
+    })
+
+    function appendResults(index) {
+      let htmlResult = '';
+      let start = index || 0;
+      let end = Math.min(start + pageSize, finds.length);
+      for (let i = start; i < end; i++) {
+        const current = finds[i];
+        let html = current.title;
+        let sum = 0;
+        let positions = current.positions;
+        positions.forEach(position => {
+          html = insertStr(html, position.start + sum, position.count);
+          sum += 9;
+        })
+        htmlResult += `<div class="item"><a class="result-title" href="${current.link}">${html}</a></div>`;
+      }
+      result.innerHTML = htmlResult;
+      pageUl.innerHTML = '';
+      let count = finds.length / pageSize;
+      let lis = '';
+      if (start !== 0) {
+        lis += `<span class="fa fa-angle-left" data-i='${start - 1}'></span>`;
+      }
+      for (let i = 0; i < count; i++) {
+        lis += `<span class='${i === start?'current':''}' data-i='${i}'>${i+1}</span>`;     
+      }
+      if (start+1 < count) {
+        lis += `<span class="fa fa-angle-right" data-i='${start+1}'></span>`;  
+      }
+      pageUl.innerHTML = lis;
+    }
+
+    function search(delay) {
+      let timer = null
+      return function () {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          let start = Date.now();
+          let segments = searchBox.value.split(' ').filter(c => c != '');
+          if (segments.length <= 0) {
+            return;
+          }
+          finds = [];
+          let htmlResult = '';
+          contents.forEach(content => {
+            let title = content.title;
+            let positions = [];
+            let find = false;
+            segments.forEach((segment) => {
+              if (content.title.includes(segment)) {
+                find = true;
+                positions.push({
+                  start: content.title.indexOf(segment),
+                  count: segment.length
+                })
+              } else if (content.details.includes(segment)) {
+                find = true;
+              }
+            });
+            if (find) {
+              finds.push({
+                title: content.title,
+                link: content.link,
+                positions
+              });
+            }
+          })
+          appendResults(0);
+          statCount.textContent = finds.length;
+          statTimes.textContent = Date.now() - start;
+        }, delay)
+      }
+    }
+    searchBox.addEventListener('input', search(200));
+  }()
+</script>
+
+<input hidden id="copy" />
+<script>
+  !function () {
+    let times = document.querySelectorAll('.publish-time');
+    for (let i = 0; i < times.length; i++) {
+      let date = times[i].dataset.t;
+      let time = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+      if (time < 60) {
+        str = time + '秒之前';
+      } else if (time < 3600) {
+        str = Math.floor(time / 60) + '分钟之前';
+      } else if (time >= 3600 && time < 86400) {
+        str = Math.floor(time / 3600) + '小时之前';
+      } else if (time >= 86400 && time < 259200) {
+        str = Math.floor(time / 86400) + '天之前';
+      } else {
+        str = times[i].textContent;
+      }
+      times[i].textContent = str;
+    }
+  }();
+</script>
+
+<script>
+  let language = '';
+  if (language !== '') {
+    let map = new Map();
+    if (language === 'en') {
+      map.set('search', 'Search');
+      map.set('category', 'Categories');
+      map.set('article', 'Articles');
+      map.set('tag', 'Tags');
+      map.set('top', 'Top');
+      map.set('publish', 'published');
+      map.set('minute', ' minutes');
+      map.set('read-more', 'Read More');
+      map.set('view', 'View');
+      map.set('words', ' words');
+      map.set('category-in', 'category in');
+      map.set('preview', 'Meta');
+      map.set('index', 'Toc');
+      map.set('no-archives', "You haven't created yet");
+      map.set('archives', " articles in total");
+      map.set('cloud-tags', " tags in total");
+      map.set('copyright', "Copyright: ");
+      map.set('author', "Author: ");
+      map.set('link', "Link: ");
+      map.set('leave-message', "Leave a message");
+      map.set('format', "Links Format");
+      map.set('site-name', "Name: ");
+      map.set('site-link', "Link: ");
+      map.set('site-desc', "Desc: ");
+      map.set('stat', " related results, taking ");
+      map.set('stat-time', " ms");
+      map.set('site-img', "Image: ");
+    }
+
+    if (map.size > 0) {
+      let lanElems = document.querySelectorAll('.language');
+      lanElems.forEach(elem => {
+        let lan = elem.dataset.lan, text = map.get(lan);
+        if (elem.__proto__ === HTMLInputElement.prototype) {
+          elem.placeholder = text
+        } else {
+          if (elem.dataset.count) {
+            text = elem.dataset.count + text;
+          }
+          elem.textContent = text;
+        }
+      })
+    }
+  }
+  //拿来主义(真香)^_^，Clipboard 实现摘自掘金 https://juejin.im/post/5aefeb6e6fb9a07aa43c20af
+  window.Clipboard = (function (window, document, navigator) {
+    var textArea,
+      copy;
+
+    // 判断是不是ios端
+    function isOS() {
+      return navigator.userAgent.match(/ipad|iphone/i);
+    }
+    //创建文本元素
+    function createTextArea(text) {
+      textArea = document.createElement('textArea');
+      textArea.value = text;
+      textArea.style.width = 0;
+      textArea.style.height = 0;
+      textArea.clientHeight = 0;
+      textArea.clientWidth = 0;
+      document.body.appendChild(textArea);
+    }
+    //选择内容
+    function selectText() {
+      var range,
+        selection;
+
+      if (isOS()) {
+        range = document.createRange();
+        range.selectNodeContents(textArea);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        textArea.setSelectionRange(0, 999999);
+      } else {
+        textArea.select();
+      }
+    }
+
+    //复制到剪贴板
+    function copyToClipboard() {
+      try {
+        document.execCommand("Copy")
+      } catch (err) {
+        alert("复制错误！请手动复制！")
+      }
+      document.body.removeChild(textArea);
+    }
+
+    copy = function (text) {
+      createTextArea(text);
+      selectText();
+      copyToClipboard();
+    };
+
+    return {
+      copy: copy
+    };
+  })(window, document, navigator);
+
+  function copyCode(e) {
+    if (e.srcElement.tagName === 'SPAN' && e.srcElement.classList.contains('copy-code')) {
+      let code = e.currentTarget.querySelector('code');
+      var text = code.innerText;
+      if (e.srcElement.textContent === '复制成功') {
+        return;
+      }
+      e.srcElement.textContent = '复制成功';
+      (function (elem) {
+        setTimeout(() => {
+          if (elem.textContent === '复制成功') {
+            elem.textContent = '复制代码'
+          }
+        }, 1000);
+      })(e.srcElement)
+      Clipboard.copy(text);
+    }
+  }
+
+  let pres = document.querySelectorAll('pre');
+  pres.forEach(pre => {
+    let code = pre.querySelector('code');
+    let copyElem = document.createElement('span');
+    copyElem.classList.add('copy-code');
+    copyElem.textContent = '复制代码';
+    pre.appendChild(copyElem);
+    pre.onclick = copyCode
+  })
+
+</script>
+<script src="/media/js/motion.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script>
+  var scroll = new SmoothScroll('a[href*="#"]', {
+    speed: 200
+  });
+</script>
+
+
+
+
+
+
+</html>
