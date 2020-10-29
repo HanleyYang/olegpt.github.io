@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>347. Top K Frequent Elements | Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1603976034557">
+<link rel="shortcut icon" href="/favicon.ico?v=1603976272388">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -596,7 +596,6 @@ Your algorithm's time complexity must be better than O(n log n), where n is the 
     }
 }
 </code></pre>
-<!-- more -->
 
             </div>
             
@@ -1164,7 +1163,6 @@ Explanation: There are three ways to climb to the top.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4 id=&#34;3斐波那契通项公式&#34;&gt;3.斐波那契通项公式&lt;/h4&gt;
 &lt;p&gt;通过公式直接算出，建议自行学习原理&lt;/p&gt;
-&lt;!-- more --&gt;
 ">70. Climbing Stairs</a>
       </div>
       
@@ -1629,7 +1627,6 @@ Your algorithm&#39;s time complexity must be better than O(n log n), where n is 
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;!-- more --&gt;
 ">347. Top K Frequent Elements</a>
       </div>
       
@@ -2106,8 +2103,7 @@ while (((rnd &amp;gt;&amp;gt;&amp;gt;= 1) &amp;amp; 1) != 0)
 &lt;p&gt;当HashTable较大时，广播所带来的资源消耗高于带来的收益，此时只能通过Shuffule将两表的数据按join_key分区后再生成HashTable进行匹配。&lt;/p&gt;
 &lt;h2 id=&#34;2-sort-merge-join&#34;&gt;2. Sort Merge Join&lt;/h2&gt;
 &lt;p&gt;Hash Join有一个缺陷就是如果BuildTable过大，无法完全存储在内存，此时就需要不断的从磁盘加载HashTable的各个部分，导致性能很低，所以为了优化两张大表的join引入了SortMergeJoin。&lt;br&gt;
-SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然后按照类似堆排序的过程进行匹配，虽然排序消耗了资源但匹配过程却只需要读取一次两表的数据。&lt;/p&gt;
-&lt;!-- more --&gt;
+SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然后按照类似堆排序的过程进行匹配，虽然排序消耗了资源但匹配过程却只需要读取一次两表的数据。\&lt;/p&gt;
 ">SparkSQL join的实现</a>
       </div>
       

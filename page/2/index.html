@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1603976034557">
+<link rel="shortcut icon" href="/favicon.ico?v=1603976272388">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -270,12 +270,22 @@
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><p>You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.</p>
 <p>Find out how many ways to assign symbols to make sum of integers equal to target S.</p>
 <p><strong>Example 1:</strong></p>
 <pre><code>Input: nums is [1, 1, 1, 1, 1], S is 3. 
 Output: 5
+Explanation: 
+
 
                 
                   <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
@@ -366,12 +376,22 @@ Output: 5
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><p>Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue.</p>
 <p><strong>Note:</strong><br>
 The number of people is less than 1,100.</p>
 <p><strong>Example</strong></p>
 <pre><code>Input:
+[[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+
 
                 
                   <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
@@ -462,12 +482,22 @@ The number of people is less than 1,100.</p>
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><p>Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.</p>
 <p><strong>Example 1:</strong></p>
 <pre><code>Input: [3,2,1,5,6,4] and k = 2
 Output: 5
 </code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: [3,2,3,1,2,4,5,5,6] and k = 4
 
                 
                   <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
@@ -558,12 +588,22 @@ Output: 5
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><h3 id="1-跳表">1. 跳表</h3>
 <h4 id="11-跳表基本思路">1.1 跳表基本思路</h4>
 <p>对于有序数据的存储，常见的数据结构有：</p>
 <ul>
 <li>数组：空间复杂度O(n)，定位插入/删除时间复杂度O(n)，查找时间复杂度O(logn)</li>
+<li>链表：空间复杂度O(n)，定位插入/删除时间复杂度O(1)，查找时间复杂度O(n)</li>
+<li>二叉树：空间复杂度O(n)，定位插入/删除时间复杂度O(logn)，查找时间复杂度Olog(n)</li>
 
                 
               <p>
@@ -651,12 +691,22 @@ Output: 5
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><p>Shuffle是下一个Stage向上一个Stage获取数据的过程，其中涉及到序列化、磁盘IO、网络IO等相对较慢的操作，所以减少和优化Shuffle过程有利于程序性能的提升。</p>
 <p>MapReduce中的shuffle：<br>
 <img src="https://olegpt.top/post-images/1603974363449.png" alt="" loading="lazy"></p>
 <h2 id="1-spark-shuffle过程">1. Spark Shuffle过程</h2>
 <p>在Spark中Shuffle和MR中的类似，也分为<code>Shuffle Read</code>和<code>Shuffle Write</code>，而且shuffle write也是将结果写入到磁盘中。</p>
+<h2 id="2-shufflemanager">2. ShuffleManager</h2>
+<p>Spark中对于Shuffle的管理由<code>ShuffleManager</code>完成，ShuffleManager也从开始的HashShuffleManager演变为现在常用的<code>SortShuffleManager</code>。</p>
 
                 
                   <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
@@ -724,35 +774,57 @@ Output: 5
         
         
           
-            <p>SparkSQL对于join的实现有3种：</p>
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><p>SparkSQL对于join的实现有3种：</p>
 <ul>
 <li>Hash Join
 <ul>
 <li>Shuffle Hash Join</li>
 <li>Broadcast Hash Join（Map-Side Join）</li>
 </ul>
-</li>
-<li>Sort Merge Join</li>
-</ul>
-<p>下面详细介绍这3种join的实现思路。</p>
-<h2 id="1-hash-join">1. Hash Join</h2>
-<p>对两张表join的的过程是对两张表种符合条件的Row进行筛选，最终合并成结果的过程，这个过程使用Hash Join来实现有如下3步：</p>
-<ul>
-<li>确定<code>BuildTable</code>和<code>ProbeTable</code>：通常小表作为BuildTable，大表作为ProbeTable</li>
-<li>将BuidleTable表中的数据写入HashTable中</li>
-<li>使用ProbeTable中的记录去HashTable中匹配，相同join_key的生成一条记录</li>
-</ul>
-<h3 id="11-broadcast-hash-join">1.1 Broadcast Hash Join</h3>
-<p>当BuildTable非常小时可以将BuildTable直接广播到ProbeTable所在的各个节点，避免了Shuffle的发生，效率也更高，但如果BuildTable很大时就需要ShuffleHashJoin了。</p>
-<p>SparkSQL对于小于10M的表默认使用BroadcastHashJoin，可通过<code>spark.sql.autoBroadcastJoinThreshold</code>参数调整</p>
-<h3 id="12-shuffle-hash-join">1.2 Shuffle Hash Join</h3>
-<p>当HashTable较大时，广播所带来的资源消耗高于带来的收益，此时只能通过Shuffule将两表的数据按join_key分区后再生成HashTable进行匹配。</p>
-<h2 id="2-sort-merge-join">2. Sort Merge Join</h2>
-<p>Hash Join有一个缺陷就是如果BuildTable过大，无法完全存储在内存，此时就需要不断的从磁盘加载HashTable的各个部分，导致性能很低，所以为了优化两张大表的join引入了SortMergeJoin。<br>
-SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然后按照类似堆排序的过程进行匹配，虽然排序消耗了资源但匹配过程却只需要读取一次两表的数据。</p>
 
+                
+              <p>
+            
           
         
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/sparksql-join-de-shi-xian/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
         
       </div>
       
@@ -828,12 +900,22 @@ SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然�
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><p>Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.</p>
 <p><strong>Example 1:</strong><br>
 Input:nums = [1,1,1], k = 2<br>
 Output: 2<br>
 <strong>Note:</strong></p>
+<ol>
+<li>The length of the array is in range [1, 20,000].</li>
 
                 
               <p>
@@ -921,12 +1003,22 @@ Output: 2<br>
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><p>今天看到两道题：</p>
 <ul>
 <li>
 <p><code>equals</code>和<code>==</code>有什么区别？</p>
 </li>
+<li>
+<pre><code class="language-java">Integer a = 1;
 
                 
                   <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
@@ -1017,13 +1109,26 @@ Output: 2<br>
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><h3 id="136-single-number"><a href="https://leetcode.com/problems/single-number/">136. Single Number</a></h3>
 <p>Difficulty: <strong>Easy</strong></p>
 <p>Given a <strong>non-empty</strong> array of integers, every element appears <em>twice</em> except for one. Find that single one.</p>
 <p><strong>Note:</strong></p>
 <p>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [2,2,1]
 
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
                 
               <p>
             
@@ -1110,12 +1215,22 @@ Output: 2<br>
               
               
             
+              
+              
+              
+            
+              
+              
+              
+            
             
               <p><h3 id="1-使用场景">1. 使用场景</h3>
 <p>在spark开发过程中，广播变量会被分发到Executor，当Executor执行多个Task时会复用广播变量。所以广播变量最常见的使用场景有两个：</p>
 <ol>
 <li><code>共享重资源</code>：重资源的初始化十分消耗性能（例如：各类存储系统的客户端和连接池等），如果不使用广播可能造成频繁的初始化而影响性能，即使基于分区创建连接，在分区数较多的情况下也会占用大量资源。</li>
 <li><code>共享只读数据</code>：多次使用的只读数据可以使用广播发送到每个节点，避免重复传输，起到性能优化的作用。</li>
+</ol>
+<h3 id="2-实现方式">2. 实现方式</h3>
 
                 
                   <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
@@ -1483,7 +1598,6 @@ Explanation: There are three ways to climb to the top.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4 id=&#34;3斐波那契通项公式&#34;&gt;3.斐波那契通项公式&lt;/h4&gt;
 &lt;p&gt;通过公式直接算出，建议自行学习原理&lt;/p&gt;
-&lt;!-- more --&gt;
 ">70. Climbing Stairs</a>
       </div>
       
@@ -1948,7 +2062,6 @@ Your algorithm&#39;s time complexity must be better than O(n log n), where n is 
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;!-- more --&gt;
 ">347. Top K Frequent Elements</a>
       </div>
       
@@ -2425,8 +2538,7 @@ while (((rnd &amp;gt;&amp;gt;&amp;gt;= 1) &amp;amp; 1) != 0)
 &lt;p&gt;当HashTable较大时，广播所带来的资源消耗高于带来的收益，此时只能通过Shuffule将两表的数据按join_key分区后再生成HashTable进行匹配。&lt;/p&gt;
 &lt;h2 id=&#34;2-sort-merge-join&#34;&gt;2. Sort Merge Join&lt;/h2&gt;
 &lt;p&gt;Hash Join有一个缺陷就是如果BuildTable过大，无法完全存储在内存，此时就需要不断的从磁盘加载HashTable的各个部分，导致性能很低，所以为了优化两张大表的join引入了SortMergeJoin。&lt;br&gt;
-SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然后按照类似堆排序的过程进行匹配，虽然排序消耗了资源但匹配过程却只需要读取一次两表的数据。&lt;/p&gt;
-&lt;!-- more --&gt;
+SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然后按照类似堆排序的过程进行匹配，虽然排序消耗了资源但匹配过程却只需要读取一次两表的数据。\&lt;/p&gt;
 ">SparkSQL join的实现</a>
       </div>
       
