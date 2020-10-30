@@ -8,7 +8,7 @@
 <meta name="keywords" content="Oleg的博客">
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
-<title>560. Subarray Sum Equals K | Oleg的博客</title>
+<title>笔记 | Oleg的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1604028330939">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="560. Subarray Sum Equals K" />
-  <meta name="keywords" content="LeetCode" />
+  <meta name="description" content="笔记" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -161,8 +161,7 @@
       <div class="sidebar-body gemini" id="sidebar_body">
         
           
-            <div class="post-side-meta" id="post_side_meta">
-              
+            
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -213,204 +212,6 @@
 
 
 </div>
-            </div>
-            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
-              <div class="toc-box right-motion">
-  <div class="toc-wrapper auto-number auto"
-    id="toc_wrapper">
-    <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#1-brute-force-%E5%89%AA%E6%9E%9D">1. Brute Force 剪枝</a></li>
-<li><a href="#2-dp">2. DP</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-  </div>
-</div>
-
-<script>
-
-  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
-  let active = 'active-show', activeClass = 'active-current';
-  let tocWrapper = document.querySelector('#toc_wrapper');
-  let tocContent = tocWrapper.children[0];
-  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
-
-  function addTocNumber(elem, deep) {
-    if (!elem) {
-      return;
-    }
-    let prop = elem.__proto__;
-
-    if (prop === HTMLUListElement.prototype) {
-      for (let i = 0; i < elem.children.length; i++) {
-        addTocNumber(elem.children[i], deep + (i + 1) + '.');
-      }
-    } else if (prop === HTMLLIElement.prototype) {
-      // 保存li元素
-      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
-        lList.push(elem);
-      }
-      for (let i = 0; i < elem.children.length; i++) {
-        let cur = elem.children[i];
-        if (cur.__proto__ === HTMLAnchorElement.prototype) {
-          if (autoNumber) {
-            cur.text = deep + ' ' + cur.text;
-          }
-        } else if (cur.__proto__ === HTMLUListElement.prototype) {
-          addTocNumber(cur, deep);
-        }
-      }
-    }
-  }
-
-  function removeParentActiveClass() {
-    let parents = tocContent.querySelectorAll('.' + active)
-    parents.forEach(function (elem) {
-      elem.classList.remove(active);
-    });
-  }
-
-  function addActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.add(activeClass);
-    }
-  }
-
-  function removeActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.remove(activeClass);
-    }
-  }
-
-  function addActiveLiElemment(elem, parent) {
-    if (!elem || elem === parent) {
-      return;
-    } else {
-      if (elem.__proto__ === HTMLLIElement.prototype) {
-        elem.classList.add(active);
-      }
-      addActiveLiElemment(elem.parentElement, parent);
-    }
-  }
-
-  function showToc() {
-    if (tocWrapper) {
-      postBody = document.querySelector('#post_body');
-      for (let i = 0; i < postBody.children.length; i++) {
-        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
-          hList.push(postBody.children[i]);
-        }
-      }
-      if (tocWrapper.classList.contains('compress')) {
-        tocContent.classList.add('closed');
-      } else if (tocWrapper.classList.contains('no_compress')) {
-        tocContent.classList.add('expanded');
-      } else {
-        if (hList.length > 10) {
-          active = 'active-hidden'
-          tocContent.classList.add('closed');
-        } else {
-          tocContent.classList.add('expanded');
-        }
-      }
-    }
-  }
-
-  (function () {
-    // 处理不是从#一级标题开始目录
-    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
-      let con = tocContent.children[0].children[0];
-      tocContent.innerHTML = con.innerHTML;
-    }
-    let markdownItTOC = document.querySelector('.markdownIt-TOC');
-    let innerHeight = window.innerHeight;
-    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
-    addTocNumber(tocContent, '');
-  })();
-
-  document.addEventListener('scroll', function (e) {
-    if (lList.length <= 0) {
-      return;
-    }
-    let scrollTop = document.scrollingElement.scrollTop + 10;
-    let dir;
-
-    if (lastTop - scrollTop > 0) {
-      dir = 'up';
-    } else {
-      dir = 'down';
-    }
-
-    lastTop = scrollTop;
-    if (scrollTop <= 0) {
-      if (lastIndex >= 0 && lastIndex < hList.length) {
-        lList[lastIndex].classList.remove(activeClass);
-      }
-      return;
-    }
-
-    let current = 0, hasFind = false;
-    for (let i = 0; i < hList.length; i++) {
-      if (hList[i].offsetTop > scrollTop) {
-        current = i;
-        hasFind = true;
-        break;
-      }
-    }
-    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
-      current = hList.length - 1;
-    } else {
-      current--;
-    }
-    if (dir === 'down') {
-      if (current > lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex)
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    } else {
-      if (current < lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex);
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    }
-  });
-
-
-  window.addEventListener('load', function () {
-    showToc();
-    document.querySelector('#sidebar').style = 'display: block;';
-    tocWrapper.classList.add('toc-active');
-    setTimeout(function () {
-      if ("createEvent" in document) {
-        let evt = document.createEvent("HTMLEvents");
-        evt.initEvent("scroll", false, true);
-        document.dispatchEvent(evt);
-      }
-      else {
-        document.fireEvent("scroll");
-      }
-    }, 500)
-  })
-
-</script>
-            </div>
           
         
       </div>
@@ -498,8 +299,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/560-subarray-sum-equals-k/">
-      560. Subarray Sum Equals K
+    <a class="post-title-link" href="https://olegpt.top/post/note/">
+      笔记
     </a>
   </h1>
   <div class="post-meta">
@@ -507,98 +308,24 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2019-04-04 20:27:00">2019-04-04</span>
+      <span class="publish-time" data-t="2020-10-30 11:21:45">2020-10-30</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/boFyc4UTy/">
-        <span>LeetCode</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3<span class="language" data-lan="minute">分钟</span></span>
+      <span>1<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>495<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>7<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.</p>
-<p><strong>Example 1:</strong><br>
-Input:nums = [1,1,1], k = 2<br>
-Output: 2<br>
-<strong>Note:</strong></p>
-<ol>
-<li>The length of the array is in range [1, 20,000].</li>
-<li>The range of numbers in the array is [-1000, 1000] and the range of the integer k is [-1e7, 1e7].</li>
-</ol>
-<p>找出一个数组中连续元素之和为k的组合个数。</p>
-<h4 id="1-brute-force-剪枝">1. Brute Force 剪枝</h4>
-<p>求出每一个元素与后面元素之和的最大最小值，当一个元素与<code>后一个元素的最小值之和大于k</code>或者<code>与后一个元素的最大值之和小于k</code>就可以断定后面不存在满足条件的集合，可以直接跳过。</p>
-<pre><code class="language-java">class Solution {
-    public int subarraySum(int[] nums, int k) {
-        if (nums == null) return 0;
-        int r = 0;
-        int[] min = new int[nums.length];
-        int[] max = new int[nums.length];
-        min[nums.length - 1] = nums[nums.length - 1];
-        max[nums.length - 1] = nums[nums.length - 1];
-        for (int i = nums.length - 2; i &gt;= 0; i--) {
-            min[i] = Math.min(min[i + 1] + nums[i], nums[i]);
-            max[i] = Math.max(max[i + 1] + nums[i], nums[i]);
-        }
-        for (int i = 0; i &lt; nums.length ; i++) {
-            int cur = nums[i];
-            if (cur == k) r++;
-            for (int j = i + 1; j &lt; nums.length; j++) {
-                if (cur + nums[j] == k) r++;
-                if (cur + min[j] &gt; k || cur + max[j] &lt; k) break;
-                cur += nums[j];
-            }
-        }
-        return r;
-    }
-}
-</code></pre>
-<p>时间复杂度为O(m * n)，空间复杂度为O(n)</p>
-<h4 id="2-dp">2. DP</h4>
-<p>将每次累加的结果保存起来，而其中任意一段的累加和可以通过两段累加和相减得到<br>
-<img src="https://olegpt.top/post-images/1603974460066.png" alt="" loading="lazy"></p>
-<p>利用上述思想可以：</p>
-<ul>
-<li>遍历整个数组，把累加和计算一遍并保存起来</li>
-<li>累加和减去我们期望的k值，如果结果在之前的累加结果中存在则可判定为符合条件。</li>
-</ul>
-<figure data-type="image" tabindex="1"><img src="https://olegpt.top/post-images/1603974490971.png" alt="" loading="lazy"></figure>
-<pre><code class="language-java">public class Solution {
-    public int subarraySum(int[] nums, int k) {
-        int count = 0, sum = 0;
-        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;(nums.length);
-        map.put(0, 1);
-        for (int i = 0; i &lt; nums.length; i++) {
-            sum += nums[i];
-            if (map.containsKey(sum - k)) count += map.get(sum - k);
-            map.put(sum, map.getOrDefault(sum, 0) + 1);
-        }
-        return count;
-    }
-}
-</code></pre>
-<p>时间复杂度为O(n)，空间复杂度为O(n)</p>
+              <p><a href="https://www.evernote.com/shard/s560/sh/a7eb5ff2-dce5-4135-9c6d-7dfea2662cf6/9a4f9f44f4cc5d91447b79a7c9190617">Memory part 3: Virtual Memory [LWN.net]</a></p>
 
             </div>
             
@@ -611,7 +338,7 @@ Output: 2<br>
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://olegpt.top/post/560-subarray-sum-equals-k/" title="560. Subarray Sum Equals K">https://olegpt.top/post/560-subarray-sum-equals-k/</a>
+      <a href="https://olegpt.top/post/note/" title="笔记">https://olegpt.top/post/note/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -620,22 +347,12 @@ Output: 2<br>
   </ul>
   <div class="tags">
     
-      <a href="https://olegpt.top/tag/boFyc4UTy/"># LeetCode</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="SparkSQL join的实现" href="https://olegpt.top/post/sparksql-join-de-shi-xian/">SparkSQL join的实现</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="SparkSQL join的实现" href="https://olegpt.top/post/sparksql-join-de-shi-xian/">上一篇</a>
-      
     </div>
     <div class="nav-next">
-      
-        <a class="nav-pc-next" title="Java中的equals和==有什么不同" href="https://olegpt.top/post/java-zhong-de-equals-he-you-shi-me-bu-tong/">Java中的equals和==有什么不同</a>
-        <a class="nav-mobile-next" title="Java中的equals和==有什么不同" href="https://olegpt.top/post/java-zhong-de-equals-he-you-shi-me-bu-tong/">下一篇</a>
-        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
