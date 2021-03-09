@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1614566283683">
+<link rel="shortcut icon" href="/favicon.ico?v=1615279202857">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -166,7 +166,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">21</span>
+        <span class="site-item-stat-count">22</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -224,6 +224,112 @@
         <div class="section-box gemini">
           <section class="section  posts-expand slide-down-in">
             
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/spark-guang-bo-ji-zhi-jie-xi/">
+      Spark广播机制解析
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2018-05-23 20:07:06">2018-05-23</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://olegpt.top/tag/MMU3f7np1/">
+        <span>Spark</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>4<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>837<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+      <div class="post-body">
+        
+        
+          
+            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
+            
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+              
+              
+              
+            
+            
+              <p><h3 id="1-使用场景">1. 使用场景</h3>
+<p>在spark开发过程中，广播变量会被分发到Executor，当Executor执行多个Task时会复用广播变量。所以广播变量最常见的使用场景有两个：</p>
+<ol>
+<li><code>共享重资源</code>：重资源的初始化十分消耗性能（例如：各类存储系统的客户端和连接池等），如果不使用广播可能造成频繁的初始化而影响性能，即使基于分区创建连接，在分区数较多的情况下也会占用大量资源。</li>
+<li><code>共享只读数据</code>：多次使用的只读数据可以使用广播发送到每个节点，避免重复传输，起到性能优化的作用。</li>
+</ol>
+<h3 id="2-实现方式">2. 实现方式</h3>
+
+                
+                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
+                  </code></pre>
+                
+              <p>
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/spark-guang-bo-ji-zhi-jie-xi/" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+
   <article class="post-list-box  post box-shadow-wrapper">
     <div class="article-wrapper bg-color">
       <section class="post-header">
@@ -599,6 +705,77 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/spark-accumulator-zhen-de-zhun-que-ma/"" data-c="
+          &lt;p&gt;通常在使用Spark进行数据处理时，为了高性能的统计某些全局指标我们会使用SparkContext.xxxAccumulator()来创建累加器，然后在具体的算子中进行累加，从而省略了执行特定的统计逻辑。&lt;/p&gt;
+&lt;p&gt;但是，这里需要考虑一个问题，如果某一个task失败后进行重试会不会因为重复统计导致统计指标不准确呢？&lt;/p&gt;
+&lt;p&gt;我们需要理解Spark对accumulator的实现后才能确定，下面就以SparkContext.longAccumulator()为例来看看事情对真相。&lt;/p&gt;
+&lt;h2 id=&#34;1创建longaccumulator&#34;&gt;1.创建LongAccumulator&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;  /**
+   * Create and register a long accumulator, which starts with 0 and accumulates inputs by `add`.
+   */
+  def longAccumulator: LongAccumulator = {
+    val acc = new LongAccumulator
+    register(acc)
+    acc
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;2longaccumulator的注册&#34;&gt;2.LongAccumulator的注册&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;  private[spark] def register(
+      sc: SparkContext,
+      name: Option[String] = None,
+      countFailedValues: Boolean = false): Unit = {
+    if (this.metadata != null) {
+      throw new IllegalStateException(&amp;quot;Cannot register an Accumulator twice.&amp;quot;)
+    }
+    this.metadata = AccumulatorMetadata(AccumulatorContext.newId(), name, countFailedValues)
+    AccumulatorContext.register(this)
+    sc.cleaner.foreach(_.registerAccumulatorForCleanup(this))
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到Accumulator注册参数中有一个countFailedValues参数默认为false，这里回答我们提出的问题：Spark的accumulator已经考虑到task失败的情况，且默认情况下失败的task不会计入accumulator，可以放心使用。&lt;/p&gt;
+&lt;h2 id=&#34;3countfailedvalues是如何生效的&#34;&gt;3.countfailedValues是如何生效的？&lt;/h2&gt;
+&lt;p&gt;Executor在任务执行结束后会调用&lt;code&gt;task.collectAccumulatorUpdates()&lt;/code&gt;对accumulator进行更新：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;private[spark] class Executor(
+    executorId: String,
+    executorHostname: String,
+    env: SparkEnv,
+    userClassPath: Seq[URL] = Nil,
+    isLocal: Boolean = false,
+    uncaughtExceptionHandler: UncaughtExceptionHandler = new SparkUncaughtExceptionHandler)
+  extends Logging {
+    ......
+
+  class TaskRunner(
+      execBackend: ExecutorBackend,
+      private val taskDescription: TaskDescription)
+    extends Runnable {
+    ......
+    override def run(): Unit = {
+      ......
+      val accumUpdates = task.collectAccumulatorUpdates()   //对accumulator进行更新
+      ......
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而更新逻辑中会剔除失败任务上报的accumulator&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;  def collectAccumulatorUpdates(taskFailed: Boolean = false): Seq[AccumulatorV2[_, _]] = {
+    if (context != null) {
+      // Note: internal accumulators representing task metrics always count failed values
+      context.taskMetrics.nonZeroInternalAccums() ++
+        // zero value external accumulators may still be useful, e.g. SQLMetrics, we should not
+        // filter them out.
+        context.taskMetrics.externalAccums.filter(a =&amp;gt; !taskFailed || a.countFailedValues)
+    } else {
+      Seq.empty
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后Executor将accumulator数据作为task结果的一部分，序列化后写入到BlockManager中，Driver端读取到的就是不包含失败任务的accumulator数据了。&lt;/p&gt;
+">Spark 任务失败会影响accumulator的准确性吗？</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/photos/"" data-c="

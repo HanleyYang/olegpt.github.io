@@ -2,13 +2,20 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://olegpt.top</id>
     <title>Oleg的博客</title>
-    <updated>2021-03-01T02:38:08.143Z</updated>
+    <updated>2021-03-09T08:40:07.467Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://olegpt.top"/>
     <link rel="self" href="https://olegpt.top/atom.xml"/>
     <logo>https://olegpt.top/images/avatar.png</logo>
     <icon>https://olegpt.top/favicon.ico</icon>
     <rights>All rights reserved 2021, Oleg的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[Spark 任务失败会影响accumulator的准确性吗？]]></title>
+        <id>https://olegpt.top/post/spark-accumulator-zhen-de-zhun-que-ma/</id>
+        <link href="https://olegpt.top/post/spark-accumulator-zhen-de-zhun-que-ma/">
+        </link>
+        <updated>2021-03-09T01:40:18.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[70. Climbing Stairs]]></title>
         <id>https://olegpt.top/post/70-climbing-stairs/</id>
@@ -71,12 +78,5 @@
         <link href="https://olegpt.top/post/438-find-all-anagrams-in-a-string/">
         </link>
         <updated>2020-04-15T12:31:12.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[208. Implement Trie (Prefix Tree)]]></title>
-        <id>https://olegpt.top/post/208-implement-trie-prefix-tree/</id>
-        <link href="https://olegpt.top/post/208-implement-trie-prefix-tree/">
-        </link>
-        <updated>2020-04-08T12:33:24.000Z</updated>
     </entry>
 </feed>

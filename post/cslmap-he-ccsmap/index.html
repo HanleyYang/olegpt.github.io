@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>CSLMap和CCSMap | Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1614566283683">
+<link rel="shortcut icon" href="/favicon.ico?v=1615279202857">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -184,7 +184,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">21</span>
+        <span class="site-item-stat-count">22</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -1149,6 +1149,77 @@ while (((rnd &gt;&gt;&gt;= 1) &amp; 1) != 0)
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/spark-accumulator-zhen-de-zhun-que-ma/"" data-c="
+          &lt;p&gt;通常在使用Spark进行数据处理时，为了高性能的统计某些全局指标我们会使用SparkContext.xxxAccumulator()来创建累加器，然后在具体的算子中进行累加，从而省略了执行特定的统计逻辑。&lt;/p&gt;
+&lt;p&gt;但是，这里需要考虑一个问题，如果某一个task失败后进行重试会不会因为重复统计导致统计指标不准确呢？&lt;/p&gt;
+&lt;p&gt;我们需要理解Spark对accumulator的实现后才能确定，下面就以SparkContext.longAccumulator()为例来看看事情对真相。&lt;/p&gt;
+&lt;h2 id=&#34;1创建longaccumulator&#34;&gt;1.创建LongAccumulator&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;  /**
+   * Create and register a long accumulator, which starts with 0 and accumulates inputs by `add`.
+   */
+  def longAccumulator: LongAccumulator = {
+    val acc = new LongAccumulator
+    register(acc)
+    acc
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;2longaccumulator的注册&#34;&gt;2.LongAccumulator的注册&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;  private[spark] def register(
+      sc: SparkContext,
+      name: Option[String] = None,
+      countFailedValues: Boolean = false): Unit = {
+    if (this.metadata != null) {
+      throw new IllegalStateException(&amp;quot;Cannot register an Accumulator twice.&amp;quot;)
+    }
+    this.metadata = AccumulatorMetadata(AccumulatorContext.newId(), name, countFailedValues)
+    AccumulatorContext.register(this)
+    sc.cleaner.foreach(_.registerAccumulatorForCleanup(this))
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到Accumulator注册参数中有一个countFailedValues参数默认为false，这里回答我们提出的问题：Spark的accumulator已经考虑到task失败的情况，且默认情况下失败的task不会计入accumulator，可以放心使用。&lt;/p&gt;
+&lt;h2 id=&#34;3countfailedvalues是如何生效的&#34;&gt;3.countfailedValues是如何生效的？&lt;/h2&gt;
+&lt;p&gt;Executor在任务执行结束后会调用&lt;code&gt;task.collectAccumulatorUpdates()&lt;/code&gt;对accumulator进行更新：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;private[spark] class Executor(
+    executorId: String,
+    executorHostname: String,
+    env: SparkEnv,
+    userClassPath: Seq[URL] = Nil,
+    isLocal: Boolean = false,
+    uncaughtExceptionHandler: UncaughtExceptionHandler = new SparkUncaughtExceptionHandler)
+  extends Logging {
+    ......
+
+  class TaskRunner(
+      execBackend: ExecutorBackend,
+      private val taskDescription: TaskDescription)
+    extends Runnable {
+    ......
+    override def run(): Unit = {
+      ......
+      val accumUpdates = task.collectAccumulatorUpdates()   //对accumulator进行更新
+      ......
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而更新逻辑中会剔除失败任务上报的accumulator&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;  def collectAccumulatorUpdates(taskFailed: Boolean = false): Seq[AccumulatorV2[_, _]] = {
+    if (context != null) {
+      // Note: internal accumulators representing task metrics always count failed values
+      context.taskMetrics.nonZeroInternalAccums() ++
+        // zero value external accumulators may still be useful, e.g. SQLMetrics, we should not
+        // filter them out.
+        context.taskMetrics.externalAccums.filter(a =&amp;gt; !taskFailed || a.countFailedValues)
+    } else {
+      Seq.empty
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后Executor将accumulator数据作为task结果的一部分，序列化后写入到BlockManager中，Driver端读取到的就是不包含失败任务的accumulator数据了。&lt;/p&gt;
+">Spark 任务失败会影响accumulator的准确性吗？</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/photos/"" data-c="
