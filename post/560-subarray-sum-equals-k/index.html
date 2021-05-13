@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>560. Subarray Sum Equals K | Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1620894980251">
+<link rel="shortcut icon" href="/favicon.ico?v=1620895485930">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1338,7 +1338,7 @@ deactivate &amp;quot;Protocol1$Proxy&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;从上图可以看出，对RPC请求的序列化和发送操作实际是由Invoker来执行的，Invoker会将调用方法和参数封装成RpcRequestWrapper发送给Server端，同时将服务端返回的RpcResponseWrapper解析成方法的返回类型返回给Caller。&lt;/p&gt;
 &lt;p&gt;WritableRpcEngine的实现也是类似的，只是将请求和响应的序列化方式切换成了Writable，将RpcRequest(Response)Wrapper换成了内部类Invocation，这里附上类图，就不再详细介绍了&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-platuml&#34;&gt;@startuml
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
 
 &#39;skinparam linetype ortho
 
