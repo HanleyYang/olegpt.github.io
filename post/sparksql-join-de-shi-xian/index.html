@@ -9,8 +9,8 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>SparkSQL join的实现 | Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1616142307232">
-<link rel="stylesheet" href="/media/css/gemini.css">
+<link rel="shortcut icon" href="/favicon.ico?v=1620894294067">
+<link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
   href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Rosario:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext"
@@ -46,7 +46,7 @@
   <div class="head-top-line"></div>
   <div class="header-box">
     
-<div class="gemini">
+<div class="pisces">
   <header class="header  ">
     <div class="blog-header box-shadow-wrapper bg-color " id="header">
       <div class="nav-toggle" id="nav_toggle">
@@ -73,6 +73,8 @@
           
             
             
+              
+            
             <li class="nav-item ">
               
               
@@ -83,6 +85,8 @@
             </li>
           
             
+            
+              
             
             <li class="nav-item ">
               
@@ -95,6 +99,8 @@
           
             
             
+              
+            
             <li class="nav-item ">
               
               
@@ -106,6 +112,8 @@
           
             
             
+              
+            
             <li class="nav-item ">
               
               
@@ -115,6 +123,16 @@
               
             </li>
           
+          
+            
+              <li class="nav-item ">
+                <a href="/friends/" target="_self">
+                  
+                    <i class="fa fa-address-book"></i> 友情链接
+                  
+                </a>
+              </li>
+            
           
           
             <li id="fa_search" class="nav-item">
@@ -154,7 +172,7 @@
   <div class="main-continer">
     
     <div
-      class="section-layout gemini ">
+      class="section-layout pisces ">
       <div class="section-layout-wrapper">
         
 
@@ -169,7 +187,7 @@
           </div>
         </div>
       
-      <div class="sidebar-body gemini" id="sidebar_body">
+      <div class="sidebar-body pisces" id="sidebar_body">
         
           
             <div class="post-side-meta" id="post_side_meta">
@@ -184,7 +202,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">24</span>
+        <span class="site-item-stat-count">25</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -217,8 +235,6 @@
         
       </div>
     </div>
-  
-
   
 
 
@@ -648,12 +664,17 @@ SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然�
         href="https://github.com/hsxyhao/gridea-theme-next" target="_blank">HsxyHao</a>
     </div>
     <div class="poweredby">
-      
+      <script src="/deflate.js"></script>
+<script src="/encode.js"></script>
+<script src="/plantuml_codeblock_parse.js"></script>
+<script>
+parsePlantumlCodeBlocks("http://www.plantuml.com/plantuml","language-plantuml")
+</script>
     </div>
   </footer>
   
   
-  <div class="gemini back-to-top" id="back_to_top">
+  <div class="pisces back-to-top" id="back_to_top">
     <i class="fa fa-arrow-up"></i>
     
     <span class="scrollpercent">
@@ -1088,6 +1109,284 @@ SortMergeJoin在Shuffle完成后对两表的记录按join_key进行排序，然�
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/hdfs-rpc-shi-xian/"" data-c="
+          &lt;h1 id=&#34;1rpc常规实现&#34;&gt;1.RPC常规实现&lt;/h1&gt;
+&lt;p&gt;RPC实现通常包含下图几个部分：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+[Caller]
+[ClientStub]
+[NetClient]
+[NetServer]
+[ServerStub]
+[Callee]
+
+[Caller] --&amp;gt; [ClientStub]
+[ClientStub] --&amp;gt; [NetClient]
+[NetClient] -right-&amp;gt; [NetServer]
+[NetServer] -up-&amp;gt; [ServerStub]
+[ServerStub] -up-&amp;gt; [Callee]
+
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Caller想要调用Callee提供的方法，可以通过直接调用ClientStub的同名方法来实现。ClientStub提供了Callee在本地的代理对象，ClientStub中的方法在被调用后会将请求参数进行封装和序列化，最终通过底层NetClient发送到服务端。&lt;/p&gt;
+&lt;p&gt;服务端则由NetServer来负责监听网络请求，并将收到的请求交给ServerStub，由其进行解析和Callee的调用，最终的调用结果原路返回给客户端。&lt;/p&gt;
+&lt;h1 id=&#34;2hdfs-client的rpc实现&#34;&gt;2.HDFS Client的RPC实现&lt;/h1&gt;
+&lt;p&gt;HDFS的RPC实现也是类似上图中的思路：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+skinparam linetype ortho
+
+skinparam component {
+  backgroundColor&amp;lt;&amp;lt;impl&amp;gt;&amp;gt; #AntiqueWhite
+}
+
+rectangle ClientImpl {
+  component ClientStub实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
+      [Protocol]
+      [RPC]
+      [RPCEngine]
+      Protocol -[hidden]r-&amp;gt; RPC
+      RPC -[hidden]r-&amp;gt; RPCEngine
+  }
+
+  component NetClient实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
+      [Client]
+      [Call]
+      [Connection]
+      Client -[hidden]r-&amp;gt; Call
+      Call -[hidden]r-&amp;gt; Connection
+  }
+
+  ClientStub实现 -[hidden]d--&amp;gt; NetClient实现
+
+}
+
+
+rectangle Standard {
+  [Caller]
+  [ClientStub]
+  [NetClient]
+  [NetServer]
+  [ServerStub]
+  [Server.]
+  [Caller] -d--&amp;gt; [ClientStub]
+  [ClientStub] -d--&amp;gt; [NetClient]
+  [NetClient] -r--&amp;gt; [NetServer]
+  [NetServer] -u--&amp;gt; [ServerStub]
+  [ServerStub] -u--&amp;gt; [Server.]
+
+  ClientStub -l-&amp;gt; ClientStub实现
+  NetClient -l-&amp;gt; NetClient实现
+  NetServer -r-&amp;gt; NetServer实现
+  ServerStub -r-&amp;gt; ServerStub实现
+  Server. -u-&amp;gt; Server实现
+}
+
+
+rectangle ServerImpl {
+  component NetServer实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
+      interface Reactor模型
+      [Server]
+      [Listener]
+      [Reader]
+      [Handler]
+      [Selector]
+      [Responder]
+      [Server] -[hidden]d-&amp;gt; Reactor模型
+      Reactor模型 -d-&amp;gt; Listener
+      Reactor模型 -d-&amp;gt; Selector
+      Reactor模型 -d-&amp;gt; Reader
+      Reactor模型 -d-&amp;gt; Handler
+      Reactor模型 -d-&amp;gt; Responder
+  }
+
+
+  component ServerStub实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
+      [RpcEngine.Server]
+      [BlockingService]
+      RpcEngine.Server -[hidden]d-&amp;gt; BlockingService
+  }
+
+  component Server实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
+      [NamenodeRpcServer]
+  }
+
+  Server实现-[hidden]d-&amp;gt; ServerStub实现
+  Server实现 -[hidden]r-&amp;gt; NetServer实现
+}
+
+
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;下面就针对HDFS中ClientStub和NetClient的实现来进行逐一分析：&lt;/p&gt;
+&lt;h2 id=&#34;21-clientstub实现&#34;&gt;2.1 ClientStub实现&lt;/h2&gt;
+&lt;p&gt;上面提到，ClientStub的主要作用是作为代理对象将客户端调用通过NetClient转发到服务端，涉及到3个(类)核心类：Protocol，RPC，RPCEngine。&lt;/p&gt;
+&lt;h3 id=&#34;211-protocol类&#34;&gt;2.1.1 Protocol类：&lt;/h3&gt;
+&lt;p&gt;Protocol类主要是为了定义RPC调用的接口，服务端实现这些接口，ClientStub则是根据Protocol来代理请求。HDFS定义了较多的Protcol，比较常见的有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ClientProtocol：用于DFSClient和Namenode交互&lt;/li&gt;
+&lt;li&gt;ClientDatanodeProtocol：用于DFSClient和Datanode交互&lt;/li&gt;
+&lt;li&gt;DataTransferProtocol：用于DFSClient从Datanode读写数据&lt;/li&gt;
+&lt;li&gt;DatanodeProtocol：用于Datanode与Namenode交互&lt;/li&gt;
+&lt;li&gt;NamenodeProtocol：ActiveNamenode与StandByNamenode交互&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;212-rpc类&#34;&gt;2.1.2 RPC类：&lt;/h3&gt;
+&lt;p&gt;RPC类是上层逻辑(Caller)进行RPC调用的入口类，HDFS定义的诸多Protocol都需要通过&lt;code&gt;Rpc.getProxy(Protocol, ...)&lt;/code&gt;来生成ClientStub，然后才能使用ClientStub实例进行RPC调用。&lt;/p&gt;
+&lt;h3 id=&#34;213-rpcengine&#34;&gt;2.1.3 RpcEngine：&lt;/h3&gt;
+&lt;p&gt;考虑到ClientStub在对RPC请求进行封装和序列化时可能有多种实现，所以HDFS并没有将生成ClientStub和ServerStub的逻辑(getProxy(), getServer())全部放到RPC类中，而是将这一工作封装成RpcEngine接口，然后在RPC类中使用HashMap维护Protocol与RpcEngine实现的映射，下游实现可以按需要注册到HashMap中。这样当客户端调用&lt;code&gt;Rpc.getProxy(Protocol, ...)&lt;/code&gt;时就会由对应的RpcEngine负责生成ClientStub。&lt;/p&gt;
+&lt;p&gt;HDFS默认提供了两种RpcEngine实现：&lt;code&gt;ProtobufRpcEngine&lt;/code&gt;和&lt;code&gt;WritableRpcEngine&lt;/code&gt;，分别用于支持Protobuf和Writable两种序列化方式。下面详细介绍ProtobufRpcEngine的实现（HDFS大部分RPC调用都是通过该引擎实现，且两种引擎实现差异并不大）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;创建ClientStub&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ClientStub的创建过程如下图：：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+    skinparam linetype ortho
+
+skinparam component {
+    backgroundColor&amp;lt;&amp;lt;impl&amp;gt;&amp;gt; #AntiqueWhite
+}
+
+Caller-&amp;gt;RPC: getProtocolProxy(Protocol1)
+activate RPC
+RPC-&amp;gt;RPC: getProtocolEngine()
+RPC-&amp;gt;ProtobufRpcEngine: getProxy(Protocol1)
+activate ProtobufRpcEngine
+participant Invoker &amp;lt;&amp;lt;RpcInvocationHandler&amp;gt;&amp;gt;
+ProtobufRpcEngine-&amp;gt;Invoker: new
+activate Invoker
+Invoker--&amp;gt;ProtobufRpcEngine: Invoker
+deactivate Invoker
+ProtobufRpcEngine-&amp;gt;&amp;quot;Protocol1$Proxy&amp;quot;: Proxy.newProxyInstance(Protocol1, Invoker)
+activate &amp;quot;Protocol1$Proxy&amp;quot;
+&amp;quot;Protocol1$Proxy&amp;quot; --&amp;gt; ProtobufRpcEngine: Protocol1  
+deactivate &amp;quot;Protocol1$Proxy&amp;quot;
+ProtobufRpcEngine--&amp;gt;RPC: Protocol1
+deactivate ProtobufRpcEngine
+RPC --&amp;gt; Caller: Protocol1
+deactivate RPC
+
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;从这里就可以看到RPC.getProtocolEngine()从本地HashMap获取到当前协议的RpcEngine为ProtobufRpcEngine，然后调用ProtobufRpcEngine.getProxy()创建了一个代理类返回给Caller，对于该代理类的所有请求都会由Invoker进行序列化并通过底层NetClient发送到Server端。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ClientStub调用&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+skinparam linetype ortho
+
+skinparam component {
+    backgroundColor&amp;lt;&amp;lt;impl&amp;gt;&amp;gt; #AntiqueWhite
+}
+
+Caller-&amp;gt;&amp;quot;Protocol1$Proxy&amp;quot;: Protocol1.function1()
+activate &amp;quot;Protocol1$Proxy&amp;quot;
+&amp;quot;Protocol1$Proxy&amp;quot;-&amp;gt;Invoker: invoke()
+activate Invoker
+Invoker-&amp;gt;RpcRequestWrapper: new()
+activate RpcRequestWrapper
+RpcRequestWrapper--&amp;gt;Invoker: RpcRequestWrapper
+deactivate RpcRequestWrapper
+Invoker-&amp;gt;Client: call(Writable RpcRequestWrapper)
+activate Client
+Client--&amp;gt;Invoker: RpcResponseWrapper
+deactivate Client
+Invoker--&amp;gt;&amp;quot;Protocol1$Proxy&amp;quot;: return
+deactivate Invoker
+&amp;quot;Protocol1$Proxy&amp;quot;--&amp;gt;Caller: return
+deactivate &amp;quot;Protocol1$Proxy&amp;quot;
+
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;从上图可以看出，对RPC请求的序列化和发送操作实际是由Invoker来执行的，Invoker会将调用方法和参数封装成RpcRequestWrapper发送给Server端，同时将服务端返回的RpcResponseWrapper解析成方法的返回类型返回给Caller。&lt;/p&gt;
+&lt;p&gt;WritableRpcEngine的实现也是类似的，只是将请求和响应的序列化方式切换成了Writable，将RpcRequest(Response)Wrapper换成了内部类Invocation，这里附上类图，就不再详细介绍了&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-platuml&#34;&gt;@startuml
+
+&#39;skinparam linetype ortho
+
+interface RpcEngine{
+    +getProxy()
+    +getServer()
+}
+class RPC
+abstract Server
+RPC +-- Server
+interface RpcInvocationHandler {
+    +ConnectionId getConnectionId()
+    +Object invoke(proxy, method, args)
+}
+
+rectangle WritableRpcEngine { 
+    RpcEngine &amp;lt;|.. WritableRpcEngine
+    WritableRpcEngine *-- Invoker
+    WritableRpcEngine *-- Invocation
+    class &amp;quot;Server&amp;quot; as Server1
+    WritableRpcEngine *-- Server1
+    Server &amp;lt;|-- Server1
+    Server1 *-- WritableRpcInvoker
+    RpcInvocationHandler &amp;lt;|.. Invoker
+}
+
+
+rectangle ProtobufRpcEngine { 
+    RpcEngine &amp;lt;|.. ProtobufRpcEngine
+    class &amp;quot;Server&amp;quot; as Server2
+    Server &amp;lt;|-- Server2
+    ProtobufRpcEngine *-- Server2
+    Server2 *-- ProtobufRpcInvoker
+    class &amp;quot;Invoker&amp;quot; as invoker2
+    ProtobufRpcEngine *-- invoker2
+    ProtobufRpcEngine *-- RpcWrapper
+    RpcWrapper &amp;lt;|.. RpcMessageWithHeader
+    RpcWrapper &amp;lt;|.. RpcResponseWrapper
+    ProtobufRpcEngine *-- RpcResponseWrapper
+    RpcMessageWithHeader &amp;lt;|-- RpcRequestWrapper
+    ProtobufRpcEngine *-- RpcRequestWrapper
+    RpcInvocationHandler &amp;lt;|.. invoker2
+}
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;22-netclient实现&#34;&gt;2.2 NetClient实现&lt;/h2&gt;
+&lt;p&gt;NetClient由Client类实现，Client类包含两个核心的内部类：Call和Connection；Call主要是记录此次调用的（id，请求，响应，重试次数等），而Connection则是一个线程类，封装了底层的网络连接（server地址，Socket，In/OutputStream等）用于和Server间的网络通信。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+    ProtobufRpcEngine.Invoker -&amp;gt;Client: call(RpcRequestWrapper)
+    activate Client
+    Client -&amp;gt;Call: createCall()
+    activate Call
+    Call --&amp;gt;Client: Call
+    deactivate Call
+    Client -&amp;gt;Connection: new()  
+    activate Connection
+    Connection --&amp;gt; Client: Connection
+    Client -&amp;gt; Connection: addCall()
+    Client -&amp;gt; Connection: setupIOstreams()
+    Connection -&amp;gt; Connection: setupConnection()
+    Connection -&amp;gt; Connection: start() Connection线程
+    Connection --&amp;gt; Client: 
+    Client -&amp;gt; Connection: sendRpcRequest()
+    participant sendParamsExecutor &amp;lt;&amp;lt;ExecutorService&amp;gt;&amp;gt;
+    Connection -&amp;gt;sendParamsExecutor : submit()
+    activate sendParamsExecutor
+    sendParamsExecutor --&amp;gt;Connection: connection.out.write()
+    deactivate sendParamsExecutor
+    Connection --&amp;gt;Client: 
+    Client -&amp;gt;Call: wait()
+    activate Call
+    Connection -&amp;gt;Connection: receiveRpcResponse() Connection线程
+    Connection --&amp;gt;Call: setRpcResponse()
+    deactivate Connection
+    Call -&amp;gt; Call: notify()
+    Call --&amp;gt; Client: return
+    Client -&amp;gt; Call: getResponse()
+    Call --&amp;gt;Client: Writable
+    deactivate Call
+    Client --&amp;gt;ProtobufRpcEngine.Invoker: Message
+    deactivate Client
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;3总结&#34;&gt;3.总结&lt;/h1&gt;
+&lt;p&gt;以上就是HDFS Client RPC实现的主要内容，对于数据传输，失败重试和Namenode切换在客户端的实现后面会单独开篇介绍。&lt;/p&gt;
+">HDFS学习笔记之：（1）RPC客户端实现</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/l/"" data-c="

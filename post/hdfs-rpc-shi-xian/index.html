@@ -8,7 +8,7 @@
 <meta name="keywords" content="Oleg的博客">
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
-<title>215. Kth Largest Element in an Array | Oleg的博客</title>
+<title>HDFS学习笔记之：（1）RPC客户端实现 | Oleg的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1620894294067">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="215. Kth Largest Element in an Array" />
-  <meta name="keywords" content="LeetCode" />
+  <meta name="description" content="HDFS学习笔记之：（1）RPC客户端实现" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -246,20 +246,20 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#1rpc%E5%B8%B8%E8%A7%84%E5%AE%9E%E7%8E%B0">1.RPC常规实现</a></li>
+<li><a href="#2hdfs-client%E7%9A%84rpc%E5%AE%9E%E7%8E%B0">2.HDFS Client的RPC实现</a>
 <ul>
-<li>
+<li><a href="#21-clientstub%E5%AE%9E%E7%8E%B0">2.1 ClientStub实现</a>
 <ul>
-<li>
-<ul>
-<li><a href="#1quicksort">1.QuickSort</a></li>
-<li><a href="#2quickselect">2.QuickSelect</a></li>
+<li><a href="#211-protocol%E7%B1%BB">2.1.1 Protocol类：</a></li>
+<li><a href="#212-rpc%E7%B1%BB">2.1.2 RPC类：</a></li>
+<li><a href="#213-rpcengine">2.1.3 RpcEngine：</a></li>
 </ul>
 </li>
+<li><a href="#22-netclient%E5%AE%9E%E7%8E%B0">2.2 NetClient实现</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li><a href="#3%E6%80%BB%E7%BB%93">3.总结</a></li>
 </ul>
 
   </div>
@@ -525,8 +525,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/215-kth-largest-element-in-an-array/">
-      215. Kth Largest Element in an Array
+    <a class="post-title-link" href="https://olegpt.top/post/hdfs-rpc-shi-xian/">
+      HDFS学习笔记之：（1）RPC客户端实现
     </a>
   </h1>
   <div class="post-meta">
@@ -534,97 +534,296 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-03-24 20:34:10">2020-03-24</span>
+      <span class="publish-time" data-t="2021-05-13 14:33:36">2021-05-13</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/boFyc4UTy/">
-        <span>LeetCode</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
+      <span>8<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>302<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>1532<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: [3,2,1,5,6,4] and k = 2
-Output: 5
+              <h1 id="1rpc常规实现">1.RPC常规实现</h1>
+<p>RPC实现通常包含下图几个部分：</p>
+<pre><code class="language-plantuml">@startuml
+
+[Caller]
+[ClientStub]
+[NetClient]
+[NetServer]
+[ServerStub]
+[Callee]
+
+[Caller] --&gt; [ClientStub]
+[ClientStub] --&gt; [NetClient]
+[NetClient] -right-&gt; [NetServer]
+[NetServer] -up-&gt; [ServerStub]
+[ServerStub] -up-&gt; [Callee]
+
+@enduml
 </code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: [3,2,3,1,2,4,5,5,6] and k = 4
-Output: 4
-</code></pre>
-<p><strong>Note:</strong><br>
-You may assume k is always valid, 1 ≤ k ≤ array's length.</p>
-<h4 id="1quicksort">1.QuickSort</h4>
-<p>最容易想到的方案就是排序后取对应位数，但是这种方式时间复杂度为O(nlogn)</p>
-<pre><code class="language-java">class Solution {
-    public int findKthLargest(int[] nums, int k) {
-        Arrays.sort(nums);
-        return nums[nums.length - k];
-    }
+<p>Caller想要调用Callee提供的方法，可以通过直接调用ClientStub的同名方法来实现。ClientStub提供了Callee在本地的代理对象，ClientStub中的方法在被调用后会将请求参数进行封装和序列化，最终通过底层NetClient发送到服务端。</p>
+<p>服务端则由NetServer来负责监听网络请求，并将收到的请求交给ServerStub，由其进行解析和Callee的调用，最终的调用结果原路返回给客户端。</p>
+<h1 id="2hdfs-client的rpc实现">2.HDFS Client的RPC实现</h1>
+<p>HDFS的RPC实现也是类似上图中的思路：</p>
+<pre><code class="language-plantuml">@startuml
+
+skinparam linetype ortho
+
+skinparam component {
+  backgroundColor&lt;&lt;impl&gt;&gt; #AntiqueWhite
 }
-</code></pre>
-<h4 id="2quickselect">2.QuickSelect</h4>
-<p>可以借助快排的思想，当<code>数组长度 - k = pivot右边的值个数</code>时，可以认为pivot就是要找的数。这种方式平均时间复杂度为<code>n + n/2 + n/4 + ... = 2n</code>即O(n)</p>
-<pre><code class="language-java">class Solution {
 
-    static Random random = new Random(); 
+rectangle ClientImpl {
+  component ClientStub实现 &lt;&lt;impl&gt;&gt;{
+      [Protocol]
+      [RPC]
+      [RPCEngine]
+      Protocol -[hidden]r-&gt; RPC
+      RPC -[hidden]r-&gt; RPCEngine
+  }
 
-    public int findKthLargest(int[] nums, int k) {
-        return findKthLargest(nums, k, 0, nums.length);
-    }
+  component NetClient实现 &lt;&lt;impl&gt;&gt;{
+      [Client]
+      [Call]
+      [Connection]
+      Client -[hidden]r-&gt; Call
+      Call -[hidden]r-&gt; Connection
+  }
 
-    public int findKthLargest(int[] nums, int k, int start, int end) {
-        int pivot = random.nextInt(end - start) + start;
-        int firstGePivot = start + 1;
-        int pivotVal = nums[pivot];
-        swap(nums, start, pivot);
-        for (int i = start + 1; i &lt; end; i++) {
-            if (nums[i] &lt; pivotVal) {
-                swap(nums, i, firstGePivot++);
-            }
-        }
-        swap(nums, start, firstGePivot - 1);
-
-        int target = nums.length - k;
-        if (firstGePivot - 1 == target) {
-            return pivotVal;
-        } else if (firstGePivot - 1 &gt; target) {
-            return findKthLargest(nums, k, start, firstGePivot - 1);
-        } else {
-            return findKthLargest(nums, k, firstGePivot, end);
-        }
-    }
-
-    public void swap(int nums[], int a, int b) {
-        int tmp = nums[a];
-        nums[a] = nums[b];
-        nums[b] = tmp;
-    }
+  ClientStub实现 -[hidden]d--&gt; NetClient实现
 
 }
 
+
+rectangle Standard {
+  [Caller]
+  [ClientStub]
+  [NetClient]
+  [NetServer]
+  [ServerStub]
+  [Server.]
+  [Caller] -d--&gt; [ClientStub]
+  [ClientStub] -d--&gt; [NetClient]
+  [NetClient] -r--&gt; [NetServer]
+  [NetServer] -u--&gt; [ServerStub]
+  [ServerStub] -u--&gt; [Server.]
+
+  ClientStub -l-&gt; ClientStub实现
+  NetClient -l-&gt; NetClient实现
+  NetServer -r-&gt; NetServer实现
+  ServerStub -r-&gt; ServerStub实现
+  Server. -u-&gt; Server实现
+}
+
+
+rectangle ServerImpl {
+  component NetServer实现 &lt;&lt;impl&gt;&gt;{
+      interface Reactor模型
+      [Server]
+      [Listener]
+      [Reader]
+      [Handler]
+      [Selector]
+      [Responder]
+      [Server] -[hidden]d-&gt; Reactor模型
+      Reactor模型 -d-&gt; Listener
+      Reactor模型 -d-&gt; Selector
+      Reactor模型 -d-&gt; Reader
+      Reactor模型 -d-&gt; Handler
+      Reactor模型 -d-&gt; Responder
+  }
+
+
+  component ServerStub实现 &lt;&lt;impl&gt;&gt;{
+      [RpcEngine.Server]
+      [BlockingService]
+      RpcEngine.Server -[hidden]d-&gt; BlockingService
+  }
+
+  component Server实现 &lt;&lt;impl&gt;&gt;{
+      [NamenodeRpcServer]
+  }
+
+  Server实现-[hidden]d-&gt; ServerStub实现
+  Server实现 -[hidden]r-&gt; NetServer实现
+}
+
+
+@enduml
 </code></pre>
+<p>下面就针对HDFS中ClientStub和NetClient的实现来进行逐一分析：</p>
+<h2 id="21-clientstub实现">2.1 ClientStub实现</h2>
+<p>上面提到，ClientStub的主要作用是作为代理对象将客户端调用通过NetClient转发到服务端，涉及到3个(类)核心类：Protocol，RPC，RPCEngine。</p>
+<h3 id="211-protocol类">2.1.1 Protocol类：</h3>
+<p>Protocol类主要是为了定义RPC调用的接口，服务端实现这些接口，ClientStub则是根据Protocol来代理请求。HDFS定义了较多的Protcol，比较常见的有：</p>
+<ul>
+<li>ClientProtocol：用于DFSClient和Namenode交互</li>
+<li>ClientDatanodeProtocol：用于DFSClient和Datanode交互</li>
+<li>DataTransferProtocol：用于DFSClient从Datanode读写数据</li>
+<li>DatanodeProtocol：用于Datanode与Namenode交互</li>
+<li>NamenodeProtocol：ActiveNamenode与StandByNamenode交互</li>
+</ul>
+<h3 id="212-rpc类">2.1.2 RPC类：</h3>
+<p>RPC类是上层逻辑(Caller)进行RPC调用的入口类，HDFS定义的诸多Protocol都需要通过<code>Rpc.getProxy(Protocol, ...)</code>来生成ClientStub，然后才能使用ClientStub实例进行RPC调用。</p>
+<h3 id="213-rpcengine">2.1.3 RpcEngine：</h3>
+<p>考虑到ClientStub在对RPC请求进行封装和序列化时可能有多种实现，所以HDFS并没有将生成ClientStub和ServerStub的逻辑(getProxy(), getServer())全部放到RPC类中，而是将这一工作封装成RpcEngine接口，然后在RPC类中使用HashMap维护Protocol与RpcEngine实现的映射，下游实现可以按需要注册到HashMap中。这样当客户端调用<code>Rpc.getProxy(Protocol, ...)</code>时就会由对应的RpcEngine负责生成ClientStub。</p>
+<p>HDFS默认提供了两种RpcEngine实现：<code>ProtobufRpcEngine</code>和<code>WritableRpcEngine</code>，分别用于支持Protobuf和Writable两种序列化方式。下面详细介绍ProtobufRpcEngine的实现（HDFS大部分RPC调用都是通过该引擎实现，且两种引擎实现差异并不大）。</p>
+<p><strong>创建ClientStub</strong></p>
+<p>ClientStub的创建过程如下图：：</p>
+<pre><code class="language-plantuml">@startuml
+    skinparam linetype ortho
+
+skinparam component {
+    backgroundColor&lt;&lt;impl&gt;&gt; #AntiqueWhite
+}
+
+Caller-&gt;RPC: getProtocolProxy(Protocol1)
+activate RPC
+RPC-&gt;RPC: getProtocolEngine()
+RPC-&gt;ProtobufRpcEngine: getProxy(Protocol1)
+activate ProtobufRpcEngine
+participant Invoker &lt;&lt;RpcInvocationHandler&gt;&gt;
+ProtobufRpcEngine-&gt;Invoker: new
+activate Invoker
+Invoker--&gt;ProtobufRpcEngine: Invoker
+deactivate Invoker
+ProtobufRpcEngine-&gt;&quot;Protocol1$Proxy&quot;: Proxy.newProxyInstance(Protocol1, Invoker)
+activate &quot;Protocol1$Proxy&quot;
+&quot;Protocol1$Proxy&quot; --&gt; ProtobufRpcEngine: Protocol1  
+deactivate &quot;Protocol1$Proxy&quot;
+ProtobufRpcEngine--&gt;RPC: Protocol1
+deactivate ProtobufRpcEngine
+RPC --&gt; Caller: Protocol1
+deactivate RPC
+
+@enduml
+</code></pre>
+<p>从这里就可以看到RPC.getProtocolEngine()从本地HashMap获取到当前协议的RpcEngine为ProtobufRpcEngine，然后调用ProtobufRpcEngine.getProxy()创建了一个代理类返回给Caller，对于该代理类的所有请求都会由Invoker进行序列化并通过底层NetClient发送到Server端。</p>
+<p><strong>ClientStub调用</strong></p>
+<pre><code class="language-plantuml">@startuml
+
+skinparam linetype ortho
+
+skinparam component {
+    backgroundColor&lt;&lt;impl&gt;&gt; #AntiqueWhite
+}
+
+Caller-&gt;&quot;Protocol1$Proxy&quot;: Protocol1.function1()
+activate &quot;Protocol1$Proxy&quot;
+&quot;Protocol1$Proxy&quot;-&gt;Invoker: invoke()
+activate Invoker
+Invoker-&gt;RpcRequestWrapper: new()
+activate RpcRequestWrapper
+RpcRequestWrapper--&gt;Invoker: RpcRequestWrapper
+deactivate RpcRequestWrapper
+Invoker-&gt;Client: call(Writable RpcRequestWrapper)
+activate Client
+Client--&gt;Invoker: RpcResponseWrapper
+deactivate Client
+Invoker--&gt;&quot;Protocol1$Proxy&quot;: return
+deactivate Invoker
+&quot;Protocol1$Proxy&quot;--&gt;Caller: return
+deactivate &quot;Protocol1$Proxy&quot;
+
+@enduml
+</code></pre>
+<p>从上图可以看出，对RPC请求的序列化和发送操作实际是由Invoker来执行的，Invoker会将调用方法和参数封装成RpcRequestWrapper发送给Server端，同时将服务端返回的RpcResponseWrapper解析成方法的返回类型返回给Caller。</p>
+<p>WritableRpcEngine的实现也是类似的，只是将请求和响应的序列化方式切换成了Writable，将RpcRequest(Response)Wrapper换成了内部类Invocation，这里附上类图，就不再详细介绍了</p>
+<pre><code class="language-platuml">@startuml
+
+'skinparam linetype ortho
+
+interface RpcEngine{
+    +getProxy()
+    +getServer()
+}
+class RPC
+abstract Server
+RPC +-- Server
+interface RpcInvocationHandler {
+    +ConnectionId getConnectionId()
+    +Object invoke(proxy, method, args)
+}
+
+rectangle WritableRpcEngine { 
+    RpcEngine &lt;|.. WritableRpcEngine
+    WritableRpcEngine *-- Invoker
+    WritableRpcEngine *-- Invocation
+    class &quot;Server&quot; as Server1
+    WritableRpcEngine *-- Server1
+    Server &lt;|-- Server1
+    Server1 *-- WritableRpcInvoker
+    RpcInvocationHandler &lt;|.. Invoker
+}
+
+
+rectangle ProtobufRpcEngine { 
+    RpcEngine &lt;|.. ProtobufRpcEngine
+    class &quot;Server&quot; as Server2
+    Server &lt;|-- Server2
+    ProtobufRpcEngine *-- Server2
+    Server2 *-- ProtobufRpcInvoker
+    class &quot;Invoker&quot; as invoker2
+    ProtobufRpcEngine *-- invoker2
+    ProtobufRpcEngine *-- RpcWrapper
+    RpcWrapper &lt;|.. RpcMessageWithHeader
+    RpcWrapper &lt;|.. RpcResponseWrapper
+    ProtobufRpcEngine *-- RpcResponseWrapper
+    RpcMessageWithHeader &lt;|-- RpcRequestWrapper
+    ProtobufRpcEngine *-- RpcRequestWrapper
+    RpcInvocationHandler &lt;|.. invoker2
+}
+@enduml
+</code></pre>
+<h2 id="22-netclient实现">2.2 NetClient实现</h2>
+<p>NetClient由Client类实现，Client类包含两个核心的内部类：Call和Connection；Call主要是记录此次调用的（id，请求，响应，重试次数等），而Connection则是一个线程类，封装了底层的网络连接（server地址，Socket，In/OutputStream等）用于和Server间的网络通信。</p>
+<pre><code class="language-plantuml">@startuml
+    ProtobufRpcEngine.Invoker -&gt;Client: call(RpcRequestWrapper)
+    activate Client
+    Client -&gt;Call: createCall()
+    activate Call
+    Call --&gt;Client: Call
+    deactivate Call
+    Client -&gt;Connection: new()  
+    activate Connection
+    Connection --&gt; Client: Connection
+    Client -&gt; Connection: addCall()
+    Client -&gt; Connection: setupIOstreams()
+    Connection -&gt; Connection: setupConnection()
+    Connection -&gt; Connection: start() Connection线程
+    Connection --&gt; Client: 
+    Client -&gt; Connection: sendRpcRequest()
+    participant sendParamsExecutor &lt;&lt;ExecutorService&gt;&gt;
+    Connection -&gt;sendParamsExecutor : submit()
+    activate sendParamsExecutor
+    sendParamsExecutor --&gt;Connection: connection.out.write()
+    deactivate sendParamsExecutor
+    Connection --&gt;Client: 
+    Client -&gt;Call: wait()
+    activate Call
+    Connection -&gt;Connection: receiveRpcResponse() Connection线程
+    Connection --&gt;Call: setRpcResponse()
+    deactivate Connection
+    Call -&gt; Call: notify()
+    Call --&gt; Client: return
+    Client -&gt; Call: getResponse()
+    Call --&gt;Client: Writable
+    deactivate Call
+    Client --&gt;ProtobufRpcEngine.Invoker: Message
+    deactivate Client
+@enduml
+</code></pre>
+<h1 id="3总结">3.总结</h1>
+<p>以上就是HDFS Client RPC实现的主要内容，对于数据传输，失败重试和Namenode切换在客户端的实现后面会单独开篇介绍。</p>
 
             </div>
             
@@ -637,7 +836,7 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.</p>
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://olegpt.top/post/215-kth-largest-element-in-an-array/" title="215. Kth Largest Element in an Array">https://olegpt.top/post/215-kth-largest-element-in-an-array/</a>
+      <a href="https://olegpt.top/post/hdfs-rpc-shi-xian/" title="HDFS学习笔记之：（1）RPC客户端实现">https://olegpt.top/post/hdfs-rpc-shi-xian/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -646,21 +845,15 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.</p>
   </ul>
   <div class="tags">
     
-      <a href="https://olegpt.top/tag/boFyc4UTy/"># LeetCode</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="406. Queue Reconstruction by Height" href="https://olegpt.top/post/406-queue-reconstruction-by-height/">406. Queue Reconstruction by Height</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="406. Queue Reconstruction by Height" href="https://olegpt.top/post/406-queue-reconstruction-by-height/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="CSLMap和CCSMap" href="https://olegpt.top/post/cslmap-he-ccsmap/">CSLMap和CCSMap</a>
-        <a class="nav-mobile-next" title="CSLMap和CCSMap" href="https://olegpt.top/post/cslmap-he-ccsmap/">下一篇</a>
+        <a class="nav-pc-next" title="Lambda表达式与匿名内部类" href="https://olegpt.top/post/l/">Lambda表达式与匿名内部类</a>
+        <a class="nav-mobile-next" title="Lambda表达式与匿名内部类" href="https://olegpt.top/post/l/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
