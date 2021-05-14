@@ -8,7 +8,7 @@
 <meta name="keywords" content="Oleg的博客">
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
-<title>Oleg的博客</title>
+<title>HDFS学习笔记之：（2）RPC服务端实现 | Oleg的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1620987170597">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,6 +38,8 @@
 
 
 
+  <meta name="description" content="HDFS学习笔记之：（2）RPC服务端实现" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -170,10 +172,26 @@
   <div class="main-continer">
     
     <div
-      class="section-layout  pisces">
+      class="section-layout pisces ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -222,295 +240,641 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#1-netserver%E5%AE%9E%E7%8E%B0">1. NetServer实现</a>
+<ul>
+<li><a href="#11-reactor%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0">1.1 Reactor模型实现</a></li>
+<li><a href="#12-server%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B">1.2 Server创建流程</a></li>
+<li><a href="#13-server%E5%90%AF%E5%8A%A8">1.3 Server启动：</a></li>
+<li><a href="#14-server%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86">1.4 Server请求处理</a></li>
+</ul>
+</li>
+<li><a href="#2-serverstub%E5%AE%9E%E7%8E%B0">2. ServerStub实现</a></li>
+<li><a href="#3-%E6%80%BB%E7%BB%93">3. 总结</a></li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'pisces';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box tag-line box-shadow-wrapper">
-          <section class="section tags-section posts-expand bg-color">
-            <div class="padding-wrapper">
-  <div class="tag-timeline-box">
-    <div class="tag-timeline-wrapper">
-      <div class="tag-timeline-title">
-        <h2>
-          LeetCode
-          <small class="language" data-lan="tag">标签</small>
-        </h2>
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
       </div>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/70-climbing-stairs/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              08-04
-              <small>70. Climbing Stairs</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              07-15
-              <small>最短路径问题的解法</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/739-daily-temperatures/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              07-01
-              <small>739. Daily Temperatures</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/287-find-the-duplicate-number/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              06-17
-              <small>287. Find the Duplicate Number</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/3-longest-substring-without-repeating-characters/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              06-15
-              <small>3. Longest Substring Without Repeating Characters</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/chou-yang-suan-fa-zhi-shui-tang-chou-yang-reservoir-sampling/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              05-12
-              <small>抽样算法之：水塘抽样（Reservoir Sampling）</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/347-top-k-frequent-elements/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              04-27
-              <small>347. Top K Frequent Elements</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/438-find-all-anagrams-in-a-string/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              04-15
-              <small>438. Find All Anagrams in a String</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/208-implement-trie-prefix-tree/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              04-08
-              <small>208. Implement Trie (Prefix Tree)</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/494-target-sum/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              04-01
-              <small>494. Target Sum</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/406-queue-reconstruction-by-height/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              03-31
-              <small>406. Queue Reconstruction by Height</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/215-kth-largest-element-in-an-array/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              03-24
-              <small>215. Kth Largest Element in an Array</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/560-subarray-sum-equals-k/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              04-04
-              <small>560. Subarray Sum Equals K</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://olegpt.top/post/136-single-number/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              02-25
-              <small>136. Single Number</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">
+      HDFS学习笔记之：（2）RPC服务端实现
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2021-05-13 16:54:52">2021-05-13</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>8<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>1581<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</section>
+            <div class="post-body next-md-body" id="post_body">
+              <p>上一篇介绍了RPC客户端的核心实现，这一篇继续来看服务端的实现。服务端的NetServer由Server类及其子类实现，而ServerStub则由RpcInvoker接口及其实现类来实现。</p>
+<pre><code class="language-plantuml">@startuml
+    'skinparam linetype ortho
+    abstract &quot;Server&quot; as ServerTop #Yellow
+    class RPC
+    abstract Server {
+
+    }
+    ServerTop &lt;|-d- Server
+    RPC +-- Server
+    interface RpcInvoker #Yellow {
+        call(Server server, String protocol, Writable rpcRequest, long receiveTime)
+    }
+    RPC +-- RpcInvoker
+    class WritableRpcEngine
+    class ProtobufRpcEngine
+
+
+    class &quot;Server&quot; as Server1 
+    class &quot;Server&quot; as Server2
+
+    WritableRpcEngine +-d- Server1
+    ProtobufRpcEngine +-d- Server2
+
+    Server1 .u.|&gt; Server
+    Server2 .u.|&gt; Server
+    Server1 +-d- WritableRpcInvoker
+    Server2 +-d- ProtobufRpcInvoker
+    WritableRpcInvoker .u.|&gt; RpcInvoker
+    ProtobufRpcInvoker .u|&gt; RpcInvoker
+
+    class WritableRpcInvoker
+    class ProtobufRpcInvoker
+@enduml
+</code></pre>
+<!-- more -->
+<h1 id="1-netserver实现">1. NetServer实现</h1>
+<p>Server抽象类包含了HDFS对于NetServer实现的主要内容，其子类RPC.Server以及RpcEngine.Server只是增加了：引擎与协议映射注册，RpcInvoker的实现，RpcInvoker与协议映射注册。</p>
+<h2 id="11-reactor模型实现">1.1 Reactor模型实现</h2>
+<p>为了保证服务端性能Server并没有像Client端一样为每一个连接创建一个线程，而是使用Reactor模型来优化性能。</p>
+<pre><code class="language-plantuml">@startuml
+    'skinparam linetype ortho
+    'skinparam linetype polyline
+    rectangle Clients {
+        cloud Client1        
+        cloud Client2        
+        cloud ClientN
+        Client1 -[hidden]d-&gt; Client2        
+        Client2 -[hidden]d-&gt; ClientN        
+    }
+    Clients .[hidden]r.&gt; Server
+
+    rectangle Server {
+        agent Listener
+        collections Readers 
+        collections Handlers
+        agent Responder
+        queue CallQueue
+        Listener -d-&gt; Readers: 2. 注册readSelector到新SocketChannel
+        Readers -r-&gt; CallQueue: 4. 请求加入CallQueue
+        CallQueue -d-&gt; Handlers: 5.消费并处理请求
+        Handlers -l-&gt; Responder: 6. Handler线程未能发送完响应的连接
+    }
+
+    Responder .[norank]u.&gt; Client1
+    Responder .[norank]u.&gt; Client2
+    Responder .[norank]l.&gt; ClientN
+
+    Client1 .u.&gt; Listener: 1. acceptSelector.select()
+    ClientN .u.&gt; Listener
+    Client2 .u.&gt; Listener
+    
+@enduml
+</code></pre>
+<p>如上图所示：</p>
+<ul>
+<li>Listener负责监听新建立的连接，并将连接绑定到一组Reader中的某一个</li>
+<li>每个Reader通过readSelector监听到读取事件时会进行数据读取，读取到一个完整请求后将请求加入队列中</li>
+<li>Handlers负责从队列中不断消费和处理请求，并将最终结果写入OutputStream。没有写入完成的会注册到Responder。</li>
+<li>Responder负责将监听可写入事件，将Handlers没有写入完成的数据继续写入（典型场景：网络抖动）<br>
+这部分的实现是使用Java自带的NIO实现，大家可自行了解。</li>
+</ul>
+<h2 id="12-server创建流程">1.2 Server创建流程</h2>
+<p>以Namenode为例，Namenode在启动时会创建底层NetServer，启动流程如下：</p>
+<pre><code class="language-plantuml">@startuml
+
+NameNode -&gt; NameNode: createRpcServer()
+NameNode -&gt;NameNodeRpcServer: new()
+activate NameNodeRpcServer
+NameNodeRpcServer -&gt; RPC: setProtocolEngine()
+Note over RPC: 1.创建各协议BlockingService
+NameNodeRpcServer -&gt; BlockingService: new(ClientNamenodeProtocolServersideTranslatorPB)
+Note over RPC, BlockingService: 2.创建clientRpcServer和serviceRpcServer
+NameNodeRpcServer -&gt;RPC.Builder: build()
+RPC.Builder -&gt;ProtobufRpcEngine: getServer()
+
+ProtobufRpcEngine -&gt;Server: new()
+Server -&gt;Listener: new()
+Listener -&gt;Reader: new()
+Reader --&gt;Listener: Reader
+Listener -&gt; Reader: start()
+loop doRunLoop()新线程读取请求
+    Reader -&gt; Reader: doRead()
+    Reader -&gt;Selector: select() &amp; selectedKeys()
+    Selector --&gt;Reader: Iterator&lt;SelectionKey&gt;
+end
+Listener --&gt;Server: Listener
+Server -&gt;Handler: new()
+Handler --&gt;Server: Handler 
+Server -&gt;Responder: new()
+Responder --&gt;Server: Responder
+Server --&gt;ProtobufRpcEngine: Server
+ProtobufRpcEngine --&gt;RPC.Builder: Server
+RPC.Builder --&gt;NameNodeRpcServer: Server
+Note over RPC: 3.注册剩余支持的协议及BlockingService
+NameNodeRpcServer -&gt; RPC: setProtocolEngine()
+NameNodeRpcServer -&gt; Server: addProtocl()
+NameNodeRpcServer --&gt;NameNode: NameNodeRpcServer
+deactivate NameNodeRpcServer
+
+@enduml
+</code></pre>
+<p>可以看到NamNodeRpcServer启动了两个Server：clientRpcServer和serviceRpcServer，分别用于处理客户端请求和Datanode请求。</p>
+<h2 id="13-server启动">1.3 Server启动：</h2>
+<p>Server启动流程较为简单，因为大部分实现都是线程类，直接启动线程即可：</p>
+<pre><code class="language-plantuml">@startuml
+
+NameNode -&gt; NameNode: startCommonServices()
+NameNode -&gt; NameNodeRpcServer: start()
+activate NameNodeRpcServer
+Note over Server: 4.启动clientRpcServer serviceRpcServer
+NameNodeRpcServer -&gt; Server: start()
+activate Server
+Server -&gt; Responder: Thread.start()
+activate Responder
+Responder --&gt; Server: void
+deactivate Responder
+Server -&gt; Listener: Thread.start()
+activate Listener
+Listener --&gt; Server: void
+deactivate Listener
+Server -&gt; Handler: Thread.start()
+activate Handler
+Handler --&gt; Server: void
+deactivate Handler
+Server --&gt; NameNodeRpcServer: void
+deactivate Server
+NameNodeRpcServer --&gt; NameNode
+deactivate NameNodeRpcServer
+@enduml
+</code></pre>
+<h2 id="14-server请求处理">1.4 Server请求处理</h2>
+<p>Listener实例创建时会注册一个acceptSelector到ServerSocketChannel，通过监听该channel的accept事件来分配连接到Reader：</p>
+<pre><code class="language-plantuml">@startuml
+
+    loop 新线程通过acceptSelector获取新io事件
+        Listener -&gt; Selector: select() &amp;&amp; selectedKeys()
+        activate Selector
+        Selector --&gt; Listener: SelectionKey
+        deactivate Selector
+        Listener -&gt; Listener: doAccept()
+        Listener -&gt; Reader: 轮询获取一个Reader，addConnection()加入其pendingConnections
+    end
+@enduml
+</code></pre>
+<p>分配到Reader的channel会加入pendingConnections,reader会不断读取该队列并注册readSelector到该队列，监听到OP_READ事件后读取数据，读取到一个完整请求后将其加入队列</p>
+<pre><code class="language-plantuml">@startuml
+
+    loop 新线程通过readSelector获取新io事件
+        Reader -&gt; Channel: register()将readSelector注册到pendingConnections中的连接
+        activate Channel
+        Channel --&gt; Reader: return
+        deactivate Channel
+        Reader -&gt; Selector: select() &amp;&amp; selectedKeys()
+        activate Selector
+        Selector --&gt; Reader: SelectionKey
+        deactivate Reader
+        deactivate Selector
+        Reader -&gt; Reader: doRead()
+        Reader -&gt; Call: new(RpcRequestHeader, RpcRequestWrapper)
+        activate Call
+        Call --&gt; Reader: Call
+        deactivate Call
+        Reader -&gt; CallQueueManager: put(Call)
+        activate CallQueueManager
+        CallQueueManager --&gt; Reader: return
+        deactivate CallQueueManager
+    end
+@enduml
+</code></pre>
+<p>Handler从队列中取出请求进行处理，请求处理完后写入响应，但如果响应数据较大或者当前网络状况不佳则可能并不能完全发送完成，所以这里引入了Responder，Handler会将writeSelector注册到未能完全写入的channel，Responder线程则会根据writeSelector筛选出当前可写的channel继续写入剩余的响应数据</p>
+<pre><code class="language-plantuml">@startuml
+    loop 新线程通过CallQueueManager获取新Call
+        Handler -&gt; CallQueueManager: take()
+        activate CallQueueManager
+        CallQueueManager --&gt; Handler: Call
+        deactivate CallQueueManager
+        Handler -&gt; RPC.Server: call(Call)
+        activate RPC.Server
+        RPC.Server -&gt; Server: getRpcInvoker()
+        activate Server
+        Server --&gt; RPC.Server: ProtobufRpcInvoker
+        RPC.Server -&gt; ProtobufRpcInvoker: call()
+        activate ProtobufRpcInvoker
+        ProtobufRpcInvoker -&gt; RPC.Server: getProtocolImpl()
+        activate RPC.Server
+        RPC.Server --&gt; ProtobufRpcInvoker: BlockingService
+        deactivate RPC.Server
+        ProtobufRpcInvoker -&gt; BlockingService: callBlockingMethod()
+        activate BlockingService
+        BlockingService --&gt; ProtobufRpcInvoker: Message
+        deactivate BlockingService
+        ProtobufRpcInvoker --&gt; RPC.Server: Message
+        deactivate ProtobufRpcInvoker
+        RPC.Server --&gt; Handler: RpcResponseWrapper(Message)
+        deactivate RPC.Server
+        Handler -&gt; Server: setUpResponse(RpcResponseWrapper)
+        Server -&gt; Responder: doRespond(Call)
+        activate Responder
+        Responder --&gt; Server: return
+        deactivate Responder
+        Server --&gt; Handler: return
+        deactivate Server
+    end
+        group Responder Thread Loop
+            Responder -&gt; SocketChannel: write
+            activate SocketChannel
+            SocketChannel --&gt; Responder: return
+            deactivate SocketChannel 
+        end 
+@enduml
+</code></pre>
+<h1 id="2-serverstub实现">2. ServerStub实现</h1>
+<p>ServerStub主要作用在于解析ClientStub发送的RPC请求并调用本地提供的服务。HDFS中ServerStub的角色由RpcInvoker的实现类来实现，RpcInvoker会在收到请求时按照protocol查找对应的实现类（即Server实现），然后将请求进行解析并调用实现类，并返回调用结果。</p>
+<p>另外ProtobufRpcEngine在服务端和在客户端一样需要一个ClientNamenodeProtocolTranslatorPB作为适配器将底层ClientNamenodeProtocolPB转换成对ClientProtocol实现类的调用，这里就不再赘述。</p>
+<h1 id="3-总结">3. 总结</h1>
+<p>了解了前两篇的内容后，客户端和服务端RPC通信链路可以完整的串联起来了：</p>
+<pre><code class="language-plantuml">@startuml
+
+agent DFSClient &lt;&lt;Caller&gt;&gt;
+
+rectangle &quot;&lt;&lt;ClientStub&gt;&gt;&quot; as clientStub {
+    agent ClientNamenodeProtocolTranslatorPB
+    agent &quot;ClientProtocol$Proxy&quot; as proxy 
+
+    ClientNamenodeProtocolTranslatorPB -d-&gt; proxy: ClientNamenodeProtocolPB
+}
+
+
+DFSClient -d-&gt; ClientNamenodeProtocolTranslatorPB: ClientProtocol
+
+agent Client &lt;&lt;NetClient&gt;&gt;
+proxy -d-&gt; Client: Writable \n (ProtonbufRpcEngine使用其子类RpcRequestWrapper，\n WritableRpcEngine使用其子类Invocation)
+
+agent Server &lt;&lt;NetServer&gt;&gt;
+
+Client -r-&gt; Server: RpcRequestHeaderProto + Writable
+rectangle &quot;&lt;&lt;ServerStub&gt;&gt;&quot; {
+    agent RpcInvoker
+    agent ClientNamenodeProtocolServerSideTranslatorPB
+    RpcInvoker -u-&gt; ClientNamenodeProtocolServerSideTranslatorPB: ClientNamenodeProtocolPB
+}
+Server -u-&gt; RpcInvoker: Writable
+agent NamenodeRpcServer &lt;&lt;Callee&gt;&gt;
+ClientNamenodeProtocolServerSideTranslatorPB -u-&gt; NamenodeRpcServer: ClientProtocol
+@enduml
+</code></pre>
+
+            </div>
+            
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      Oleg
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/" title="HDFS学习笔记之：（2）RPC服务端实现">https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="HDFS学习笔记之：（1）RPC客户端实现" href="https://olegpt.top/post/hdfs-rpc-shi-xian/">HDFS学习笔记之：（1）RPC客户端实现</a>
+        <a class="nav-mobile-next" title="HDFS学习笔记之：（1）RPC客户端实现" href="https://olegpt.top/post/hdfs-rpc-shi-xian/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
 </div>
-          </section>
+            
+            
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '9642215384e94cb128eb',
+    clientSecret: 'deda26b0dc46e68fb2079597b90d6924dfb5083e',
+    repo: 'blog_comment',
+    owner: 'OlegPt',
+    admin: ['OlegPt'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+    
+    
+  
+
+          </div>
         </div>
       </div>
     </div>
@@ -702,6 +1066,253 @@ parsePlantumlCodeBlocks("http://www.plantuml.com/plantuml","language-plantuml")
   }
 
 </script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px;border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
+</script>
+    <div class="reward-mask" style="display: none;">
+  <div class="reward-relative">
+    <span class="close" aria-hidden="true">x</span>
+    <div class="reward-body">
+      <h2>感谢您的支持，我会继续努力的!</h2>
+      <div class="reward-img-box">
+        <div style="position: relative; width: 140px; height: 140px;">
+          
+          
+          
+        </div>
+      </div>
+      <p class="reward-word">扫码打赏，你说多少就多少</p>
+      <p class="reward-tip">打开微信扫一扫，即可进行扫码打赏哦</p>
+    </div>
+    <div class="bottom">
+      
+      
+    </div>
+  </div>
+</div>
+<style>
+  .reward-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000054;
+  }
+
+  .reward-relative {
+    position: relative;
+    width: 480px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -205px;
+  }
+
+  .reward-relative .close {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #929292;
+  }
+
+  .reward-body {
+    padding: 40px 20px 20px;
+  }
+
+  .bottom {
+    display: flex;
+  }
+
+  .reward-btn {
+    text-align: center;
+  }
+
+  .reward-btn-text {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #ff9734;
+    color: #FFF;
+    margin-top: 20px;
+  }
+
+  .pay-text {
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    transition: all .2s linear;
+  }
+
+  .pay-text:hover {
+    background-color: #a5a5a536;
+  }
+
+  .reward-body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 20px;
+  }
+
+  .reward-body h2:after,
+  .reward-body h2:before {
+    font-family: Arial, Helvetica, sans-serif;
+    background: 0 0;
+    width: 0;
+    height: 0;
+    font-style: normal;
+    color: #eee;
+    font-size: 80px;
+    position: absolute;
+    top: 20px;
+  }
+
+  .reward-body h2:before {
+    content: '\201c';
+    left: 50px;
+  }
+
+  .reward-body h2:after {
+    content: '\201d';
+    right: 80px;
+  }
+
+  .reward-img-box {
+    display: inline-block;
+    padding: 10px;
+    border: 6px solid #ea5f00;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .reward-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .reward-relative {
+      height: 100%;
+      top: 0px;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .reward-relative .bottom {
+      flex-direction: column;
+    }
+
+    .reward-relative .pay-text {
+      width: 80%;
+      margin: 5px auto;
+      border: 1px solid silver;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .reward-body h2:after {
+      right: 40px;
+    }
+
+    .reward-body h2:after,
+    .reward-body h2:before {
+      font-size: 60px;
+    }
+
+    .reward-body h2:before {
+      left: 20px;
+    }
+  }
+</style>
+<script>
+  !function () {
+    var mask = document.querySelector('.reward-mask');
+    let close = document.querySelector('.reward-relative .close');
+    let rewardBtn = document.querySelector('.reward-btn');
+
+    let zfb = document.querySelector('#zfb'),
+      wx = document.querySelector('#wx'),
+      zfbBtn = document.querySelector('#zfbBtn'),
+      wxBtn = document.querySelector('#wxBtn');
+
+    if (zfbBtn && wxBtn) {
+      zfbBtn.addEventListener('click', () => {
+        window.Velocity(zfb, 'transition.slideLeftIn', {
+          duration: 400
+        });
+        window.Velocity(wx, 'transition.slideRightOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+
+      wxBtn.addEventListener('click', () => {
+        window.Velocity(wx, 'transition.slideRightIn', {
+          duration: 400
+        });
+        window.Velocity(zfb, 'transition.slideLeftOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+    }
+
+    rewardBtn.addEventListener('click', (e) => {
+      window.Velocity(mask, 'transition.slideDownIn', {
+        duration: 400
+      })
+    });
+
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.Velocity(mask, 'transition.slideUpOut', {
+        duration: 400
+      })
+    })
+  }()
+</script>
+
   </div>
 </body>
 
@@ -3338,7 +3949,6 @@ public void test1(){
     speed: 200
   });
 </script>
-
 
 
 

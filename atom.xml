@@ -2,13 +2,92 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://olegpt.top</id>
     <title>Oleg的博客</title>
-    <updated>2021-05-13T08:44:51.366Z</updated>
+    <updated>2021-05-14T10:13:05.565Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://olegpt.top"/>
     <link rel="self" href="https://olegpt.top/atom.xml"/>
     <logo>https://olegpt.top/images/avatar.png</logo>
     <icon>https://olegpt.top/favicon.ico</icon>
     <rights>All rights reserved 2021, Oleg的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[HDFS学习笔记之：（2）RPC服务端实现]]></title>
+        <id>https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/</id>
+        <link href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">
+        </link>
+        <updated>2021-05-13T08:54:52.000Z</updated>
+        <summary type="html"><![CDATA[<p>上一篇介绍了RPC客户端的核心实现，这一篇继续来看服务端的实现。服务端的NetServer由Server类及其子类实现，而ServerStub则由RpcInvoker接口及其实现类来实现。</p>
+<pre><code class="language-plantuml">@startuml
+    'skinparam linetype ortho
+    abstract &quot;Server&quot; as ServerTop #Yellow
+    class RPC
+    abstract Server {
+
+    }
+    ServerTop &lt;|-d- Server
+    RPC +-- Server
+    interface RpcInvoker #Yellow {
+        call(Server server, String protocol, Writable rpcRequest, long receiveTime)
+    }
+    RPC +-- RpcInvoker
+    class WritableRpcEngine
+    class ProtobufRpcEngine
+
+
+    class &quot;Server&quot; as Server1 
+    class &quot;Server&quot; as Server2
+
+    WritableRpcEngine +-d- Server1
+    ProtobufRpcEngine +-d- Server2
+
+    Server1 .u.|&gt; Server
+    Server2 .u.|&gt; Server
+    Server1 +-d- WritableRpcInvoker
+    Server2 +-d- ProtobufRpcInvoker
+    WritableRpcInvoker .u.|&gt; RpcInvoker
+    ProtobufRpcInvoker .u|&gt; RpcInvoker
+
+    class WritableRpcInvoker
+    class ProtobufRpcInvoker
+@enduml
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>上一篇介绍了RPC客户端的核心实现，这一篇继续来看服务端的实现。服务端的NetServer由Server类及其子类实现，而ServerStub则由RpcInvoker接口及其实现类来实现。</p>
+<pre><code class="language-plantuml">@startuml
+    'skinparam linetype ortho
+    abstract &quot;Server&quot; as ServerTop #Yellow
+    class RPC
+    abstract Server {
+
+    }
+    ServerTop &lt;|-d- Server
+    RPC +-- Server
+    interface RpcInvoker #Yellow {
+        call(Server server, String protocol, Writable rpcRequest, long receiveTime)
+    }
+    RPC +-- RpcInvoker
+    class WritableRpcEngine
+    class ProtobufRpcEngine
+
+
+    class &quot;Server&quot; as Server1 
+    class &quot;Server&quot; as Server2
+
+    WritableRpcEngine +-d- Server1
+    ProtobufRpcEngine +-d- Server2
+
+    Server1 .u.|&gt; Server
+    Server2 .u.|&gt; Server
+    Server1 +-d- WritableRpcInvoker
+    Server2 +-d- ProtobufRpcInvoker
+    WritableRpcInvoker .u.|&gt; RpcInvoker
+    ProtobufRpcInvoker .u|&gt; RpcInvoker
+
+    class WritableRpcInvoker
+    class ProtobufRpcInvoker
+@enduml
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[HDFS学习笔记之：（1）RPC客户端实现]]></title>
         <id>https://olegpt.top/post/hdfs-rpc-shi-xian/</id>
@@ -71,12 +150,5 @@
         <link href="https://olegpt.top/post/287-find-the-duplicate-number/">
         </link>
         <updated>2020-06-17T12:34:49.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[3. Longest Substring Without Repeating Characters]]></title>
-        <id>https://olegpt.top/post/3-longest-substring-without-repeating-characters/</id>
-        <link href="https://olegpt.top/post/3-longest-substring-without-repeating-characters/">
-        </link>
-        <updated>2020-06-15T12:38:28.000Z</updated>
     </entry>
 </feed>

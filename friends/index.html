@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1620895485930">
+<link rel="shortcut icon" href="/favicon.ico?v=1620987170597">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -184,7 +184,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">25</span>
+        <span class="site-item-stat-count">26</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -502,6 +502,278 @@ parsePlantumlCodeBlocks("http://www.plantuml.com/plantuml","language-plantuml")
     <div class="result" id="result">
       
       <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/"" data-c="
+          &lt;p&gt;上一篇介绍了RPC客户端的核心实现，这一篇继续来看服务端的实现。服务端的NetServer由Server类及其子类实现，而ServerStub则由RpcInvoker接口及其实现类来实现。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+    &#39;skinparam linetype ortho
+    abstract &amp;quot;Server&amp;quot; as ServerTop #Yellow
+    class RPC
+    abstract Server {
+
+    }
+    ServerTop &amp;lt;|-d- Server
+    RPC +-- Server
+    interface RpcInvoker #Yellow {
+        call(Server server, String protocol, Writable rpcRequest, long receiveTime)
+    }
+    RPC +-- RpcInvoker
+    class WritableRpcEngine
+    class ProtobufRpcEngine
+
+
+    class &amp;quot;Server&amp;quot; as Server1 
+    class &amp;quot;Server&amp;quot; as Server2
+
+    WritableRpcEngine +-d- Server1
+    ProtobufRpcEngine +-d- Server2
+
+    Server1 .u.|&amp;gt; Server
+    Server2 .u.|&amp;gt; Server
+    Server1 +-d- WritableRpcInvoker
+    Server2 +-d- ProtobufRpcInvoker
+    WritableRpcInvoker .u.|&amp;gt; RpcInvoker
+    ProtobufRpcInvoker .u|&amp;gt; RpcInvoker
+
+    class WritableRpcInvoker
+    class ProtobufRpcInvoker
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;!-- more --&gt;
+&lt;h1 id=&#34;1-netserver实现&#34;&gt;1. NetServer实现&lt;/h1&gt;
+&lt;p&gt;Server抽象类包含了HDFS对于NetServer实现的主要内容，其子类RPC.Server以及RpcEngine.Server只是增加了：引擎与协议映射注册，RpcInvoker的实现，RpcInvoker与协议映射注册。&lt;/p&gt;
+&lt;h2 id=&#34;11-reactor模型实现&#34;&gt;1.1 Reactor模型实现&lt;/h2&gt;
+&lt;p&gt;为了保证服务端性能Server并没有像Client端一样为每一个连接创建一个线程，而是使用Reactor模型来优化性能。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+    &#39;skinparam linetype ortho
+    &#39;skinparam linetype polyline
+    rectangle Clients {
+        cloud Client1        
+        cloud Client2        
+        cloud ClientN
+        Client1 -[hidden]d-&amp;gt; Client2        
+        Client2 -[hidden]d-&amp;gt; ClientN        
+    }
+    Clients .[hidden]r.&amp;gt; Server
+
+    rectangle Server {
+        agent Listener
+        collections Readers 
+        collections Handlers
+        agent Responder
+        queue CallQueue
+        Listener -d-&amp;gt; Readers: 2. 注册readSelector到新SocketChannel
+        Readers -r-&amp;gt; CallQueue: 4. 请求加入CallQueue
+        CallQueue -d-&amp;gt; Handlers: 5.消费并处理请求
+        Handlers -l-&amp;gt; Responder: 6. Handler线程未能发送完响应的连接
+    }
+
+    Responder .[norank]u.&amp;gt; Client1
+    Responder .[norank]u.&amp;gt; Client2
+    Responder .[norank]l.&amp;gt; ClientN
+
+    Client1 .u.&amp;gt; Listener: 1. acceptSelector.select()
+    ClientN .u.&amp;gt; Listener
+    Client2 .u.&amp;gt; Listener
+    
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如上图所示：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Listener负责监听新建立的连接，并将连接绑定到一组Reader中的某一个&lt;/li&gt;
+&lt;li&gt;每个Reader通过readSelector监听到读取事件时会进行数据读取，读取到一个完整请求后将请求加入队列中&lt;/li&gt;
+&lt;li&gt;Handlers负责从队列中不断消费和处理请求，并将最终结果写入OutputStream。没有写入完成的会注册到Responder。&lt;/li&gt;
+&lt;li&gt;Responder负责将监听可写入事件，将Handlers没有写入完成的数据继续写入（典型场景：网络抖动）&lt;br&gt;
+这部分的实现是使用Java自带的NIO实现，大家可自行了解。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;12-server创建流程&#34;&gt;1.2 Server创建流程&lt;/h2&gt;
+&lt;p&gt;以Namenode为例，Namenode在启动时会创建底层NetServer，启动流程如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+NameNode -&amp;gt; NameNode: createRpcServer()
+NameNode -&amp;gt;NameNodeRpcServer: new()
+activate NameNodeRpcServer
+NameNodeRpcServer -&amp;gt; RPC: setProtocolEngine()
+Note over RPC: 1.创建各协议BlockingService
+NameNodeRpcServer -&amp;gt; BlockingService: new(ClientNamenodeProtocolServersideTranslatorPB)
+Note over RPC, BlockingService: 2.创建clientRpcServer和serviceRpcServer
+NameNodeRpcServer -&amp;gt;RPC.Builder: build()
+RPC.Builder -&amp;gt;ProtobufRpcEngine: getServer()
+
+ProtobufRpcEngine -&amp;gt;Server: new()
+Server -&amp;gt;Listener: new()
+Listener -&amp;gt;Reader: new()
+Reader --&amp;gt;Listener: Reader
+Listener -&amp;gt; Reader: start()
+loop doRunLoop()新线程读取请求
+    Reader -&amp;gt; Reader: doRead()
+    Reader -&amp;gt;Selector: select() &amp;amp; selectedKeys()
+    Selector --&amp;gt;Reader: Iterator&amp;lt;SelectionKey&amp;gt;
+end
+Listener --&amp;gt;Server: Listener
+Server -&amp;gt;Handler: new()
+Handler --&amp;gt;Server: Handler 
+Server -&amp;gt;Responder: new()
+Responder --&amp;gt;Server: Responder
+Server --&amp;gt;ProtobufRpcEngine: Server
+ProtobufRpcEngine --&amp;gt;RPC.Builder: Server
+RPC.Builder --&amp;gt;NameNodeRpcServer: Server
+Note over RPC: 3.注册剩余支持的协议及BlockingService
+NameNodeRpcServer -&amp;gt; RPC: setProtocolEngine()
+NameNodeRpcServer -&amp;gt; Server: addProtocl()
+NameNodeRpcServer --&amp;gt;NameNode: NameNodeRpcServer
+deactivate NameNodeRpcServer
+
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到NamNodeRpcServer启动了两个Server：clientRpcServer和serviceRpcServer，分别用于处理客户端请求和Datanode请求。&lt;/p&gt;
+&lt;h2 id=&#34;13-server启动&#34;&gt;1.3 Server启动：&lt;/h2&gt;
+&lt;p&gt;Server启动流程较为简单，因为大部分实现都是线程类，直接启动线程即可：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+NameNode -&amp;gt; NameNode: startCommonServices()
+NameNode -&amp;gt; NameNodeRpcServer: start()
+activate NameNodeRpcServer
+Note over Server: 4.启动clientRpcServer serviceRpcServer
+NameNodeRpcServer -&amp;gt; Server: start()
+activate Server
+Server -&amp;gt; Responder: Thread.start()
+activate Responder
+Responder --&amp;gt; Server: void
+deactivate Responder
+Server -&amp;gt; Listener: Thread.start()
+activate Listener
+Listener --&amp;gt; Server: void
+deactivate Listener
+Server -&amp;gt; Handler: Thread.start()
+activate Handler
+Handler --&amp;gt; Server: void
+deactivate Handler
+Server --&amp;gt; NameNodeRpcServer: void
+deactivate Server
+NameNodeRpcServer --&amp;gt; NameNode
+deactivate NameNodeRpcServer
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;14-server请求处理&#34;&gt;1.4 Server请求处理&lt;/h2&gt;
+&lt;p&gt;Listener实例创建时会注册一个acceptSelector到ServerSocketChannel，通过监听该channel的accept事件来分配连接到Reader：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+    loop 新线程通过acceptSelector获取新io事件
+        Listener -&amp;gt; Selector: select() &amp;amp;&amp;amp; selectedKeys()
+        activate Selector
+        Selector --&amp;gt; Listener: SelectionKey
+        deactivate Selector
+        Listener -&amp;gt; Listener: doAccept()
+        Listener -&amp;gt; Reader: 轮询获取一个Reader，addConnection()加入其pendingConnections
+    end
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;分配到Reader的channel会加入pendingConnections,reader会不断读取该队列并注册readSelector到该队列，监听到OP_READ事件后读取数据，读取到一个完整请求后将其加入队列&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+    loop 新线程通过readSelector获取新io事件
+        Reader -&amp;gt; Channel: register()将readSelector注册到pendingConnections中的连接
+        activate Channel
+        Channel --&amp;gt; Reader: return
+        deactivate Channel
+        Reader -&amp;gt; Selector: select() &amp;amp;&amp;amp; selectedKeys()
+        activate Selector
+        Selector --&amp;gt; Reader: SelectionKey
+        deactivate Reader
+        deactivate Selector
+        Reader -&amp;gt; Reader: doRead()
+        Reader -&amp;gt; Call: new(RpcRequestHeader, RpcRequestWrapper)
+        activate Call
+        Call --&amp;gt; Reader: Call
+        deactivate Call
+        Reader -&amp;gt; CallQueueManager: put(Call)
+        activate CallQueueManager
+        CallQueueManager --&amp;gt; Reader: return
+        deactivate CallQueueManager
+    end
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Handler从队列中取出请求进行处理，请求处理完后写入响应，但如果响应数据较大或者当前网络状况不佳则可能并不能完全发送完成，所以这里引入了Responder，Handler会将writeSelector注册到未能完全写入的channel，Responder线程则会根据writeSelector筛选出当前可写的channel继续写入剩余的响应数据&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+    loop 新线程通过CallQueueManager获取新Call
+        Handler -&amp;gt; CallQueueManager: take()
+        activate CallQueueManager
+        CallQueueManager --&amp;gt; Handler: Call
+        deactivate CallQueueManager
+        Handler -&amp;gt; RPC.Server: call(Call)
+        activate RPC.Server
+        RPC.Server -&amp;gt; Server: getRpcInvoker()
+        activate Server
+        Server --&amp;gt; RPC.Server: ProtobufRpcInvoker
+        RPC.Server -&amp;gt; ProtobufRpcInvoker: call()
+        activate ProtobufRpcInvoker
+        ProtobufRpcInvoker -&amp;gt; RPC.Server: getProtocolImpl()
+        activate RPC.Server
+        RPC.Server --&amp;gt; ProtobufRpcInvoker: BlockingService
+        deactivate RPC.Server
+        ProtobufRpcInvoker -&amp;gt; BlockingService: callBlockingMethod()
+        activate BlockingService
+        BlockingService --&amp;gt; ProtobufRpcInvoker: Message
+        deactivate BlockingService
+        ProtobufRpcInvoker --&amp;gt; RPC.Server: Message
+        deactivate ProtobufRpcInvoker
+        RPC.Server --&amp;gt; Handler: RpcResponseWrapper(Message)
+        deactivate RPC.Server
+        Handler -&amp;gt; Server: setUpResponse(RpcResponseWrapper)
+        Server -&amp;gt; Responder: doRespond(Call)
+        activate Responder
+        Responder --&amp;gt; Server: return
+        deactivate Responder
+        Server --&amp;gt; Handler: return
+        deactivate Server
+    end
+        group Responder Thread Loop
+            Responder -&amp;gt; SocketChannel: write
+            activate SocketChannel
+            SocketChannel --&amp;gt; Responder: return
+            deactivate SocketChannel 
+        end 
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;2-serverstub实现&#34;&gt;2. ServerStub实现&lt;/h1&gt;
+&lt;p&gt;ServerStub主要作用在于解析ClientStub发送的RPC请求并调用本地提供的服务。HDFS中ServerStub的角色由RpcInvoker的实现类来实现，RpcInvoker会在收到请求时按照protocol查找对应的实现类（即Server实现），然后将请求进行解析并调用实现类，并返回调用结果。&lt;/p&gt;
+&lt;p&gt;另外ProtobufRpcEngine在服务端和在客户端一样需要一个ClientNamenodeProtocolTranslatorPB作为适配器将底层ClientNamenodeProtocolPB转换成对ClientProtocol实现类的调用，这里就不再赘述。&lt;/p&gt;
+&lt;h1 id=&#34;3-总结&#34;&gt;3. 总结&lt;/h1&gt;
+&lt;p&gt;了解了前两篇的内容后，客户端和服务端RPC通信链路可以完整的串联起来了：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+
+agent DFSClient &amp;lt;&amp;lt;Caller&amp;gt;&amp;gt;
+
+rectangle &amp;quot;&amp;lt;&amp;lt;ClientStub&amp;gt;&amp;gt;&amp;quot; as clientStub {
+    agent ClientNamenodeProtocolTranslatorPB
+    agent &amp;quot;ClientProtocol$Proxy&amp;quot; as proxy 
+
+    ClientNamenodeProtocolTranslatorPB -d-&amp;gt; proxy: ClientNamenodeProtocolPB
+}
+
+
+DFSClient -d-&amp;gt; ClientNamenodeProtocolTranslatorPB: ClientProtocol
+
+agent Client &amp;lt;&amp;lt;NetClient&amp;gt;&amp;gt;
+proxy -d-&amp;gt; Client: Writable \n (ProtonbufRpcEngine使用其子类RpcRequestWrapper，\n WritableRpcEngine使用其子类Invocation)
+
+agent Server &amp;lt;&amp;lt;NetServer&amp;gt;&amp;gt;
+
+Client -r-&amp;gt; Server: RpcRequestHeaderProto + Writable
+rectangle &amp;quot;&amp;lt;&amp;lt;ServerStub&amp;gt;&amp;gt;&amp;quot; {
+    agent RpcInvoker
+    agent ClientNamenodeProtocolServerSideTranslatorPB
+    RpcInvoker -u-&amp;gt; ClientNamenodeProtocolServerSideTranslatorPB: ClientNamenodeProtocolPB
+}
+Server -u-&amp;gt; RpcInvoker: Writable
+agent NamenodeRpcServer &amp;lt;&amp;lt;Callee&amp;gt;&amp;gt;
+ClientNamenodeProtocolServerSideTranslatorPB -u-&amp;gt; NamenodeRpcServer: ClientProtocol
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+">HDFS学习笔记之：（2）RPC服务端实现</a>
+      </div>
+      
+      <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/hdfs-rpc-shi-xian/"" data-c="
           &lt;h1 id=&#34;1rpc常规实现&#34;&gt;1.RPC常规实现&lt;/h1&gt;
 &lt;p&gt;RPC实现通常包含下图几个部分：&lt;/p&gt;
@@ -527,7 +799,6 @@ parsePlantumlCodeBlocks("http://www.plantuml.com/plantuml","language-plantuml")
 &lt;h1 id=&#34;2hdfs-client的rpc实现&#34;&gt;2.HDFS Client的RPC实现&lt;/h1&gt;
 &lt;p&gt;HDFS的RPC实现也是类似上图中的思路：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
-
 skinparam linetype ortho
 
 skinparam component {
@@ -539,8 +810,10 @@ rectangle ClientImpl {
       [Protocol]
       [RPC]
       [RPCEngine]
+      [ProtocolTranslatorPB]
       Protocol -[hidden]r-&amp;gt; RPC
       RPC -[hidden]r-&amp;gt; RPCEngine
+      Protocol -[hidden]d-&amp;gt; ProtocolTranslatorPB
   }
 
   component NetClient实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
@@ -562,59 +835,40 @@ rectangle Standard {
   [NetClient]
   [NetServer]
   [ServerStub]
-  [Server.]
+  [Server]
   [Caller] -d--&amp;gt; [ClientStub]
   [ClientStub] -d--&amp;gt; [NetClient]
   [NetClient] -r--&amp;gt; [NetServer]
   [NetServer] -u--&amp;gt; [ServerStub]
-  [ServerStub] -u--&amp;gt; [Server.]
+  [ServerStub] -u--&amp;gt; [Server]
 
   ClientStub -l-&amp;gt; ClientStub实现
   NetClient -l-&amp;gt; NetClient实现
   NetServer -r-&amp;gt; NetServer实现
   ServerStub -r-&amp;gt; ServerStub实现
-  Server. -u-&amp;gt; Server实现
 }
 
 
 rectangle ServerImpl {
   component NetServer实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
-      interface Reactor模型
-      [Server]
-      [Listener]
-      [Reader]
-      [Handler]
-      [Selector]
-      [Responder]
-      [Server] -[hidden]d-&amp;gt; Reactor模型
-      Reactor模型 -d-&amp;gt; Listener
-      Reactor模型 -d-&amp;gt; Selector
-      Reactor模型 -d-&amp;gt; Reader
-      Reactor模型 -d-&amp;gt; Handler
-      Reactor模型 -d-&amp;gt; Responder
+      [Server] as Server1
+      [RPC.Server]
+      [RpcEngine.Server]
+      [ProtocolServerSideTranslatorPB]
   }
 
 
   component ServerStub实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
-      [RpcEngine.Server]
-      [BlockingService]
-      RpcEngine.Server -[hidden]d-&amp;gt; BlockingService
+      [RpcInvoker]
   }
-
-  component Server实现 &amp;lt;&amp;lt;impl&amp;gt;&amp;gt;{
-      [NamenodeRpcServer]
-  }
-
-  Server实现-[hidden]d-&amp;gt; ServerStub实现
-  Server实现 -[hidden]r-&amp;gt; NetServer实现
+  ServerStub实现 -[hidden]d- NetServer实现
 }
-
 
 @enduml
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;下面就针对HDFS中ClientStub和NetClient的实现来进行逐一分析：&lt;/p&gt;
 &lt;h2 id=&#34;21-clientstub实现&#34;&gt;2.1 ClientStub实现&lt;/h2&gt;
-&lt;p&gt;上面提到，ClientStub的主要作用是作为代理对象将客户端调用通过NetClient转发到服务端，涉及到3个(类)核心类：Protocol，RPC，RPCEngine。&lt;/p&gt;
+&lt;p&gt;上面提到，ClientStub的主要作用是作为代理对象将客户端调用通过NetClient转发到服务端，涉及到4个(类)核心类：Protocol，RPC，RPCEngine，ProtocolTranslatorPB。&lt;/p&gt;
 &lt;h3 id=&#34;211-protocol类&#34;&gt;2.1.1 Protocol类：&lt;/h3&gt;
 &lt;p&gt;Protocol类主要是为了定义RPC调用的接口，服务端实现这些接口，ClientStub则是根据Protocol来代理请求。HDFS定义了较多的Protcol，比较常见的有：&lt;/p&gt;
 &lt;ul&gt;
@@ -628,7 +882,7 @@ rectangle ServerImpl {
 &lt;p&gt;RPC类是上层逻辑(Caller)进行RPC调用的入口类，HDFS定义的诸多Protocol都需要通过&lt;code&gt;Rpc.getProxy(Protocol, ...)&lt;/code&gt;来生成ClientStub，然后才能使用ClientStub实例进行RPC调用。&lt;/p&gt;
 &lt;h3 id=&#34;213-rpcengine&#34;&gt;2.1.3 RpcEngine：&lt;/h3&gt;
 &lt;p&gt;考虑到ClientStub在对RPC请求进行封装和序列化时可能有多种实现，所以HDFS并没有将生成ClientStub和ServerStub的逻辑(getProxy(), getServer())全部放到RPC类中，而是将这一工作封装成RpcEngine接口，然后在RPC类中使用HashMap维护Protocol与RpcEngine实现的映射，下游实现可以按需要注册到HashMap中。这样当客户端调用&lt;code&gt;Rpc.getProxy(Protocol, ...)&lt;/code&gt;时就会由对应的RpcEngine负责生成ClientStub。&lt;/p&gt;
-&lt;p&gt;HDFS默认提供了两种RpcEngine实现：&lt;code&gt;ProtobufRpcEngine&lt;/code&gt;和&lt;code&gt;WritableRpcEngine&lt;/code&gt;，分别用于支持Protobuf和Writable两种序列化方式。下面详细介绍ProtobufRpcEngine的实现（HDFS大部分RPC调用都是通过该引擎实现，且两种引擎实现差异并不大）。&lt;/p&gt;
+&lt;p&gt;HDFS默认提供了两种RpcEngine实现：&lt;code&gt;ProtobufRpcEngine&lt;/code&gt;和&lt;code&gt;WritableRpcEngine&lt;/code&gt;，分别用于支持Protobuf和Writable两种序列化方式。下面详细介绍ProtobufRpcEngine的实现（HDFS大部分RPC调用都是通过该引擎实现）。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;创建ClientStub&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;ClientStub的创建过程如下图：：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
@@ -736,6 +990,41 @@ rectangle ProtobufRpcEngine {
 }
 @enduml
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;214-protocoltranslatorpb类&#34;&gt;2.1.4 ProtocolTranslatorPB类&lt;/h3&gt;
+&lt;p&gt;Hadoop 0.23.0及其之前的版本只有WritableRpcEngine，该引擎实现较为简单：客户端记录调用代理对象的方法和参数，服务端通过反射直接调用对应方法，但是这种实现意味着客户端和服务端必须使用相同的协议类，无法实现向前向后兼容，也就意味着如果API发生变化：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;集群升级，所有客户端都要升级&lt;/li&gt;
+&lt;li&gt;不支持滚动更新&lt;/li&gt;
+&lt;li&gt;多集群代理不支持跨版本&lt;/li&gt;
+&lt;li&gt;...&lt;br&gt;
+更加详细的介绍可以&lt;a href=&#34;https://issues.apache.org/jira/browse/HADOOP-7347&#34;&gt;参考这里&lt;/a&gt;&lt;br&gt;
+所以新增加的ProtobufRpcEngine就是来解决这个问题。每一个协议都定义一个pb文件来用于传输（例如针对ClientProtocol就定义了ClientNamenodeProtocolPB.class），获取ClientStub代理时也是获取ClientNamenodeProtocolPB的代理对象，然后使用适配器类ClientNamenodeProtocolTranslatorPB包裹代理类来将ClientProtocol调用转换成ClientNamenodeProtocolPB调用，还可以同时协调不同版本之间的兼容性问题，而非像WritableRpcEngine一样直接获取ClientProtocol的代理对象：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
+ 
+    interface ClientProtocol &amp;lt;&amp;lt;Target&amp;gt;&amp;gt;
+    Caller ..&amp;gt; ClientProtocol
+    class ClientNamenodeProtocolTranslatorPB
+    ClientNamenodeProtocolTranslatorPB &amp;lt;&amp;lt;Adapter&amp;gt;&amp;gt; 
+    ClientProtocol &amp;lt;|-- ClientNamenodeProtocolTranslatorPB
+    class ClientNamenodeProtocolPB
+    ClientNamenodeProtocolPB &amp;lt;&amp;lt;Adaptee&amp;gt;&amp;gt;
+    ClientNamenodeProtocolTranslatorPB o-- ClientNamenodeProtocolPB
+
+
+    class &amp;quot;ClientNamenodeProtocolPB&amp;quot; as c2 &amp;lt;&amp;lt;Target&amp;gt;&amp;gt;
+    interface &amp;quot;ClientProtocol&amp;quot; as c1 
+    class NameNodeRpcServer &amp;lt;&amp;lt;Adaptee&amp;gt;&amp;gt;
+    class ClientNamenodeProtocolServerSideTranslatorPB
+    ClientNamenodeProtocolServerSideTranslatorPB &amp;lt;&amp;lt;Adapter&amp;gt;&amp;gt;
+    c2 &amp;lt;|-u- ClientNamenodeProtocolServerSideTranslatorPB
+    ClientNamenodeProtocolServerSideTranslatorPB o-u- NameNodeRpcServer
+    c1 &amp;lt;|.d. NameNodeRpcServer
+
+    ClientNamenodeProtocolTranslatorPB .[hidden]r. ClientNamenodeProtocolServerSideTranslatorPB
+    
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;22-netclient实现&#34;&gt;2.2 NetClient实现&lt;/h2&gt;
 &lt;p&gt;NetClient由Client类实现，Client类包含两个核心的内部类：Call和Connection；Call主要是记录此次调用的（id，请求，响应，重试次数等），而Connection则是一个线程类，封装了底层的网络连接（server地址，Socket，In/OutputStream等）用于和Server间的网络通信。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-plantuml&#34;&gt;@startuml
@@ -775,7 +1064,7 @@ rectangle ProtobufRpcEngine {
 @enduml
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id=&#34;3总结&#34;&gt;3.总结&lt;/h1&gt;
-&lt;p&gt;以上就是HDFS Client RPC实现的主要内容，对于数据传输，失败重试和Namenode切换在客户端的实现后面会单独开篇介绍。&lt;/p&gt;
+&lt;p&gt;以上就是HDFS Client RPC实现的主要内容，对于文件传输，失败重试和Namenode切换在客户端的实现后面会单独开篇介绍。&lt;/p&gt;
 ">HDFS学习笔记之：（1）RPC客户端实现</a>
       </div>
       
