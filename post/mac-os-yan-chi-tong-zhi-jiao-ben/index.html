@@ -8,7 +8,7 @@
 <meta name="keywords" content="Oleg的博客">
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
-<title>Oleg的博客</title>
+<title>Mac OS延迟通知脚本 | Oleg的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1624958282176">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,6 +38,8 @@
 
 
 
+  <meta name="description" content="Mac OS延迟通知脚本" />
+  <meta name="keywords" content="工具" />
 </head>
 
 <body>
@@ -73,7 +75,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/" target="_self">
@@ -172,8 +174,23 @@
     <div
       class="section-layout pisces ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -222,27 +239,92 @@
 
 
 </div>
+          
+        
+      </div>
+    </div>
+  
 </div>
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'pisces';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
       }
-    });
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
   }
-  </script>
-        <div class="section-box pisces">
-          <section class="section bg-color posts-expand slide-down-in">
-            
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <section class="post-header">
   <h1 class="post-title">
     <a class="post-title-link" href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/">
       Mac OS延迟通知脚本
@@ -282,1058 +364,89 @@
     
   </div>
 </section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><p>工作中经常被IM的消息淹没，而且通常是优先级很低的事情，导致很难专注做事情，长期开勿扰模式又会导致一些事情漏掉。<br>
+            <div class="post-body next-md-body" id="post_body">
+              <p>工作中经常被IM的消息淹没，而且通常是优先级很低的事情，导致很难专注做事情，长期开勿扰模式又会导致一些事情漏掉。<br>
 这里提供一个小脚本，在系统中将勿扰模式(D)和通知中心(N)的快捷键设置好后，脚本会每半小时关闭5分钟勿扰模式来让你进行消息回复。</p>
 <pre><code class="language-actionscript">repeat while true
 	ignoring application responses
 		tell application &quot;System Events&quot; to keystroke &quot;D&quot; using {command down, shift down, option down, control down}
 	end ignoring
 	say &quot;DND opened&quot;
-
-                
-                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
-                  </code></pre>
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">
-      HDFS学习笔记之：（2）RPC服务端实现
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-05-13 16:54:52">2021-05-13</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>8<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1581<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <p>上一篇介绍了RPC客户端的核心实现，这一篇继续来看服务端的实现。服务端的NetServer由Server类及其子类实现，而ServerStub则由RpcInvoker接口及其实现类来实现。</p>
-<pre><code class="language-plantuml">@startuml
-    'skinparam linetype ortho
-    abstract &quot;Server&quot; as ServerTop #Yellow
-    class RPC
-    abstract Server {
-
-    }
-    ServerTop &lt;|-d- Server
-    RPC +-- Server
-    interface RpcInvoker #Yellow {
-        call(Server server, String protocol, Writable rpcRequest, long receiveTime)
-    }
-    RPC +-- RpcInvoker
-    class WritableRpcEngine
-    class ProtobufRpcEngine
-
-
-    class &quot;Server&quot; as Server1 
-    class &quot;Server&quot; as Server2
-
-    WritableRpcEngine +-d- Server1
-    ProtobufRpcEngine +-d- Server2
-
-    Server1 .u.|&gt; Server
-    Server2 .u.|&gt; Server
-    Server1 +-d- WritableRpcInvoker
-    Server2 +-d- ProtobufRpcInvoker
-    WritableRpcInvoker .u.|&gt; RpcInvoker
-    ProtobufRpcInvoker .u|&gt; RpcInvoker
-
-    class WritableRpcInvoker
-    class ProtobufRpcInvoker
-@enduml
+	delay 1800
+	
+	ignoring application responses
+		tell application &quot;System Events&quot; to keystroke &quot;D&quot; using {command down, shift down, option down, control down}
+	end ignoring
+	ignoring application responses
+		tell application &quot;System Events&quot; to keystroke &quot;N&quot; using {command down, shift down, option down, control down}
+	end ignoring
+	say &quot;DND closed&quot;
+	delay 300
+end repeat
 </code></pre>
 
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/hdfs-rpc-shi-xian/">
-      HDFS学习笔记之：（1）RPC客户端实现
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-05-13 14:33:36">2021-05-13</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/hdfs/">
-        <span>HDFS</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>9<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1803<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><h1 id="1rpc常规实现">1.RPC常规实现</h1>
-<p>RPC实现通常包含下图几个部分：</p>
-<pre><code class="language-plantuml">@startuml
-
-[Caller]
-[ClientStub]
-[NetClient]
-
-                
-                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
-                  </code></pre>
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/hdfs-rpc-shi-xian/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/l/">
-      Lambda表达式与匿名内部类
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-03-09 19:44:09">2021-03-09</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/1LLmSYVy9/">
-        <span>Java</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>705<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><h2 id="1lambda表达式是什么">1.Lambda表达式是什么</h2>
-<p>Java8中新引入的匿名函数功能，能够将匿名函数作为参数，相比传统的匿名内部类更加简洁。</p>
-<h2 id="2lambda表达式与匿名内部类有何区别">2.Lambda表达式与匿名内部类有何区别</h2>
-<p>首先看一个简单的例子：</p>
-<pre><code class="language-java">public class LambdaTest {
-    public void fun1() {
-        ((Runnable) () -&gt; {
-
-                
-                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
-                  </code></pre>
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/l/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/spark-accumulator-zhen-de-zhun-que-ma/">
-      Spark 任务失败会影响accumulator的准确性吗？
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-03-09 09:40:18">2021-03-09</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/MMU3f7np1/">
-        <span>Spark</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>469<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><p>通常在使用Spark进行数据处理时，为了高性能的统计某些全局指标我们会使用SparkContext.xxxAccumulator()来创建累加器，然后在具体的算子中进行累加，从而省略了执行特定的统计逻辑。</p>
-<p>但是，这里需要考虑一个问题，如果某一个task失败后进行重试会不会因为重复统计导致统计指标不准确呢？</p>
-<p>我们需要理解Spark对accumulator的实现后才能确定，下面就以SparkContext.longAccumulator()为例来看看事情的真相。</p>
-<h2 id="1创建longaccumulator">1.创建LongAccumulator</h2>
-<pre><code class="language-scala">  /**
-   * Create and register a long accumulator, which starts with 0 and accumulates inputs by `add`.
-   */
-
-                
-                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
-                  </code></pre>
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/spark-accumulator-zhen-de-zhun-que-ma/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/spark-rpc-kuang-jia-de-shi-xian/">
-      Spark源码笔记之-RPC框架
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-10-29 20:41:18">2020-10-29</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>4<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1004<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><h1 id="1-核心抽象">1. 核心抽象</h1>
-<p>Spark是一个分布式计算框架，job的执行过程一定会涉跨节点的方法调用（心跳，任务分发，block管理等），Spark RPC的实现可大致归纳为以下3个接口（抽象类）：</p>
-<ul>
-<li>RpcEnv：接收来自RpcEndpointRef发送的数据，并将数据转发至对应的RpcEndpoint，是整个RPC框架的协调中心</li>
-<li>RpcEndpoint：定义了从连接建立到收到消息时所需要触发功能的接口。RpcEndpoint启动时需要注册到RpcEnv，用于对外暴露服务</li>
-<li>RpcEndpointRef：对一个远程RpcEndpoint的引用，用于调用远程服务<br>
-<img src="https://olegpt.top/post-images/1603975332770.jpg" alt="" loading="lazy"></li>
-
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/spark-rpc-kuang-jia-de-shi-xian/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/70-climbing-stairs/">
-      70. Climbing Stairs
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-08-04 20:37:24">2020-08-04</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/boFyc4UTy/">
-        <span>LeetCode</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>317<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><h3 id="70-climbing-stairs"><a href="https://leetcode.com/problems/climbing-stairs/">70. Climbing Stairs</a></h3>
-<p>Difficulty: <strong>Easy</strong></p>
-<p>You are climbing a stair case. It takes <em>n</em> steps to reach to the top.</p>
-<p>Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?</p>
-<p><strong>Note:</strong> Given <em>n</em> will be a positive integer.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: 2
-
-                
-                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
-                  </code></pre>
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/70-climbing-stairs/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/">
-      最短路径问题的解法
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-07-15 20:36:20">2020-07-15</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/boFyc4UTy/">
-        <span>LeetCode</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>5<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>966<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><p>最短路径问题即：找出一个点到另一个点的最短路径。这类问题的解法有：</p>
-<h3 id="1动态规划dp">1.动态规划（DP）</h3>
-<p>以为<a href="https://leetcode.com/problems/minimum-path-sum">63. Minimum Path Sum</a>例，遍历方向只有右和下且目的地为最后一个节点，所以任意一个节点最终都能到达目的节点，此时只需要把所有节点遍历，并简单的记录每一个节点的最短路径就可以解决问题：</p>
-<pre><code class="language-java">class Solution {
-    public int minPathSum(int[][] grid) {
-        for (int i = 0; i &lt; grid.length; i++) {
-            for (int j = 0; j &lt; grid[0].length; j++) {
-
-                
-                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
-                  </code></pre>
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/kudu-de-compaction-ji-zhi/">
-      kudu的compaction机制
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-07-07 20:43:10">2020-07-07</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/8Z3JQ74Xj/">
-        <span>HBase</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>5<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1108<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><h3 id="1-为什么进行compaction">1. 为什么进行compaction</h3>
-<p>kudu中的compaction主要针对磁盘中的DiskRowset进行合并，DiskRowset包含3部分数据：BaseData、RedoLog、UndoLog，对应的有下面3种compaction形式：</p>
-<ul>
-<li><strong>MergeCompaction</strong>：仅对BaseData合并</li>
-<li><strong>MinorDeltaCompaction</strong>：对RedoLog进行合并</li>
-<li><strong>MajorDeltaCompaction</strong>：对UndoLog、BaseData、RedoLog进行合并，删除历史版本数据释放磁盘空间</li>
-</ul>
-
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/kudu-de-compaction-ji-zhi/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <section class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/739-daily-temperatures/">
-      739. Daily Temperatures
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-07-01 20:40:45">2020-07-01</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/boFyc4UTy/">
-        <span>LeetCode</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>341<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</section>
-      <div class="post-body">
-        
-        
-          
-            <!-- 没有手动摘要切开启了自动摘要,则根据配置筛除摘要内容 -->
-            
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-              
-              
-              
-            
-            
-              <p><h3 id="739-daily-temperatures"><a href="https://leetcode.com/problems/daily-temperatures/">739. Daily Temperatures</a></h3>
-<p>Difficulty: <strong>Medium</strong></p>
-<p>Given a list of daily temperatures <code>T</code>, return a list such that, for each day in the input, tells you how many days you would have to wait until a warmer temperature. If there is no future day for which this is possible, put <code>0</code> instead.</p>
-<p>For example, given the list of temperatures <code>T = [73, 74, 75, 71, 69, 72, 76, 73]</code>, your output should be <code>[1, 1, 4, 2, 1, 1, 0, 0]</code>.</p>
-<p><strong>Note:</strong> The length of <code>temperatures</code> will be in the range <code>[1, 30000]</code>. Each temperature will be an integer in the range <code>[30, 100]</code>.</p>
-<h3 id="1stack">1.Stack</h3>
-<p>利用栈来消除多余的降序数，例如：<code>1, 3, 5, 7, 4, 3, 8</code>中的<code>4, 3</code>在7之后，所以在后续的遍历中完全无用，通过栈可以跳过这部分数据。</p>
-
-                
-                  <!-- 自动摘要出来的内容有<code则补上结尾,防止格式错误 -->
-                  </code></pre>
-                
-              <p>
-            
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://olegpt.top/post/739-daily-temperatures/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
-  
-            
-            
-<div class="page bg-color">
-  <ul class="pagination-ul">
-    
-    
-      
-        <li class="pagination-li pagination-active">
-            <a href="/page/../">
-              1
-            </a>
-        </li>
-      
-        <li class="pagination-li ">
-            <a href="/page/2">
-              2
-            </a>
-        </li>
-      
-        <li class="pagination-li ">
-            <a href="/page/3">
-              3
-            </a>
-        </li>
-      
-    
-    
-      <li class="pagination-dir">
-        <a href="/page/2">
-          <i class="fa fa-angle-right"></i>
-        </a>
-      </li>
-    
+            </div>
+            
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      Oleg
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/" title="Mac OS延迟通知脚本">https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
   </ul>
+  <div class="tags">
+    
+      <a href="https://olegpt.top/tag/tools/"># 工具</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="HDFS学习笔记之：（2）RPC服务端实现" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">HDFS学习笔记之：（2）RPC服务端实现</a>
+        <a class="nav-mobile-next" title="HDFS学习笔记之：（2）RPC服务端实现" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
 </div>
-          </section>
+            
+            
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '9642215384e94cb128eb',
+    clientSecret: 'deda26b0dc46e68fb2079597b90d6924dfb5083e',
+    repo: 'blog_comment',
+    owner: 'HanleyYang',
+    admin: ['HanleyYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+    
+    
+  
+
+          </div>
         </div>
       </div>
     </div>
@@ -1555,6 +668,223 @@ parsePlantumlCodeBlocks("http://www.plantuml.com/plantuml","language-plantuml")
     }
   })
 </script>
+    <div class="reward-mask" style="display: none;">
+  <div class="reward-relative">
+    <span class="close" aria-hidden="true">x</span>
+    <div class="reward-body">
+      <h2>感谢您的支持，我会继续努力的!</h2>
+      <div class="reward-img-box">
+        <div style="position: relative; width: 140px; height: 140px;">
+          
+          
+          
+        </div>
+      </div>
+      <p class="reward-word">扫码打赏，你说多少就多少</p>
+      <p class="reward-tip">打开微信扫一扫，即可进行扫码打赏哦</p>
+    </div>
+    <div class="bottom">
+      
+      
+    </div>
+  </div>
+</div>
+<style>
+  .reward-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000054;
+  }
+
+  .reward-relative {
+    position: relative;
+    width: 480px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -205px;
+  }
+
+  .reward-relative .close {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #929292;
+  }
+
+  .reward-body {
+    padding: 40px 20px 20px;
+  }
+
+  .bottom {
+    display: flex;
+  }
+
+  .reward-btn {
+    text-align: center;
+  }
+
+  .reward-btn-text {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #ff9734;
+    color: #FFF;
+    margin-top: 20px;
+  }
+
+  .pay-text {
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    transition: all .2s linear;
+  }
+
+  .pay-text:hover {
+    background-color: #a5a5a536;
+  }
+
+  .reward-body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 20px;
+  }
+
+  .reward-body h2:after,
+  .reward-body h2:before {
+    font-family: Arial, Helvetica, sans-serif;
+    background: 0 0;
+    width: 0;
+    height: 0;
+    font-style: normal;
+    color: #eee;
+    font-size: 80px;
+    position: absolute;
+    top: 20px;
+  }
+
+  .reward-body h2:before {
+    content: '\201c';
+    left: 50px;
+  }
+
+  .reward-body h2:after {
+    content: '\201d';
+    right: 80px;
+  }
+
+  .reward-img-box {
+    display: inline-block;
+    padding: 10px;
+    border: 6px solid #ea5f00;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .reward-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .reward-relative {
+      height: 100%;
+      top: 0px;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .reward-relative .bottom {
+      flex-direction: column;
+    }
+
+    .reward-relative .pay-text {
+      width: 80%;
+      margin: 5px auto;
+      border: 1px solid silver;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .reward-body h2:after {
+      right: 40px;
+    }
+
+    .reward-body h2:after,
+    .reward-body h2:before {
+      font-size: 60px;
+    }
+
+    .reward-body h2:before {
+      left: 20px;
+    }
+  }
+</style>
+<script>
+  !function () {
+    var mask = document.querySelector('.reward-mask');
+    let close = document.querySelector('.reward-relative .close');
+    let rewardBtn = document.querySelector('.reward-btn');
+
+    let zfb = document.querySelector('#zfb'),
+      wx = document.querySelector('#wx'),
+      zfbBtn = document.querySelector('#zfbBtn'),
+      wxBtn = document.querySelector('#wxBtn');
+
+    if (zfbBtn && wxBtn) {
+      zfbBtn.addEventListener('click', () => {
+        window.Velocity(zfb, 'transition.slideLeftIn', {
+          duration: 400
+        });
+        window.Velocity(wx, 'transition.slideRightOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+
+      wxBtn.addEventListener('click', () => {
+        window.Velocity(wx, 'transition.slideRightIn', {
+          duration: 400
+        });
+        window.Velocity(zfb, 'transition.slideLeftOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+    }
+
+    rewardBtn.addEventListener('click', (e) => {
+      window.Velocity(mask, 'transition.slideDownIn', {
+        duration: 400
+      })
+    });
+
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.Velocity(mask, 'transition.slideUpOut', {
+        duration: 400
+      })
+    })
+  }()
+</script>
+
   </div>
 </body>
 
@@ -4215,7 +3545,6 @@ public void test1(){
     speed: 200
   });
 </script>
-
 
 
 

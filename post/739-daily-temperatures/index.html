@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
 <title>739. Daily Temperatures | Oleg的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1621217039408">
+<link rel="shortcut icon" href="/favicon.ico?v=1624958282176">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -202,19 +202,19 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">26</span>
+        <span class="site-item-stat-count">27</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="">
-        <span class="site-item-stat-count">5</span>
+        <span class="site-item-stat-count">6</span>
         <span class="site-item-stat-name language" data-lan="category">分类</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="/tags/">
-        <span class="site-item-stat-count">5</span>
+        <span class="site-item-stat-count">6</span>
         <span class="site-item-stat-name language" data-lan="tag">标签</span>
       </a>
     </div>
@@ -1129,6 +1129,30 @@ parsePlantumlCodeBlocks("http://www.plantuml.com/plantuml","language-plantuml")
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/"" data-c="
+          &lt;p&gt;工作中经常被IM的消息淹没，而且通常是优先级很低的事情，导致很难专注做事情，长期开勿扰模式又会导致一些事情漏掉。&lt;br&gt;
+这里提供一个小脚本，在系统中将勿扰模式(D)和通知中心(N)的快捷键设置好后，脚本会每半小时关闭5分钟勿扰模式来让你进行消息回复。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-actionscript&#34;&gt;repeat while true
+	ignoring application responses
+		tell application &amp;quot;System Events&amp;quot; to keystroke &amp;quot;D&amp;quot; using {command down, shift down, option down, control down}
+	end ignoring
+	say &amp;quot;DND opened&amp;quot;
+	delay 1800
+	
+	ignoring application responses
+		tell application &amp;quot;System Events&amp;quot; to keystroke &amp;quot;D&amp;quot; using {command down, shift down, option down, control down}
+	end ignoring
+	ignoring application responses
+		tell application &amp;quot;System Events&amp;quot; to keystroke &amp;quot;N&amp;quot; using {command down, shift down, option down, control down}
+	end ignoring
+	say &amp;quot;DND closed&amp;quot;
+	delay 300
+end repeat
+&lt;/code&gt;&lt;/pre&gt;
+">Mac OS延迟通知脚本</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/"" data-c="

@@ -2,13 +2,20 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://olegpt.top</id>
     <title>Oleg的博客</title>
-    <updated>2021-05-17T02:04:05.416Z</updated>
+    <updated>2021-06-29T09:18:35.098Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://olegpt.top"/>
     <link rel="self" href="https://olegpt.top/atom.xml"/>
     <logo>https://olegpt.top/images/avatar.png</logo>
     <icon>https://olegpt.top/favicon.ico</icon>
     <rights>All rights reserved 2021, Oleg的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[Mac OS延迟通知脚本]]></title>
+        <id>https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/</id>
+        <link href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/">
+        </link>
+        <updated>2021-06-29T09:08:33.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[HDFS学习笔记之：（2）RPC服务端实现]]></title>
         <id>https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/</id>
@@ -143,12 +150,5 @@
         <link href="https://olegpt.top/post/739-daily-temperatures/">
         </link>
         <updated>2020-07-01T12:40:45.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[287. Find the Duplicate Number]]></title>
-        <id>https://olegpt.top/post/287-find-the-duplicate-number/</id>
-        <link href="https://olegpt.top/post/287-find-the-duplicate-number/">
-        </link>
-        <updated>2020-06-17T12:34:49.000Z</updated>
     </entry>
 </feed>
