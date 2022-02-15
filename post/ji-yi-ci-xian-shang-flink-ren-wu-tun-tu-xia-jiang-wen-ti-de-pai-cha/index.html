@@ -8,7 +8,7 @@
 <meta name="keywords" content="Oleg的博客">
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
-<title>HDFS学习笔记之：（1）RPC客户端实现 | Oleg的博客</title>
+<title>记一次线上Flink任务吞吐下降问题的排查 | Oleg的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1644924456442">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="HDFS学习笔记之：（1）RPC客户端实现" />
-  <meta name="keywords" content="HDFS" />
+  <meta name="description" content="记一次线上Flink任务吞吐下降问题的排查" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -246,21 +246,19 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li><a href="#1rpc%E5%B8%B8%E8%A7%84%E5%AE%9E%E7%8E%B0">1.RPC常规实现</a></li>
-<li><a href="#2hdfs-client%E7%9A%84rpc%E5%AE%9E%E7%8E%B0">2.HDFS Client的RPC实现</a>
+<li>
 <ul>
-<li><a href="#21-clientstub%E5%AE%9E%E7%8E%B0">2.1 ClientStub实现</a>
+<li>
 <ul>
-<li><a href="#211-protocol%E7%B1%BB">2.1.1 Protocol类：</a></li>
-<li><a href="#212-rpc%E7%B1%BB">2.1.2 RPC类：</a></li>
-<li><a href="#213-rpcengine">2.1.3 RpcEngine：</a></li>
-<li><a href="#214-protocoltranslatorpb%E7%B1%BB">2.1.4 ProtocolTranslatorPB类</a></li>
+<li><a href="#1-%E8%B5%B7%E5%9B%A0">1. 起因</a></li>
+<li><a href="#2-%E7%AE%97%E5%AD%90%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88-gc%E9%97%AE%E9%A2%98">2. 算子性能瓶颈？ GC问题？</a></li>
+<li><a href="#3-%E4%B8%BA%E5%95%A5%E4%BC%9A%E5%AF%BC%E8%87%B4%E6%95%B4%E4%B8%AAjob%E5%90%9E%E5%90%90%E4%B8%8B%E9%99%8D">3. 为啥会导致整个Job吞吐下降？</a></li>
+<li><a href="#4-%E5%A6%82%E4%BD%95%E7%BC%93%E8%A7%A3">4. 如何缓解？</a></li>
+<li><a href="#5-%E4%B8%B4%E6%97%B6%E6%96%B9%E6%A1%88%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98">5. 临时方案有什么问题？</a></li>
 </ul>
 </li>
-<li><a href="#22-netclient%E5%AE%9E%E7%8E%B0">2.2 NetClient实现</a></li>
 </ul>
 </li>
-<li><a href="#3%E6%80%BB%E7%BB%93">3.总结</a></li>
 </ul>
 
   </div>
@@ -526,8 +524,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/hdfs-rpc-shi-xian/">
-      HDFS学习笔记之：（1）RPC客户端实现
+    <a class="post-title-link" href="https://olegpt.top/post/ji-yi-ci-xian-shang-flink-ren-wu-tun-tu-xia-jiang-wen-ti-de-pai-cha/">
+      记一次线上Flink任务吞吐下降问题的排查
     </a>
   </h1>
   <div class="post-meta">
@@ -535,326 +533,233 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-05-13 14:33:36">2021-05-13</span>
+      <span class="publish-time" data-t="2022-02-15 17:01:21">2022-02-15</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://olegpt.top/tag/hdfs/">
-        <span>HDFS</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>9<span class="language" data-lan="minute">分钟</span></span>
+      <span>8<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1803<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>1510<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <h1 id="1rpc常规实现">1.RPC常规实现</h1>
-<p>RPC实现通常包含下图几个部分：</p>
-<pre><code class="language-plantuml">@startuml
+              <h3 id="1-起因">1. 起因</h3>
+<p>线上有个Flink ETL任务突发Kafka消费延迟告警，之前压测时150并行度就可以满足需求，线上并行度设置为200，但任务延迟还是不断增加。</p>
+<p>查看Kafka监控发现有流量突增，与运维同事沟通后确认是由于有一台Broker节点宕机导致，于是修改任务并行度至400加速消费数据，但消费延迟还是没有下降，吞吐只比200并行度时提高了20%且波动很大。</p>
+<h3 id="2-算子性能瓶颈-gc问题">2. 算子性能瓶颈？ GC问题？</h3>
+<p>此时开始怀疑是任务本身出现了性能瓶颈，查看Flink Dashboard发现部分节点的消费数量非常低，初步怀疑是算子内部计算逻辑的RPC调用耗时增加导致的，经过Arthas线上统计发现：正常节点的耗时在0.6ms左右，而这部分节点的耗时在1.2～20ms之间。</p>
+<p>满心欢喜，以为已经定位到问题了，但是查看RPC服务端耗时后确认服务端一切正常。。。</p>
+<p>于是开始排查异常节点自身问题，查看Dashboard发现这类节点的GC时长明显高于正常节点，打开GC日志打印后却发现回收内存大小并没有太大差异，通过查看Arthas Dashboard发现这些节点的负载非常高，这就是导致单个节点吞吐下降的真正原因。</p>
+<h3 id="3-为啥会导致整个job吞吐下降">3. 为啥会导致整个Job吞吐下降？</h3>
+<p>由于Yarn集群没有开启CGroup隔离，只通过vCore进行分配是没有办法保证单个节点上的任务公平使用CPU资源的，但是为啥单个节点的吞吐下降会导致整个Job的吞吐下降呢？</p>
+<p>之前一直以为Flink上游到下游算子Task之间的数据传递是互不干扰的，某一个下游Task阻塞并不会影响其他下游Task，查看源码后发现这个理解是错误的：</p>
+<p>写入下游Task数据时会通过ChannelSelector选择一个channel进行写入</p>
+<pre><code class="language-java">public final class ChannelSelectorRecordWriter&lt;T extends IOReadableWritable&gt; extends RecordWriter&lt;T&gt; {
 
-[Caller]
-[ClientStub]
-[NetClient]
-[NetServer]
-[ServerStub]
-[Callee]
-
-[Caller] --&gt; [ClientStub]
-[ClientStub] --&gt; [NetClient]
-[NetClient] -right-&gt; [NetServer]
-[NetServer] -up-&gt; [ServerStub]
-[ServerStub] -up-&gt; [Callee]
-
-@enduml
+    //......
+	
+	@Override
+	public void emit(T record) throws IOException, InterruptedException {
+		emit(record, channelSelector.selectChannel(record));
+	}
+}
 </code></pre>
-<p>Caller想要调用Callee提供的方法，可以通过直接调用ClientStub的同名方法来实现。ClientStub提供了Callee在本地的代理对象，ClientStub中的方法在被调用后会将请求参数进行封装和序列化，最终通过底层NetClient发送到服务端。</p>
-<p>服务端则由NetServer来负责监听网络请求，并将收到的请求交给ServerStub，由其进行解析和Callee的调用，最终的调用结果原路返回给客户端。</p>
-<h1 id="2hdfs-client的rpc实现">2.HDFS Client的RPC实现</h1>
-<p>HDFS的RPC实现也是类似上图中的思路：</p>
-<pre><code class="language-plantuml">@startuml
-skinparam linetype ortho
-
-skinparam component {
-  backgroundColor&lt;&lt;impl&gt;&gt; #AntiqueWhite
-}
-
-rectangle ClientImpl {
-  component ClientStub实现 &lt;&lt;impl&gt;&gt;{
-      [Protocol]
-      [RPC]
-      [RPCEngine]
-      [ProtocolTranslatorPB]
-      Protocol -[hidden]r-&gt; RPC
-      RPC -[hidden]r-&gt; RPCEngine
-      Protocol -[hidden]d-&gt; ProtocolTranslatorPB
-  }
-
-  component NetClient实现 &lt;&lt;impl&gt;&gt;{
-      [Client]
-      [Call]
-      [Connection]
-      Client -[hidden]r-&gt; Call
-      Call -[hidden]r-&gt; Connection
-  }
-
-  ClientStub实现 -[hidden]d--&gt; NetClient实现
-
-}
-
-
-rectangle Standard {
-  [Caller]
-  [ClientStub]
-  [NetClient]
-  [NetServer]
-  [ServerStub]
-  [Server]
-  [Caller] -d--&gt; [ClientStub]
-  [ClientStub] -d--&gt; [NetClient]
-  [NetClient] -r--&gt; [NetServer]
-  [NetServer] -u--&gt; [ServerStub]
-  [ServerStub] -u--&gt; [Server]
-
-  ClientStub -l-&gt; ClientStub实现
-  NetClient -l-&gt; NetClient实现
-  NetServer -r-&gt; NetServer实现
-  ServerStub -r-&gt; ServerStub实现
-}
-
-
-rectangle ServerImpl {
-  component NetServer实现 &lt;&lt;impl&gt;&gt;{
-      [Server] as Server1
-      [RPC.Server]
-      [RpcEngine.Server]
-      [ProtocolServerSideTranslatorPB]
-  }
-
-
-  component ServerStub实现 &lt;&lt;impl&gt;&gt;{
-      [RpcInvoker]
-  }
-  ServerStub实现 -[hidden]d- NetServer实现
-}
-
-@enduml
+<p>写入的过程需要获取对应channel的buffer，虽然不同output channel之间的共享buffer是有限制的，但任何一个channe的buffer不足就会导致阻塞</p>
+<pre><code class="language-java">public BufferBuilder requestNewBufferBuilder(int targetChannel) throws IOException, InterruptedException {
+		BufferBuilder builder = targetPartition.tryGetBufferBuilder(targetChannel);
+		if (builder == null) {
+			long start = System.currentTimeMillis();
+			builder = targetPartition.getBufferBuilder(targetChannel);
+			idleTimeMsPerSecond.markEvent(System.currentTimeMillis() - start);
+		}
+		return builder;
+	}
 </code></pre>
-<p>下面就针对HDFS中ClientStub和NetClient的实现来进行逐一分析：</p>
-<h2 id="21-clientstub实现">2.1 ClientStub实现</h2>
-<p>上面提到，ClientStub的主要作用是作为代理对象将客户端调用通过NetClient转发到服务端，涉及到4个(类)核心类：Protocol，RPC，RPCEngine，ProtocolTranslatorPB。</p>
-<h3 id="211-protocol类">2.1.1 Protocol类：</h3>
-<p>Protocol类主要是为了定义RPC调用的接口，服务端实现这些接口，ClientStub则是根据Protocol来代理请求。HDFS定义了较多的Protcol，比较常见的有：</p>
-<ul>
-<li>ClientProtocol：用于DFSClient和Namenode交互</li>
-<li>ClientDatanodeProtocol：用于DFSClient和Datanode交互</li>
-<li>DataTransferProtocol：用于DFSClient从Datanode读写数据</li>
-<li>DatanodeProtocol：用于Datanode与Namenode交互</li>
-<li>NamenodeProtocol：ActiveNamenode与StandByNamenode交互</li>
-</ul>
-<h3 id="212-rpc类">2.1.2 RPC类：</h3>
-<p>RPC类是上层逻辑(Caller)进行RPC调用的入口类，HDFS定义的诸多Protocol都需要通过<code>Rpc.getProxy(Protocol, ...)</code>来生成ClientStub，然后才能使用ClientStub实例进行RPC调用。</p>
-<h3 id="213-rpcengine">2.1.3 RpcEngine：</h3>
-<p>考虑到ClientStub在对RPC请求进行封装和序列化时可能有多种实现，所以HDFS并没有将生成ClientStub和ServerStub的逻辑(getProxy(), getServer())全部放到RPC类中，而是将这一工作封装成RpcEngine接口，然后在RPC类中使用HashMap维护Protocol与RpcEngine实现的映射，下游实现可以按需要注册到HashMap中。这样当客户端调用<code>Rpc.getProxy(Protocol, ...)</code>时就会由对应的RpcEngine负责生成ClientStub。</p>
-<p>HDFS默认提供了两种RpcEngine实现：<code>ProtobufRpcEngine</code>和<code>WritableRpcEngine</code>，分别用于支持Protobuf和Writable两种序列化方式。下面详细介绍ProtobufRpcEngine的实现（HDFS大部分RPC调用都是通过该引擎实现）。</p>
-<p><strong>创建ClientStub</strong></p>
-<p>ClientStub的创建过程如下图：：</p>
-<pre><code class="language-plantuml">@startuml
-    skinparam linetype ortho
+<p>也就是当集群中有节点性能很差时，上游算子写入数据时会被阻塞，整体吞吐会下降，随着积压数据的消费，写入数据不再被阻塞，此时整体吞吐又会上升，然后重复上述过程。</p>
+<h3 id="4-如何缓解">4. 如何缓解？</h3>
+<p>开启集群的CGroup隔离可能影响到所有任务，必须要谨慎。为了快速恢复这里使用一个临时方案：</p>
+<p>既然是因为慢节点拖累整个集群，那我们只要自定义一个分区方案，按照不同节点的数据处理能力来对数据进行分区：</p>
+<pre><code class="language-java">public class DynamicLoadBalancing {
 
-skinparam component {
-    backgroundColor&lt;&lt;impl&gt;&gt; #AntiqueWhite
+    private static final String REDIS_ADDR = &quot;&quot;;
+
+    public static &lt;R&gt; DataStream&lt;R&gt; rebalance(DataStream&lt;R&gt; dataStream, int parallelism, String slotSharingGroup) throws InterruptedException {
+        if (parallelism &lt; 1 || slotSharingGroup == null) throw new IllegalArgumentException();
+        /**
+         * Part 1. repartition controller
+         */
+        String loadGroup = UUID.randomUUID().toString();
+        DataStream&lt;Tuple2&lt;LoadEvent, R&gt;&gt; repartitionedStream = dataStream.map(new RichMapFunction&lt;R, Tuple2&lt;LoadEvent, R&gt;&gt;() {
+            final Random random = new Random();
+            final Map&lt;String, Float&gt; loadFactor = new HashMap&lt;&gt;();
+            volatile ConcurrentSkipListMap&lt;Integer, String&gt; loadIdMap = new ConcurrentSkipListMap&lt;&gt;();
+
+            RedisClusterClient redisClient;
+            StatefulRedisClusterConnection&lt;String, String&gt; connection;
+            RedisClusterCommands&lt;String, String&gt; syncCommands;
+            ScheduledExecutorService scheduledExecutorService;
+
+            @Override
+            public void open(Configuration parameters) throws Exception {
+                super.open(parameters);
+                redisClient = RedisClusterClientFactory.createClient(REDIS_ADDR);
+                connection = redisClient.connect();
+                syncCommands = connection.sync();
+                syncCommands.expire(loadGroup, 24 * 3600);
+                for (int i = 0; i &lt; parallelism; i++) loadFactor.put(i + &quot;&quot;, 0.5f);
+                scheduledExecutorService = Executors.newScheduledThreadPool(1);
+                scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Map&lt;String, String&gt; feedback = syncCommands.hgetall(loadGroup);
+                            ConcurrentSkipListMap&lt;Integer, String&gt; newLoadIdMap = new ConcurrentSkipListMap&lt;&gt;();
+                            if (feedback == null) {
+                                return;
+                            }
+                            if (feedback.size() == parallelism) {
+                                List&lt;Long&gt; curLatencyInOrder = new ArrayList&lt;&gt;();
+                                feedback.values().forEach(v -&gt; curLatencyInOrder.add(Long.parseLong(v)));
+                                Collections.sort(curLatencyInOrder);
+                                Long midLatency = curLatencyInOrder.get(curLatencyInOrder.size() / 2);
+                                int idIndex = 0;
+                                for (Map.Entry&lt;String, String&gt; entry : feedback.entrySet()) {
+                                    Long latency = Long.valueOf(entry.getValue());
+                                    float newLoad = loadFactor.get(entry.getKey());
+                                    if (latency &lt; midLatency) {
+                                        newLoad = Math.min(1f, newLoad + .05f);
+                                    } else if (latency &gt; midLatency){
+                                        newLoad = Math.max(0.001f, newLoad - .05f);
+                                    }
+                                    loadFactor.put(entry.getKey(), newLoad);
+                                    idIndex += (newLoad * 10000);
+                                    newLoadIdMap.put(idIndex, entry.getKey());
+                                }
+                                loadIdMap = newLoadIdMap;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, 5, 5, TimeUnit.SECONDS);
+            }
+
+            @Override
+            public Tuple2&lt;LoadEvent, R&gt; map(R value) throws Exception {
+                String loadId;
+                if (loadIdMap.size() &lt; parallelism) {
+                    loadId = random.nextInt(parallelism) + &quot;&quot;;
+                } else {
+                    loadId = loadIdMap.ceilingEntry(random.nextInt(loadIdMap.floorKey(Integer.MAX_VALUE)) + 1).getValue();
+                }
+                return new Tuple2&lt;&gt;(new LoadEvent(loadGroup, loadId, System.currentTimeMillis()), value);
+            }
+
+            @Override
+            public void close() throws Exception {
+                super.close();
+                if (scheduledExecutorService != null) scheduledExecutorService.shutdown();
+                if (redisClient != null) redisClient.shutdown();
+            }
+        }).name(&quot;load-balance-controller&quot;).partitionCustom((Partitioner&lt;LoadEvent&gt;) (key, numPartitions) -&gt; Integer.parseInt(key.id),
+                (KeySelector&lt;Tuple2&lt;LoadEvent, R&gt;, LoadEvent&gt;) value -&gt; value.f0);
+
+        /**
+         * Part 2. throughout feedback
+         */
+        return repartitionedStream.map(new RichMapFunction&lt;Tuple2&lt;LoadEvent, R&gt;, R&gt;() {
+            RedisClusterClient redisClient;
+            StatefulRedisClusterConnection&lt;String, String&gt; connection;
+            RedisClusterCommands&lt;String, String&gt; syncCommands;
+            ScheduledExecutorService scheduledExecutorService;
+            volatile Long avgLatency;
+            volatile String id;
+            Long lastReport;
+
+            @Override
+            public void open(Configuration parameters) throws Exception {
+                super.open(parameters);
+                redisClient = RedisClusterClientFactory.createClient(REDIS_ADDR);
+                connection = redisClient.connect();
+                syncCommands = connection.sync();
+                scheduledExecutorService = Executors.newScheduledThreadPool(1);
+                scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (id != null &amp;&amp; lastReport != null)
+                                syncCommands.hset(loadGroup, id, String.valueOf(avgLatency));
+                            lastReport = System.currentTimeMillis();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, 3, 3, TimeUnit.SECONDS);
+            }
+
+            @Override
+            public R map(Tuple2&lt;LoadEvent, R&gt; value) throws Exception {
+                if (id == null) id = value.f0.getId();
+                long currentLatency = System.currentTimeMillis() - value.f0.eventTIme;
+                avgLatency = avgLatency == null ? currentLatency : (currentLatency + avgLatency) / 2;
+                return value.f1;
+            }
+
+            @Override
+            public void close() throws Exception {
+                super.close();
+                if (scheduledExecutorService != null) scheduledExecutorService.shutdown();
+                if (redisClient != null) redisClient.shutdown();
+            }
+        }).setParallelism(parallelism).name(&quot;load-balance-feedback&quot;).slotSharingGroup(slotSharingGroup);
+    }
+
+    private static class LoadEvent implements Serializable {
+        private String group;
+        private String id;
+        private Long eventTIme;
+
+        public LoadEvent(String group, String id, Long eventTIme) {
+            this.group = group;
+            this.id = id;
+            this.eventTIme = eventTIme;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        public void setGroup(String group) {
+            this.group = group;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public Long getEventTIme() {
+            return eventTIme;
+        }
+
+        public void setEventTIme(Long eventTIme) {
+            this.eventTIme = eventTIme;
+        }
+    }
 }
-
-Caller-&gt;RPC: getProtocolProxy(Protocol1)
-activate RPC
-RPC-&gt;RPC: getProtocolEngine()
-RPC-&gt;ProtobufRpcEngine: getProxy(Protocol1)
-activate ProtobufRpcEngine
-participant Invoker &lt;&lt;RpcInvocationHandler&gt;&gt;
-ProtobufRpcEngine-&gt;Invoker: new
-activate Invoker
-Invoker--&gt;ProtobufRpcEngine: Invoker
-deactivate Invoker
-ProtobufRpcEngine-&gt;&quot;Protocol1$Proxy&quot;: Proxy.newProxyInstance(Protocol1, Invoker)
-activate &quot;Protocol1$Proxy&quot;
-&quot;Protocol1$Proxy&quot; --&gt; ProtobufRpcEngine: Protocol1  
-deactivate &quot;Protocol1$Proxy&quot;
-ProtobufRpcEngine--&gt;RPC: Protocol1
-deactivate ProtobufRpcEngine
-RPC --&gt; Caller: Protocol1
-deactivate RPC
-
-@enduml
 </code></pre>
-<p>从这里就可以看到RPC.getProtocolEngine()从本地HashMap获取到当前协议的RpcEngine为ProtobufRpcEngine，然后调用ProtobufRpcEngine.getProxy()创建了一个代理类返回给Caller，对于该代理类的所有请求都会由Invoker进行序列化并通过底层NetClient发送到Server端。</p>
-<p><strong>ClientStub调用</strong></p>
-<pre><code class="language-plantuml">@startuml
-
-skinparam linetype ortho
-
-skinparam component {
-    backgroundColor&lt;&lt;impl&gt;&gt; #AntiqueWhite
-}
-
-Caller-&gt;&quot;Protocol1$Proxy&quot;: Protocol1.function1()
-activate &quot;Protocol1$Proxy&quot;
-&quot;Protocol1$Proxy&quot;-&gt;Invoker: invoke()
-activate Invoker
-Invoker-&gt;RpcRequestWrapper: new()
-activate RpcRequestWrapper
-RpcRequestWrapper--&gt;Invoker: RpcRequestWrapper
-deactivate RpcRequestWrapper
-Invoker-&gt;Client: call(Writable RpcRequestWrapper)
-activate Client
-Client--&gt;Invoker: RpcResponseWrapper
-deactivate Client
-Invoker--&gt;&quot;Protocol1$Proxy&quot;: return
-deactivate Invoker
-&quot;Protocol1$Proxy&quot;--&gt;Caller: return
-deactivate &quot;Protocol1$Proxy&quot;
-
-@enduml
-</code></pre>
-<p>从上图可以看出，对RPC请求的序列化和发送操作实际是由Invoker来执行的，Invoker会将调用方法和参数封装成RpcRequestWrapper发送给Server端，同时将服务端返回的RpcResponseWrapper解析成方法的返回类型返回给Caller。</p>
-<p>WritableRpcEngine的实现也是类似的，只是将请求和响应的序列化方式切换成了Writable，将RpcRequest(Response)Wrapper换成了内部类Invocation，这里附上类图，就不再详细介绍了</p>
-<pre><code class="language-plantuml">@startuml
-
-'skinparam linetype ortho
-
-interface RpcEngine{
-    +getProxy()
-    +getServer()
-}
-class RPC
-abstract Server
-RPC +-- Server
-interface RpcInvocationHandler {
-    +ConnectionId getConnectionId()
-    +Object invoke(proxy, method, args)
-}
-
-rectangle WritableRpcEngine { 
-    RpcEngine &lt;|.. WritableRpcEngine
-    WritableRpcEngine *-- Invoker
-    WritableRpcEngine *-- Invocation
-    class &quot;Server&quot; as Server1
-    WritableRpcEngine *-- Server1
-    Server &lt;|-- Server1
-    Server1 *-- WritableRpcInvoker
-    RpcInvocationHandler &lt;|.. Invoker
-}
-
-
-rectangle ProtobufRpcEngine { 
-    RpcEngine &lt;|.. ProtobufRpcEngine
-    class &quot;Server&quot; as Server2
-    Server &lt;|-- Server2
-    ProtobufRpcEngine *-- Server2
-    Server2 *-- ProtobufRpcInvoker
-    class &quot;Invoker&quot; as invoker2
-    ProtobufRpcEngine *-- invoker2
-    ProtobufRpcEngine *-- RpcWrapper
-    RpcWrapper &lt;|.. RpcMessageWithHeader
-    RpcWrapper &lt;|.. RpcResponseWrapper
-    ProtobufRpcEngine *-- RpcResponseWrapper
-    RpcMessageWithHeader &lt;|-- RpcRequestWrapper
-    ProtobufRpcEngine *-- RpcRequestWrapper
-    RpcInvocationHandler &lt;|.. invoker2
-}
-@enduml
-</code></pre>
-<h3 id="214-protocoltranslatorpb类">2.1.4 ProtocolTranslatorPB类</h3>
-<p>Hadoop 0.23.0及其之前的版本只有WritableRpcEngine，该引擎实现较为简单：客户端记录调用代理对象的方法和参数，服务端通过反射直接调用对应方法，但是这种实现意味着客户端和服务端必须使用相同的协议类，无法实现向前向后兼容，也就意味着如果API发生变化：</p>
-<ul>
-<li>集群升级，所有客户端都要升级</li>
-<li>不支持滚动更新</li>
-<li>多集群代理不支持跨版本</li>
-<li>...<br>
-更加详细的介绍可以<a href="https://issues.apache.org/jira/browse/HADOOP-7347">参考这里</a><br>
-所以新增加的ProtobufRpcEngine就是来解决这个问题。每一个协议都定义一个pb文件来用于传输（例如针对ClientProtocol就定义了ClientNamenodeProtocolPB.class），获取ClientStub代理时也是获取ClientNamenodeProtocolPB的代理对象，然后使用适配器类ClientNamenodeProtocolTranslatorPB包裹代理类来将ClientProtocol调用转换成ClientNamenodeProtocolPB调用，还可以同时协调不同版本之间的兼容性问题，而非像WritableRpcEngine一样直接获取ClientProtocol的代理对象：</li>
-</ul>
-<pre><code class="language-plantuml">@startuml
- 
-    interface ClientProtocol &lt;&lt;Target&gt;&gt;
-    Caller ..&gt; ClientProtocol
-    class ClientNamenodeProtocolTranslatorPB
-    ClientNamenodeProtocolTranslatorPB &lt;&lt;Adapter&gt;&gt; 
-    ClientProtocol &lt;|-- ClientNamenodeProtocolTranslatorPB
-    class ClientNamenodeProtocolPB
-    ClientNamenodeProtocolPB &lt;&lt;Adaptee&gt;&gt;
-    ClientNamenodeProtocolTranslatorPB o-- ClientNamenodeProtocolPB
-
-
-    class &quot;ClientNamenodeProtocolPB&quot; as c2 &lt;&lt;Target&gt;&gt;
-    interface &quot;ClientProtocol&quot; as c1 
-    class NameNodeRpcServer &lt;&lt;Adaptee&gt;&gt;
-    class ClientNamenodeProtocolServerSideTranslatorPB
-    ClientNamenodeProtocolServerSideTranslatorPB &lt;&lt;Adapter&gt;&gt;
-    c2 &lt;|-u- ClientNamenodeProtocolServerSideTranslatorPB
-    ClientNamenodeProtocolServerSideTranslatorPB o-u- NameNodeRpcServer
-    c1 &lt;|.d. NameNodeRpcServer
-
-    ClientNamenodeProtocolTranslatorPB .[hidden]r. ClientNamenodeProtocolServerSideTranslatorPB
-    
-@enduml
-</code></pre>
-<h2 id="22-netclient实现">2.2 NetClient实现</h2>
-<p>NetClient由Client类实现，Client类包含两个核心的内部类：Call和Connection；Call主要是记录此次调用的（id，请求，响应，重试次数等），而Connection则是一个线程类，封装了底层的网络连接（server地址，Socket，In/OutputStream等）用于和Server间的网络通信。</p>
-<pre><code class="language-plantuml">@startuml
-    ProtobufRpcEngine.Invoker -&gt;Client: call(RpcRequestWrapper)
-    activate Client
-    Client -&gt;Call: createCall()
-    activate Call
-    Call --&gt;Client: Call
-    deactivate Call
-    Client -&gt;Connection: new()  
-    activate Connection
-    Connection --&gt; Client: Connection
-    Client -&gt; Connection: addCall()
-    Client -&gt; Connection: setupIOstreams()
-    Connection -&gt; Connection: setupConnection()
-    Connection -&gt; Connection: start() Connection线程
-    Connection --&gt; Client: 
-    Client -&gt; Connection: sendRpcRequest()
-    participant sendParamsExecutor &lt;&lt;ExecutorService&gt;&gt;
-    Connection -&gt;sendParamsExecutor : submit()
-    activate sendParamsExecutor
-    sendParamsExecutor --&gt;Connection: connection.out.write()
-    deactivate sendParamsExecutor
-    Connection --&gt;Client: 
-    Client -&gt;Call: wait()
-    activate Call
-    Connection -&gt;Connection: receiveRpcResponse() Connection线程
-    Connection --&gt;Call: setRpcResponse()
-    deactivate Connection
-    Call -&gt; Call: notify()
-    Call --&gt; Client: return
-    Client -&gt; Call: getResponse()
-    Call --&gt;Client: Writable
-    deactivate Call
-    Client --&gt;ProtobufRpcEngine.Invoker: Message
-    deactivate Client
-@enduml
-</code></pre>
-<h1 id="3总结">3.总结</h1>
-<p>以上就是HDFS Client RPC实现的主要内容，对于文件传输，失败重试和Namenode切换在客户端的实现后面会单独开篇介绍。</p>
+<h3 id="5-临时方案有什么问题">5. 临时方案有什么问题？</h3>
+<p>对于无状态算子使用这种方案进行负载均衡是可行的，但是在有状态的任务中改变分区也意味着必须要迁移对应的状态，这个改动还是较为复杂的，目前网上已经有一些相关的讨论可以参考。</p>
 
             </div>
             
@@ -867,7 +772,7 @@ rectangle ProtobufRpcEngine {
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://olegpt.top/post/hdfs-rpc-shi-xian/" title="HDFS学习笔记之：（1）RPC客户端实现">https://olegpt.top/post/hdfs-rpc-shi-xian/</a>
+      <a href="https://olegpt.top/post/ji-yi-ci-xian-shang-flink-ren-wu-tun-tu-xia-jiang-wen-ti-de-pai-cha/" title="记一次线上Flink任务吞吐下降问题的排查">https://olegpt.top/post/ji-yi-ci-xian-shang-flink-ren-wu-tun-tu-xia-jiang-wen-ti-de-pai-cha/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -876,21 +781,15 @@ rectangle ProtobufRpcEngine {
   </ul>
   <div class="tags">
     
-      <a href="https://olegpt.top/tag/hdfs/"># HDFS</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="HDFS学习笔记之：（2）RPC服务端实现" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">HDFS学习笔记之：（2）RPC服务端实现</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="HDFS学习笔记之：（2）RPC服务端实现" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Lambda表达式与匿名内部类" href="https://olegpt.top/post/l/">Lambda表达式与匿名内部类</a>
-        <a class="nav-mobile-next" title="Lambda表达式与匿名内部类" href="https://olegpt.top/post/l/">下一篇</a>
+        <a class="nav-pc-next" title="Mac OS延迟通知脚本" href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/">Mac OS延迟通知脚本</a>
+        <a class="nav-mobile-next" title="Mac OS延迟通知脚本" href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
