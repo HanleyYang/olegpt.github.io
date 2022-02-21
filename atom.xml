@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://olegpt.top</id>
     <title>Oleg的博客</title>
-    <updated>2022-02-15T11:27:43.836Z</updated>
+    <updated>2022-02-21T08:54:56.261Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://olegpt.top"/>
     <link rel="self" href="https://olegpt.top/atom.xml"/>
@@ -22,6 +22,13 @@
         <link href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/">
         </link>
         <updated>2021-06-29T09:08:33.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[HDFS学习笔记之：（3）RPC重试]]></title>
+        <id>https://olegpt.top/post/3rpc-chong-shi-de-shi-xian/</id>
+        <link href="https://olegpt.top/post/3rpc-chong-shi-de-shi-xian/">
+        </link>
+        <updated>2021-05-17T02:00:38.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[HDFS学习笔记之：（2）RPC服务端实现]]></title>
@@ -143,12 +150,5 @@
         <link href="https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/">
         </link>
         <updated>2020-07-15T12:36:20.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[kudu的compaction机制]]></title>
-        <id>https://olegpt.top/post/kudu-de-compaction-ji-zhi/</id>
-        <link href="https://olegpt.top/post/kudu-de-compaction-ji-zhi/">
-        </link>
-        <updated>2020-07-07T12:43:10.000Z</updated>
     </entry>
 </feed>

@@ -8,7 +8,7 @@
 <meta name="keywords" content="Oleg的博客">
 <meta name="description" content="">
 <meta name="theme-color" content="#000">
-<title>最短路径问题的解法 | Oleg的博客</title>
+<title>HDFS学习笔记之：（3）RPC重试 | Oleg的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1645433690879">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="最短路径问题的解法" />
-  <meta name="keywords" content="LeetCode" />
+  <meta name="description" content="HDFS学习笔记之：（3）RPC重试" />
+  <meta name="keywords" content="HDFS" />
 </head>
 
 <body>
@@ -190,8 +190,7 @@
       <div class="sidebar-body pisces" id="sidebar_body">
         
           
-            <div class="post-side-meta" id="post_side_meta">
-              
+            
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -240,201 +239,6 @@
 
 
 </div>
-            </div>
-            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
-              <div class="toc-box right-motion">
-  <div class="toc-wrapper auto-number auto"
-    id="toc_wrapper">
-    <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#1%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92dp">1.动态规划（DP）</a></li>
-<li><a href="#2floyd-%E7%AE%97%E6%B3%95">2.Floyd 算法</a></li>
-<li><a href="#3%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95dijkstra">3.迪杰斯特拉算法（Dijkstra）</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-  </div>
-</div>
-
-<script>
-
-  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
-  let active = 'active-show', activeClass = 'active-current';
-  let tocWrapper = document.querySelector('#toc_wrapper');
-  let tocContent = tocWrapper.children[0];
-  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
-
-  function addTocNumber(elem, deep) {
-    if (!elem) {
-      return;
-    }
-    let prop = elem.__proto__;
-
-    if (prop === HTMLUListElement.prototype) {
-      for (let i = 0; i < elem.children.length; i++) {
-        addTocNumber(elem.children[i], deep + (i + 1) + '.');
-      }
-    } else if (prop === HTMLLIElement.prototype) {
-      // 保存li元素
-      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
-        lList.push(elem);
-      }
-      for (let i = 0; i < elem.children.length; i++) {
-        let cur = elem.children[i];
-        if (cur.__proto__ === HTMLAnchorElement.prototype) {
-          if (autoNumber) {
-            cur.text = deep + ' ' + cur.text;
-          }
-        } else if (cur.__proto__ === HTMLUListElement.prototype) {
-          addTocNumber(cur, deep);
-        }
-      }
-    }
-  }
-
-  function removeParentActiveClass() {
-    let parents = tocContent.querySelectorAll('.' + active)
-    parents.forEach(function (elem) {
-      elem.classList.remove(active);
-    });
-  }
-
-  function addActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.add(activeClass);
-    }
-  }
-
-  function removeActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.remove(activeClass);
-    }
-  }
-
-  function addActiveLiElemment(elem, parent) {
-    if (!elem || elem === parent) {
-      return;
-    } else {
-      if (elem.__proto__ === HTMLLIElement.prototype) {
-        elem.classList.add(active);
-      }
-      addActiveLiElemment(elem.parentElement, parent);
-    }
-  }
-
-  function showToc() {
-    if (tocWrapper) {
-      postBody = document.querySelector('#post_body');
-      for (let i = 0; i < postBody.children.length; i++) {
-        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
-          hList.push(postBody.children[i]);
-        }
-      }
-      if (tocWrapper.classList.contains('compress')) {
-        tocContent.classList.add('closed');
-      } else if (tocWrapper.classList.contains('no_compress')) {
-        tocContent.classList.add('expanded');
-      } else {
-        if (hList.length > 10) {
-          active = 'active-hidden'
-          tocContent.classList.add('closed');
-        } else {
-          tocContent.classList.add('expanded');
-        }
-      }
-    }
-  }
-
-  (function () {
-    // 处理不是从#一级标题开始目录
-    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
-      let con = tocContent.children[0].children[0];
-      tocContent.innerHTML = con.innerHTML;
-    }
-    let markdownItTOC = document.querySelector('.markdownIt-TOC');
-    let innerHeight = window.innerHeight;
-    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
-    addTocNumber(tocContent, '');
-  })();
-
-  document.addEventListener('scroll', function (e) {
-    if (lList.length <= 0) {
-      return;
-    }
-    let scrollTop = document.scrollingElement.scrollTop + 10;
-    let dir;
-
-    if (lastTop - scrollTop > 0) {
-      dir = 'up';
-    } else {
-      dir = 'down';
-    }
-
-    lastTop = scrollTop;
-    if (scrollTop <= 0) {
-      if (lastIndex >= 0 && lastIndex < hList.length) {
-        lList[lastIndex].classList.remove(activeClass);
-      }
-      return;
-    }
-
-    let current = 0, hasFind = false;
-    for (let i = 0; i < hList.length; i++) {
-      if (hList[i].offsetTop > scrollTop) {
-        current = i;
-        hasFind = true;
-        break;
-      }
-    }
-    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
-      current = hList.length - 1;
-    } else {
-      current--;
-    }
-    if (dir === 'down') {
-      if (current > lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex)
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    } else {
-      if (current < lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex);
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    }
-  });
-
-
-  window.addEventListener('load', function () {
-    showToc();
-    document.querySelector('#sidebar').style = 'display: block;';
-    tocWrapper.classList.add('toc-active');
-    setTimeout(function () {
-      if ("createEvent" in document) {
-        let evt = document.createEvent("HTMLEvents");
-        evt.initEvent("scroll", false, true);
-        document.dispatchEvent(evt);
-      }
-      else {
-        document.fireEvent("scroll");
-      }
-    }, 500)
-  })
-
-</script>
-            </div>
           
         
       </div>
@@ -522,8 +326,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/">
-      最短路径问题的解法
+    <a class="post-title-link" href="https://olegpt.top/post/3rpc-chong-shi-de-shi-xian/">
+      HDFS学习笔记之：（3）RPC重试
     </a>
   </h1>
   <div class="post-meta">
@@ -531,7 +335,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-07-15 20:36:20">2020-07-15</span>
+      <span class="publish-time" data-t="2021-05-17 10:00:38">2021-05-17</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -540,8 +344,8 @@
       <span class="pc-show language" data-lan="category-in">分类于</span>
       
       
-      <a href="https://olegpt.top/tag/boFyc4UTy/">
-        <span>LeetCode</span>
+      <a href="https://olegpt.top/tag/hdfs/">
+        <span>HDFS</span>
       </a>
       
       
@@ -550,142 +354,94 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>5<span class="language" data-lan="minute">分钟</span></span>
+      <span>3<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>966<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>451<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>最短路径问题即：找出一个点到另一个点的最短路径。这类问题的解法有：</p>
-<h3 id="1动态规划dp">1.动态规划（DP）</h3>
-<p>以为<a href="https://leetcode.com/problems/minimum-path-sum">63. Minimum Path Sum</a>例，遍历方向只有右和下且目的地为最后一个节点，所以任意一个节点最终都能到达目的节点，此时只需要把所有节点遍历，并简单的记录每一个节点的最短路径就可以解决问题：</p>
-<pre><code class="language-java">class Solution {
-    public int minPathSum(int[][] grid) {
-        for (int i = 0; i &lt; grid.length; i++) {
-            for (int j = 0; j &lt; grid[0].length; j++) {
-                if (i &gt; 0 &amp;&amp; j &gt; 0) {
-                    grid[i][j] += Math.min(grid[i - 1][j], grid[i][j-1]);
-                } else if (i &gt; 0) {
-                    grid[i][j] += grid[i - 1][j];
-                } else if (j &gt; 0) {
-                    grid[i][j] += grid[i][j - 1];
-                }
-            }
-        }
-        return grid[grid.length - 1][grid[0].length - 1];
-    }
-}
+              <p>为了规范内部不同组件代码的重试机制，hadoop对内部重试进行了统一封装，需要进行失败重试时调用<code>RetryProxy.create()</code>来创建一个代理对象：</p>
+<pre><code class="language-java">public static &lt;T&gt; Object create(Class&lt;T&gt; iface, T implementation,
+                              RetryPolicy retryPolicy)
+                              
+public static &lt;T&gt; Object create(Class&lt;T&gt; iface,
+      FailoverProxyProvider&lt;T&gt; proxyProvider, RetryPolicy retryPolicy)
+      
+public static &lt;T&gt; Object create(Class&lt;T&gt; iface, T implementation,
+                              Map&lt;String,RetryPolicy&gt; methodNameToPolicyMap)
 </code></pre>
-<p>时间复杂度为O(m*n)。</p>
-<h3 id="2floyd-算法">2.Floyd 算法</h3>
-<p>以<a href="https://leetcode.com/problems/network-delay-time/">743. Network Delay Time</a>为例，这一题本质就是求两个点之间的最短距离，还是沿用上面的思路来解决。</p>
-<ul>
-<li>
-<p>通过一个二维数据来记录各个点到另一个点的延迟。</p>
-</li>
-<li>
-<p>当不经过其他点时，两个点的最短延迟就是二维数组中记录的数据。</p>
-</li>
-<li>
-<p>假设现在必须只经过点c，则两点之间的最低延迟为</p>
-</li>
-</ul>
-<p>$$ L_ {ab} = min(L_{ ab }, \quad L_{ac} + L_{cb}) $$</p>
-<ul>
-<li>假设现在必须经过点c、d，则两点之间的最低延迟为</li>
-</ul>
-<p>$$ L_{ab} = min(min(L_{ab}, L_{ac} + L_{cb}),\quad min(L_{ab},L_{ad} + L_{db})) $$</p>
-<p>因此，经过所有点时的延迟可以通过遍历所有点，套用上述公式得到：</p>
-<pre><code class="language-java">class Solution {
-    public int networkDelayTime(int[][] times, int N, int K) {
-        Integer dp[][] = new Integer[N + 1][N + 1];
-        for (int[] time : times) {
-            dp[time[0]][time[1]] = time[2];
-        }
-
-        for (int k = 1; k &lt;= N; k++) {
-            for (int i = 1; i &lt;= N; i++) {
-                for (int j = 1; j &lt;= N; j++) {
-                    if (dp[i][k] != null &amp;&amp; dp[k][j] != null) {
-                        if (dp[i][j] == null) {
-                            dp[i][j] = dp[i][k] + dp[k][j];
-                        } else {
-                            dp[i][j] = Math.min(dp[i][k] + dp[k][j], dp[i][j]);
-                        }
-                    }
-                }
-            }
-        }
-
-        int max = 0;
-        for (int i = 1; i &lt;= N; i++) {
-            if (i != K) {
-                if (dp[K][i] == null) return -1;
-                max = Math.max(max, dp[K][i]);    
-            }
-        }
-        return max;
+<p>代理对象利用JAVA自身的动态代理进行创建(Proxy.newProxyInstance())，从上面的方法参数可以看到，还需要额外指定重试的策略以及故障切换时的stub对象provider，当被代理方法抛出异常时RetryInvocationHandler会捕获异常，并按照RetryPolicy进行处理</p>
+<pre><code class="language-java">@Override
+  public Object invoke(Object proxy, Method method, Object[] args)
+    throws Throwable {
+    RetryPolicy policy = methodNameToPolicyMap.get(method.getName());
+    if (policy == null) {
+      policy = defaultPolicy;
     }
-}
-</code></pre>
-<p>时间复杂度为O(n^3)<br>
-关于此算法更详细的介绍可以参考：https://wiki.jikexueyuan.com/project/easy-learn-algorithm/floyd.html</p>
-<h3 id="3迪杰斯特拉算法dijkstra">3.迪杰斯特拉算法（Dijkstra）</h3>
-<p>还是以Network Delay Time问题为例，使用Floyd算法可以得出图中<strong>所有点到点的最短路径</strong>，这称为<strong>多源最短路径算法</strong>，但是实际上这个问题中，只需要求点K到其余各点的最短距离，所以这里介绍一种新的算法：Dijkstra。</p>
-<ul>
-<li>同样还是使用二维数据记录各点的距离。</li>
-<li>另外用一个单独的数据记录各点到指定点K的最短距离。</li>
-<li>找到距离K最近的点A，并看看A指向的点是否能通过A来缩短与K的距离，并将距离记录到2中的数组，这个过程称为松弛</li>
-<li>继续通过3中的方法，直到所有点都松弛完成，2中数组保存的就是最短的点</li>
-</ul>
-<pre><code class="language-java">class Solution {
-    public int networkDelayTime(int[][] times, int N, int K) {
-        Integer dp[][] = new Integer[N + 1][N + 1];
-        Integer min[] = new Integer[N + 1];
-        boolean finished[] = new boolean[N + 1];
-        for (int[] time : times) {
-            dp[time[0]][time[1]] = time[2];
-            if (time[0] == K) min[time[1]] = time[2];
+    ......
+    while (true) {
+      ......
+      try {
+        Object ret = invokeMethod(method, args);
+        hasMadeASuccessfulCall = true;
+        return ret;
+      } catch (Exception e) {
+        ......
+        RetryAction action = policy.shouldRetry(e, retries++,
+            invocationFailoverCount, isIdempotentOrAtMostOnce);
+        if (action.action == RetryAction.RetryDecision.FAIL) {
+          if (action.reason != null) {
+            LOG.warn(&quot;Exception while invoking &quot; + currentProxy.proxy.getClass()
+                + &quot;.&quot; + method.getName() + &quot; over &quot; + currentProxy.proxyInfo
+                + &quot;. Not retrying because &quot; + action.reason, e);
+          }
+          throw e;
+        } else { // retry or failover
+          ......
         }
-
-        for (int i = 1; i &lt;= N; i++) {
-            int minIndex = -1;
-            for (int j = 1; j &lt;= N; j++) {
-                if (j != K &amp;&amp; min[j] != null &amp;&amp; !finished[j]) {
-                    minIndex = minIndex &lt; 0 ? j : (min[j] &lt;= min[minIndex] ? j : minIndex);
-                }
-            }
-
-            if (minIndex &gt; 0) {
-                finished[minIndex] = true;
-                for (int j = 1; j &lt;=N; j++) {
-                    if (j != K &amp;&amp; dp[minIndex][j] != null) {
-                        min[j] = min[j] == null ? min[minIndex] + dp[minIndex][j] : Math.min(min[j], min[minIndex] + dp[minIndex][j]);
-                    }
-                }
-            }
-        }
-
-        int max = 0;
-        for (int i = 1; i &lt;= N; i++) {
-            if (i != K) {
-                if (min[i] == null) return -1;
-                max = Math.max(max, min[i]);    
-            }
-        }
-        return max;
+      }
     }
-}
-
+  }
 </code></pre>
-<p>时间复杂度为O(n^2)<br>
-关于此算法更详细的介绍可以参考：<br>
-https://wiki.jikexueyuan.com/project/easy-learn-algorithm/dijkstra.html</p>
+<p>对于RPC调用的重试也是使用上述机制来实现的，以NameNode为例：如果hdfs配置文件开启了HA机制，客户端创建ClientProtocol代理对象时会在外层套上一层重试代理来实现RPC异常时的重试：</p>
+<pre><code class="language-java">public static &lt;T&gt; ProxyAndInfo&lt;T&gt; createProxy(Configuration conf,
+      URI nameNodeUri, Class&lt;T&gt; xface, AtomicBoolean fallbackToSimpleAuth)
+      throws IOException {
+    AbstractNNFailoverProxyProvider&lt;T&gt; failoverProxyProvider =
+        createFailoverProxyProvider(conf, nameNodeUri, xface, true,
+          fallbackToSimpleAuth);
+  
+    if (failoverProxyProvider == null) {
+      // Non-HA case
+      return createNonHAProxy(conf, NameNode.getAddress(nameNodeUri), xface,
+          UserGroupInformation.getCurrentUser(), true, fallbackToSimpleAuth);
+    } else {
+      // HA case
+      Conf config = new Conf(conf);
+      T proxy = (T) RetryProxy.create(xface, failoverProxyProvider,
+          RetryPolicies.failoverOnNetworkException(
+              RetryPolicies.TRY_ONCE_THEN_FAIL, config.maxFailoverAttempts,
+              config.maxRetryAttempts, config.failoverSleepBaseMillis,
+              config.failoverSleepMaxMillis));
+
+      Text dtService;
+      if (failoverProxyProvider.useLogicalURI()) {
+        dtService = HAUtil.buildTokenServiceForLogicalUri(nameNodeUri,
+            HdfsConstants.HDFS_URI_SCHEME);
+      } else {
+        dtService = SecurityUtil.buildTokenService(
+            NameNode.getAddress(nameNodeUri));
+      }
+      return new ProxyAndInfo&lt;T&gt;(proxy, dtService,
+          NameNode.getAddress(nameNodeUri));
+    }
+  }
+</code></pre>
 
             </div>
             
@@ -698,7 +454,7 @@ https://wiki.jikexueyuan.com/project/easy-learn-algorithm/dijkstra.html</p>
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/" title="最短路径问题的解法">https://olegpt.top/post/zui-duan-lu-jing-wen-ti-de-jie-fa/</a>
+      <a href="https://olegpt.top/post/3rpc-chong-shi-de-shi-xian/" title="HDFS学习笔记之：（3）RPC重试">https://olegpt.top/post/3rpc-chong-shi-de-shi-xian/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -707,21 +463,21 @@ https://wiki.jikexueyuan.com/project/easy-learn-algorithm/dijkstra.html</p>
   </ul>
   <div class="tags">
     
-      <a href="https://olegpt.top/tag/boFyc4UTy/"># LeetCode</a>
+      <a href="https://olegpt.top/tag/hdfs/"># HDFS</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="70. Climbing Stairs" href="https://olegpt.top/post/70-climbing-stairs/">70. Climbing Stairs</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="70. Climbing Stairs" href="https://olegpt.top/post/70-climbing-stairs/">上一篇</a>
+        <a class="nav-pc-next" title="Mac OS延迟通知脚本" href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/">Mac OS延迟通知脚本</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Mac OS延迟通知脚本" href="https://olegpt.top/post/mac-os-yan-chi-tong-zhi-jiao-ben/">上一篇</a>
       
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="kudu的compaction机制" href="https://olegpt.top/post/kudu-de-compaction-ji-zhi/">kudu的compaction机制</a>
-        <a class="nav-mobile-next" title="kudu的compaction机制" href="https://olegpt.top/post/kudu-de-compaction-ji-zhi/">下一篇</a>
+        <a class="nav-pc-next" title="HDFS学习笔记之：（2）RPC服务端实现" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">HDFS学习笔记之：（2）RPC服务端实现</a>
+        <a class="nav-mobile-next" title="HDFS学习笔记之：（2）RPC服务端实现" href="https://olegpt.top/post/hdfs-xue-xi-bi-ji-zhi-2rpc-fu-wu-duan-shi-xian/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
